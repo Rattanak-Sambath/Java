@@ -38,8 +38,27 @@ include 'session/check_if_no_session.php';
             <div>
               <q-card-section class="row">
 
-                <div style="width: 300px;">
-                  <q-select outlined v-model="month" dense options-dense :options="months" label="Outlined" />
+
+
+
+
+                <div class="q-pa-sm">
+                  <q-checkbox v-model="checkboxText" label="For Input Year" left-label />
+                </div>
+
+                <!-- select -->
+                <div v-show="!checkboxText" style="width: 200px;" class="q-pa-sm">
+                  <q-select outlined v-model="year" dense options-dense :options="years" label="Select Year" clearable />
+                </div>
+
+                <!-- input -->
+                <div v-show="checkboxText" style="width: 200px;" class="q-pa-sm">
+                  <q-input outlined v-model="year" dense label="Input Year" clearable />
+                </div>
+
+                <!-- btn search -->
+                <div class="q-pa-sm">
+                  <q-btn label="Search" color="primary" />
                 </div>
 
 
@@ -55,8 +74,9 @@ include 'session/check_if_no_session.php';
             <!--  -->
             <div>
               <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua.
+                <div>
+                  <q-btn label="Test" dense color="primary" />
+                </div>
               </q-card-section>
             </div>
           </q-card>
@@ -76,22 +96,13 @@ include 'session/check_if_no_session.php';
       name: 'ex',
       data: function() {
         return {
-          month: '',
-          months: [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December',
-          ]
+          year: '',
+          years: [],
+          checkboxText: false,
         }
+      },
+      created() {
+        this.generateYear()
       },
       methods: {
         onLogout() {
@@ -103,6 +114,14 @@ include 'session/check_if_no_session.php';
             }
           })
         },
+        generateYear() {
+          this.years = []
+          thisYear = new Date().getFullYear()
+          for (i = 0; i < 5; i++) {
+            this.years.push(thisYear)
+            thisYear += 1
+          }
+        }
       }
     })
   </script>
