@@ -36,10 +36,17 @@ include 'session/check_if_no_session.php';
         <q-page class="q-pa-md">
           <q-card flat bordered class="my-card">
             <div>
-              <q-card-section>
-                <div style="max-width: 300px;">
-                  <q-input outlined dense />
+              <q-card-section class="row">
+
+                <div style="width: 300px;">
+                  <q-select outlined v-model="month" dense options-dense :options="months" label="Outlined" />
                 </div>
+
+
+
+
+
+
               </q-card-section>
             </div>
             <div>
@@ -68,7 +75,23 @@ include 'session/check_if_no_session.php';
       el: '#q-app',
       name: 'ex',
       data: function() {
-        return {}
+        return {
+          month: '',
+          months: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ]
+        }
       },
       methods: {
         onLogout() {
