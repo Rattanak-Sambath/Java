@@ -33,7 +33,9 @@ include 'session/check_if_session.php';
                 </div>
 
                 <div class="q-pa-sm">
-                  <q-btn push color="positive" size="lg" class="full-width" label="Login" @click="onLogin()" />
+                  <q-btn :loading="loading" push color="positive" size="lg" class="full-width" label="Login" @click="onLogin()">
+
+                  </q-btn>
                 </div>
                 <div class="q-pa-sm">
                   <q-btn push color="primary" size="lg" class="full-width" label="Show Info" @click="showInfo()" />
@@ -57,12 +59,14 @@ include 'session/check_if_session.php';
         return {
           form: {
             username: '',
-            password: ''
-          }
+            password: '',
+          },
+          loading: false,
         }
       },
       methods: {
         onLogin() {
+          this.loading = true;
           axios.post('./action/login_action.php', {
             action: 'login',
             username: this.form.username,
@@ -77,14 +81,18 @@ include 'session/check_if_session.php';
                 type: 'positive'
               })
               setTimeout(() => {
+                this.loading = false
                 window.location.href = 'index.php';
               }, 500);
             } else {
-              this.$q.notify({
-                message: res.data.status,
-                position: 'top-right',
-                type: 'negative'
-              })
+              setTimeout(() => {
+                this.loading = false
+                this.$q.notify({
+                  message: res.data.status,
+                  position: 'top-right',
+                  type: 'negative'
+                })
+              }, 500);
               console.log(res.data.status);
             }
           })
