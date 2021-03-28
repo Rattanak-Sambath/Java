@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Vue</title>
+  <title>Ele-Water</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -24,8 +24,8 @@ include 'session/check_if_no_session.php';
             <div class="text-h5">
               Kandal-Pagoda
             </div>
-            <q-btn label="Ele-Water" flat color="white"></q-btn>
-            <q-btn label="Home" flat color="white"></q-btn>
+            <q-btn disabled label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
+            <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
 
           </q-toolbar-title>
           <!-- right side -->
@@ -82,13 +82,13 @@ include 'session/check_if_no_session.php';
             <!--  -->
             <div>
               <q-card-section>
-                <div class="row q-col-gutter-x-md q-col-gutter-y-sm">
-                  <div class="col-xs-6 col-sm-6 col-md-3" v-for="(person,index) in persons" :key="index">
+                <div class="row q-col-gutter-x-md q-col-gutter-y-md">
+                  <div class="col-xs-12 col-sm-6 col-md-3" v-for="(person,index) in persons" :key="index">
                     <q-card bordered flat class="my-card">
                       <div>
-                        <!-- month -->
+                        <!-- name -->
                         <q-card-section class="text-h5 row bg-positive">
-                          {{ person.name }} - {{ person.homeName }}
+                          {{ person.name }}
                         </q-card-section>
                       </div>
                       <div>
@@ -166,6 +166,16 @@ include 'session/check_if_no_session.php';
 
                         </q-card-section>
                       </div>
+                      <!-- <div>
+                        <q-separator />
+                      </div> -->
+                      <!-- home -->
+                      <!-- <div>
+                        <q-card-section class="">
+                          {{ person.homeName }}
+                        </q-card-section>
+                      </div> -->
+
 
                     </q-card>
                   </div>
@@ -232,6 +242,38 @@ include 'session/check_if_no_session.php';
             ele_new: 15,
             water_old: 5,
             water_new: 8,
+          }, {
+            homeName: 'កុដិលេខ០៨',
+            name: 'Vann Sopeha',
+            gender: 'Male',
+            ele_old: 10,
+            ele_new: 15,
+            water_old: 5,
+            water_new: 8,
+          }, {
+            homeName: 'កុដិលេខ០៨',
+            name: 'San Saren',
+            gender: 'Male',
+            ele_old: 10,
+            ele_new: 15,
+            water_old: 5,
+            water_new: 8,
+          }, {
+            homeName: 'កុដិលេខ០៨',
+            name: 'Vann Sopeha',
+            gender: 'Male',
+            ele_old: 10,
+            ele_new: 15,
+            water_old: 5,
+            water_new: 8,
+          }, {
+            homeName: 'កុដិលេខ០៨',
+            name: 'San Saren',
+            gender: 'Male',
+            ele_old: 10,
+            ele_new: 15,
+            water_old: 5,
+            water_new: 8,
           }, ],
           unit: {
             ele: 2000,
@@ -243,6 +285,13 @@ include 'session/check_if_no_session.php';
         this.generateYear()
       },
       methods: {
+        goIndex() {
+          window.location.href = 'index.php'
+        },
+        goHome() {
+          window.location.href = 'home.php'
+        },
+
         onLogout() {
           axios.post('action/index_action.php', {
             action: 'logout'
