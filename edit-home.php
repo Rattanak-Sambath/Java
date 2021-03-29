@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Home</title>
+  <title>Edit Home</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -27,7 +27,7 @@ include 'session/check_if_no_session.php';
               Kandal-Pagoda
             </div>
             <q-btn label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
-            <q-btn disabled label="Home" flat color="white" @click="goHome()"></q-btn>
+            <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
 
           </q-toolbar-title>
           <!-- right side -->
@@ -41,18 +41,8 @@ include 'session/check_if_no_session.php';
         <q-page class="q-pa-md">
           <q-card flat bordered class="my-card">
             <div>
-              <q-card-section class="row">
-
-
-
-                <!-- btn search -->
-                <div class="q-pa-sm">
-                  <q-btn label="Add" color="primary" @click="goNewHome()" />
-                </div>
-
-
-
-
+              <q-card-section class="text-h5">
+                Edit Home
               </q-card-section>
             </div>
             <div>
@@ -61,21 +51,24 @@ include 'session/check_if_no_session.php';
             <!--  -->
             <div>
               <q-card-section>
-                <q-table flat :columns="columns" :data="data">
-                  <!-- index -->
-                  <template slot="body-cell-index" slot-scope="props" :props="props.row">
-                    <q-td>
-                      {{ props.pageIndex + 1 }}
-                    </q-td>
-                  </template>
-                  <!-- action -->
-                  <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                    <q-td align="center">
-                      <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
-                    </q-td>
-                  </template>
+                <!-- name -->
+                <div class="q-pa-sm" style="max-width: 600px;">
+                  <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                </div>
 
-                </q-table>
+                <!-- latin -->
+                <div class="q-pa-sm" style="max-width: 600px;">
+                  <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                </div>
+
+                <!-- description -->
+                <div class="q-pa-sm" style="max-width: 600px;">
+                  <q-input v-model="form.description" label="Description" outlined autogrow />
+                </div>
+                <!-- btn -->
+                <div class="q-pa-sm">
+                  <q-btn label="Update" color="positive" @click="onSubmit()" />
+                </div>
               </q-card-section>
             </div>
           </q-card>
@@ -89,7 +82,7 @@ include 'session/check_if_no_session.php';
   <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
-  <script src="./js/home.js"></script>
+  <script src="./js/edit-home.js"></script>
 </body>
 
 </html>

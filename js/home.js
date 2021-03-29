@@ -104,5 +104,9 @@ var app = new Vue({
     convertDate(d) {
       return dayjs(d).format("YYYY-MM-DD");
     },
+    onEdit(id) {
+      console.log(id);
+      window.location.href = "edit-home.php?id=" + id;
+    },
   },
 });
