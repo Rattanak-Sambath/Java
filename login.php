@@ -21,19 +21,19 @@ include 'session/check_if_session.php';
         <div class="row">
           <q-card flat bordered class="q-pa-lg shadow-1 bg-grey-3">
             <q-card-section>
-              <q-form class="q-gutter-xs" @submit="onLogin()">
+              <q-form class="q-gutter-xs" @submit.prevent.stop="onLogin()">
                 <!-- username -->
-                <div class="q-pa-sm">
-                  <q-input v-model="form.username" autofocus outlined label="Username" />
+                <div class="q-pa-xs">
+                  <q-input ref="username" v-model="form.username" autofocus outlined label="Username" :rules="[val => !!val || 'Username is required']" />
                 </div>
 
                 <!-- password -->
-                <div class="q-pa-sm">
-                  <q-input v-model="form.password" outlined type="password" label="Password" />
+                <div>
+                  <q-input ref="password" v-model="form.password" outlined type="password" label="Password" :rules="[val => !!val || 'Password is required']" />
                 </div>
 
-                <div class="q-pa-sm">
-                  <q-btn :loading="loading" push color="positive" size="lg" class="full-width" label="Login" @click="onLogin()">
+                <div class="q-pa-xs">
+                  <q-btn :loading="loading" push color="positive" size="lg" class="full-width" label="Login" type="submit">
 
                   </q-btn>
                 </div>
@@ -66,39 +66,46 @@ include 'session/check_if_session.php';
       },
       methods: {
         onLogin() {
-          this.loading = true;
-          axios.post('./action/login_action.php', {
-            action: 'login',
-            username: this.form.username,
-            password: this.form.password
-          }).then(res => {
-            if (res.data.status == "login_success") {
-              console.log(res.data.status);
-              console.log(res.data);
-              this.$q.notify({
-                message: 'Login',
-                position: 'top-right',
-                type: 'positive'
-              })
-              setTimeout(() => {
-                this.loading = false
-                window.location.href = 'index.php';
-              }, 500);
-            } else {
-              setTimeout(() => {
-                this.loading = false
+          this.$refs.username.validate()
+          this.$refs.password.validate()
+
+          if (this.$refs.username.hasError || this.$refs.password.hasError) {
+            // check when value null
+          } else {
+            this.loading = true;
+            axios.post('./action/login_action.php', {
+              action: 'login',
+              username: this.form.username,
+              password: this.form.password
+            }).then(res => {
+              if (res.data.status == "login_success") {
+                console.log(res.data.status);
+                console.log(res.data);
                 this.$q.notify({
-                  message: res.data.status,
+                  message: 'Login',
                   position: 'top-right',
-                  type: 'negative'
+                  type: 'positive'
                 })
-              }, 500);
-              console.log(res.data.status);
-            }
-          })
+                setTimeout(() => {
+                  this.loading = false
+                  window.location.href = 'index.php';
+                }, 500);
+              } else {
+                setTimeout(() => {
+                  this.loading = false
+                  this.$q.notify({
+                    message: res.data.status,
+                    position: 'top-right',
+                    type: 'negative'
+                  })
+                }, 500);
+                console.log(res.data.status);
+              }
+            })
+          }
         },
         showInfo() {
-          window.location.href = 'public/show.php'
+          window.location.href = 'public/index.php'
         },
       }
     })

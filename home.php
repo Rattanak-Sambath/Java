@@ -62,6 +62,19 @@ include 'session/check_if_no_session.php';
             <div>
               <q-card-section>
                 <q-table flat :columns="columns" :data="data">
+                  <!-- index -->
+                  <template slot="body-cell-index" slot-scope="props" :props="props.row">
+                    <q-td>
+                      {{ props.pageIndex + 1 }}
+                    </q-td>
+                  </template>
+                  <!-- action -->
+                  <template slot="body-cell-action" slot-scope="props" :props="props.row">
+                    <q-td align="center">
+                      <q-btn dense color="primary" icon="create" @click="testGet(props.row.id)" />
+                    </q-td>
+                  </template>
+
                 </q-table>
               </q-card-section>
             </div>
@@ -87,10 +100,9 @@ include 'session/check_if_no_session.php';
           checkboxText: false,
           month: '',
           columns: [{
-            name: 'id',
-            label: 'ID',
+            name: 'index',
+            label: 'No',
             align: 'left',
-            field: row => row.id,
           }, {
             name: 'name',
             label: 'Khmer',
@@ -111,6 +123,10 @@ include 'session/check_if_no_session.php';
             label: 'Updated',
             align: 'left',
             field: row => this.convertDate(row.updated_at),
+          }, {
+            name: 'action',
+            label: 'Action',
+            align: 'center'
           }, ],
           data: [],
         }
@@ -159,23 +175,12 @@ include 'session/check_if_no_session.php';
             this.data = res.data
           })
         },
-        testGet() {
-          // let uri = window.location.href.split('?');
-          // if (uri.length == 2) {
-          //   let vars = uri[1].split('&');
-          //   let getVars = {};
-          //   let tmp = '';
-          //   vars.forEach(function(v) {
-          //     tmp = v.split('=');
-          //     if (tmp.length == 2)
-          //       getVars[tmp[0]] = tmp[1];
-          //   });
-          //   console.log(getVars);
-          // }
+        testGet(a) {
+          console.log(a);
           let uri = window.location.search.substring(1);
           let params = new URLSearchParams(uri);
           let id = params.get("id");
-          console.log(id);
+          // console.log(id);
         },
         convertDate(d) {
           return dayjs(d).format('YYYY-MM-DD')

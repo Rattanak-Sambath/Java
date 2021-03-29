@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Home</title>
+  <title>New Home</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -51,18 +51,23 @@ include 'session/check_if_no_session.php';
             <!--  -->
             <div>
               <q-card-section>
-                <div class="q-pa-md" style="max-width: 600px;">
-                  <q-input v-model="form.name" label="Name" outlined />
+                <!-- name -->
+                <div class="q-pa-sm" style="max-width: 600px;">
+                  <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
                 </div>
-                <div class="q-pa-md" style="max-width: 600px;">
-                  <q-input v-model="form.latin" label="Latin" outlined />
+
+                <!-- latin -->
+                <div class="q-pa-sm" style="max-width: 600px;">
+                  <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
                 </div>
-                <div class="q-pa-md" style="max-width: 600px;">
+
+                <!-- description -->
+                <div class="q-pa-sm" style="max-width: 600px;">
                   <q-input v-model="form.description" label="Description" outlined autogrow />
                 </div>
                 <!-- btn -->
-                <div class="q-pa-md">
-                  <q-btn label="Add" color="positive" />
+                <div class="q-pa-sm">
+                  <q-btn label="Add" color="positive" @click="onSubmit()" />
                 </div>
 
               </q-card-section>
@@ -93,6 +98,50 @@ include 'session/check_if_no_session.php';
       },
       created() {},
       methods: {
+        onSubmit() {
+          this.$refs.name.validate()
+          this.$refs.latin.validate()
+
+          if (this.$refs.name.hasError || this.$refs.latin.hasError) {
+            // check when value null
+          } else {
+            console.log(dayjs().format('YYYY-MM-DD HH:mm:ss'));
+            axios.post('action/new-home_action.php', {
+              action: 'addNewHome',
+              name: this.form.name,
+              latin: this.form.latin,
+              description: this.form.description,
+              created: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+              updated: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+
+            }).then((res) => {
+              console.log(res.data);
+              if (res.data.status == 'inserted') {
+                this.$q.notify({
+                  message: 'Inserted successfully',
+                  type: 'positive',
+                  position: 'top-right'
+                })
+                // 
+                setTimeout(() => {
+                  window.location.href = 'home.php'
+                }, 500);
+              } else {
+                this.$q.notify({
+                  message: 'Cannot Inserted!!!',
+                  type: 'negative',
+                  position: 'top-right'
+                })
+                this.$q.notify({
+                  message: res.data.err,
+                  type: 'negative',
+                  position: 'top-right'
+                })
+              }
+            })
+          }
+
+        },
         goIndex() {
           window.location.href = 'index.php'
         },

@@ -181,13 +181,6 @@ include 'session/check_if_no_session.php';
                   </div>
 
 
-
-
-
-
-
-
-
                 </div>
               </q-card-section>
             </div>
