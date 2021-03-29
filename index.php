@@ -166,15 +166,6 @@ include 'session/check_if_no_session.php';
 
                         </q-card-section>
                       </div>
-                      <!-- <div>
-                        <q-separator />
-                      </div> -->
-                      <!-- home -->
-                      <!-- <div>
-                        <q-card-section class="">
-                          {{ person.homeName }}
-                        </q-card-section>
-                      </div> -->
 
 
                     </q-card>
@@ -195,124 +186,8 @@ include 'session/check_if_no_session.php';
   <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
-  <script>
-    new Vue({
-      el: '#q-app',
-      name: 'ex',
-      data: function() {
-        return {
-          year: null,
-          years: [],
-          checkboxText: false,
-          month: '',
-          months: [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ],
-          persons: [{
-            homeName: 'កុដិលេខ០៨',
-            name: 'Vann Sopeha',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, {
-            homeName: 'កុដិលេខ០៨',
-            name: 'San Saren',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, {
-            homeName: 'កុដិលេខ០៨',
-            name: 'Vann Sopeha',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, {
-            homeName: 'កុដិលេខ០៨',
-            name: 'San Saren',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, {
-            homeName: 'កុដិលេខ០៨',
-            name: 'Vann Sopeha',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, {
-            homeName: 'កុដិលេខ០៨',
-            name: 'San Saren',
-            gender: 'Male',
-            ele_old: 10,
-            ele_new: 15,
-            water_old: 5,
-            water_new: 8,
-          }, ],
-          unit: {
-            ele: 2000,
-            water: 1000,
-          },
-        }
-      },
-      created() {
-        this.generateYear()
-      },
-      methods: {
-        goIndex() {
-          window.location.href = 'index.php'
-        },
-        goHome() {
-          window.location.href = 'home.php'
-        },
+  <script src="./js/index.js"></script>
 
-        onLogout() {
-          axios.post('action/index_action.php', {
-            action: 'logout'
-          }).then(res => {
-            if (res.data.status == 'logout') {
-              window.location.href = 'login.php';
-            }
-          })
-        },
-        generateYear() {
-          // 
-          console.log(this.months[new Date().getMonth()]);
-          this.month = this.months[new Date().getMonth()]
-          // 
-          this.year = new Date().getFullYear()
-          this.years = []
-          thisYear = new Date().getFullYear()
-          for (i = 0; i < 5; i++) {
-            this.years.push(thisYear)
-            thisYear += 1
-          }
-        },
-        getAllMonths() {
-          console.log(this.month, this.year);
-        }
-      }
-    })
-  </script>
 </body>
 
 </html>
