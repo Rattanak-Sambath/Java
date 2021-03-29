@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Home</title>
+  <title>Person</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -27,8 +27,8 @@ include 'session/check_if_no_session.php';
               Kandal-Pagoda
             </div>
             <q-btn label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
-            <q-btn label="Person" flat color="white" @click="goPerson()"></q-btn>
-            <q-btn disabled label="Home" flat color="white" @click="goHome()"></q-btn>
+            <q-btn disabled label="Person" flat color="white" @click="goPerson()"></q-btn>
+            <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
 
           </q-toolbar-title>
           <!-- right side -->
@@ -90,7 +90,7 @@ include 'session/check_if_no_session.php';
   <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
-  <script src="./js/home.js"></script>
+  <script src="./js/person.js"></script>
 </body>
 
 </html>

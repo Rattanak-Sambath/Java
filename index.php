@@ -25,6 +25,7 @@ include 'session/check_if_no_session.php';
               Kandal-Pagoda
             </div>
             <q-btn disabled label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
+            <q-btn label="Person" flat color="white" @click="goPerson()"></q-btn>
             <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
 
           </q-toolbar-title>

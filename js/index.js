@@ -87,6 +87,9 @@ var app = new Vue({
     this.generateYear();
   },
   methods: {
+    goPerson() {
+      window.location.href = "person.php";
+    },
     goIndex() {
       window.location.href = "index.php";
     },

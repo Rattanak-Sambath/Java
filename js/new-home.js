@@ -56,6 +56,9 @@ var app = new Vue({
           });
       }
     },
+    goPerson() {
+      window.location.href = "person.php";
+    },
     goIndex() {
       window.location.href = "index.php";
     },

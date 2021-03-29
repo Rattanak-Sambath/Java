@@ -1,6 +1,6 @@
 var app = new Vue({
   el: "#q-app",
-  name: "ex",
+  name: "person",
   data: function () {
     return {
       year: null,
@@ -65,7 +65,7 @@ var app = new Vue({
     },
     onLogout() {
       axios
-        .post("action/index_action.php", {
+        .post("action/logout_action.php", {
           action: "logout",
         })
         .then((res) => {
@@ -89,7 +89,7 @@ var app = new Vue({
     },
     getAllData() {
       axios
-        .post("action/home_action.php", {
+        .post("action/person_action.php", {
           action: "getTblHome",
         })
         .then((res) => {
