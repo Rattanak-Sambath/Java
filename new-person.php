@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Person</title>
+  <title>New Person</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -27,7 +27,7 @@ include 'session/check_if_no_session.php';
               Kandal-Pagoda
             </div>
             <q-btn label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
-            <q-btn disabled label="Person" flat color="white" @click="goPerson()"></q-btn>
+            <q-btn label="Person" flat color="white" @click="goPerson()"></q-btn>
             <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
 
           </q-toolbar-title>
@@ -42,18 +42,8 @@ include 'session/check_if_no_session.php';
         <q-page class="q-pa-md">
           <q-card flat bordered class="my-card">
             <div>
-              <q-card-section class="row">
-
-
-
-                <!-- btn search -->
-                <div class="q-pa-sm">
-                  <q-btn label="Add" color="primary" @click="goAddPerson()"></q-btn>
-                </div>
-
-
-
-
+              <q-card-section class="text-h5">
+                New Home
               </q-card-section>
             </div>
             <div>
@@ -61,22 +51,40 @@ include 'session/check_if_no_session.php';
             </div>
             <!--  -->
             <div>
-              <q-card-section>
-                <q-table flat :columns="columns" :data="data">
-                  <!-- index -->
-                  <template slot="body-cell-index" slot-scope="props" :props="props.row">
-                    <q-td>
-                      {{ props.pageIndex + 1 }}
-                    </q-td>
-                  </template>
-                  <!-- action -->
-                  <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                    <q-td align="center">
-                      <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
-                    </q-td>
-                  </template>
 
-                </q-table>
+              <q-card-section>
+
+                <!-- home id -->
+                <div class="q-pa-sm">
+                  <q-select options-dense ref="homeId" v-model="form.homeId" :options="options.home" option-label="name" option-value="id" map-options emit-value label="Home" outlined :rules="[val => !!val || 'Home is required']" />
+                </div>
+
+                <!-- name -->
+                <div class="q-pa-sm">
+                  <q-input ref="name" hint="Khmer" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                </div>
+
+                <!-- latin -->
+                <div class="q-pa-sm">
+                  <q-input ref="latin" hint="English" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                </div>
+
+                <!-- gender -->
+                <div class="q-pa-sm">
+                  <q-select ref="gender" v-model="form.gender" label="Gender" :options="options.gender" outlined :rules="[val => !!val || 'Name is required']" />
+                </div>
+
+                <!-- phone -->
+                <div class="q-pa-sm">
+                  <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                </div>
+
+
+                <!-- btn -->
+                <div class="q-pa-sm">
+                  <q-btn label="Add" color="positive" @click="onSubmit()" />
+                </div>
+
               </q-card-section>
             </div>
           </q-card>
@@ -90,7 +98,7 @@ include 'session/check_if_no_session.php';
   <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
-  <script src="./js/person.js"></script>
+  <script src="./js/new-person.js"></script>
 </body>
 
 </html>

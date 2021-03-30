@@ -26,16 +26,22 @@ var app = new Vue({
           field: (row) => row.latin,
         },
         {
-          name: "created_at",
-          label: "Created",
+          name: "gender",
+          label: "Gender",
           align: "left",
-          field: (row) => this.convertDate(row.created_at),
+          field: (row) => row.gender,
         },
         {
-          name: "updated_at",
-          label: "Updated",
+          name: "phone",
+          label: "Phone",
           align: "left",
-          field: (row) => this.convertDate(row.updated_at),
+          field: (row) => row.phone,
+        },
+        {
+          name: "homeName",
+          label: "Home Name",
+          align: "left",
+          field: (row) => row.homeName,
         },
         {
           name: "action",
@@ -60,8 +66,8 @@ var app = new Vue({
     goHome() {
       window.location.href = "home.php";
     },
-    goNewHome() {
-      window.location.href = "new-home.php";
+    goAddPerson(a) {
+      window.location.href = "new-person.php";
     },
     onLogout() {
       axios
@@ -90,7 +96,7 @@ var app = new Vue({
     getAllData() {
       axios
         .post("action/person_action.php", {
-          action: "getTblHome",
+          action: "getTblPerson",
         })
         .then((res) => {
           console.log(res.data);

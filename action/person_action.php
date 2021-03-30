@@ -4,9 +4,13 @@ $data = array();
 // connection
 include '../connection/db.php';
 // 
-if ($received_data->action == 'getTblHome') {
+if ($received_data->action == 'getTblPerson') {
   // sql
-  $query = "select * from tbl_home";
+  $query = "select tbl_person.id, tbl_person.name, tbl_person.latin, tbl_person.gender, tbl_person.phone,
+  tbl_home.name as homeName 
+  from tbl_person 
+  INNER JOIN tbl_home
+  ON tbl_person.home_id=tbl_home.id;";
   // execure query
   $result = mysqli_query($conn, $query);
 
