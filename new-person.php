@@ -151,6 +151,28 @@ include 'session/check_if_no_session.php';
               })
               .then((res) => {
                 console.log(res.data);
+                if (res.data.status == "inserted") {
+                  this.$q.notify({
+                    message: "Inserted successfully",
+                    type: "positive",
+                    position: "top-right",
+                  });
+                  //
+                  setTimeout(() => {
+                    window.location.href = "person.php";
+                  }, 500);
+                } else {
+                  this.$q.notify({
+                    message: "Cannot Inserted!!!",
+                    type: "negative",
+                    position: "top-right",
+                  });
+                  this.$q.notify({
+                    message: res.data.err,
+                    type: "negative",
+                    position: "top-right",
+                  });
+                }
               });
           }
         },

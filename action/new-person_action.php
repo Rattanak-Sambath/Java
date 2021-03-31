@@ -33,18 +33,6 @@ if ($received_data->action == 'addNewPerson') {
     );
   }
 
-
-
-  // $data = array(
-  //   'status' => 'cannot inserted',
-  //   'homeId' => $homeId,
-  //   'name' => $name,
-  //   'latin' => $latin,
-  //   'gender' => $gender,
-  //   'phone' => $phone,
-  // );
-
-
   // echo
   echo json_encode($data);
 }

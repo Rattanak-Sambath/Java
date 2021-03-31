@@ -88,10 +88,10 @@ include 'session/check_if_no_session.php';
                     <q-card bordered flat class="my-card">
                       <div>
                         <!-- name -->
-                        <q-card-section class="bg-positive">
-                          <q-btn flat :label="person.id">
+                        <q-card-section :class="unit.ele>1?'bg-positive':'bg-negative'">
+                          <q-btn flat :label="person.name">
                             <q-tooltip content-class="bg-primary" content-style="font-size: 16px" :offset="[10, 10]" anchor="center right" self="center start">
-                              Home08
+                              {{ person.homeName }}
                             </q-tooltip>
                           </q-btn>
                         </q-card-section>
@@ -129,7 +129,7 @@ include 'session/check_if_no_session.php';
                           <q-separator></q-separator>
 
                           <!-- eletronic finish -->
-                          <div class="text-bold">
+                          <div v-show="unit.ele>1?true:false" class="text-bold">
                             Eletronic (
                             <q-badge color="amber" class="text-black text-bold">
                               {{ unit.ele }}
@@ -178,7 +178,7 @@ include 'session/check_if_no_session.php';
                           <q-separator></q-separator>
 
                           <!-- water finish -->
-                          <div class="text-bold">
+                          <div v-show="unit.water>1?true:false" class="text-bold">
                             Water (
                             <q-badge color="amber" class="text-black text-bold">
                               {{ unit.water }}
@@ -197,7 +197,7 @@ include 'session/check_if_no_session.php';
                           <div class="text-bold">
                             Phone :
                             <q-badge>
-                              {{ test }}
+                              {{ person.phone }}
                             </q-badge>
                           </div>
 
@@ -208,7 +208,7 @@ include 'session/check_if_no_session.php';
                         <q-card-section align="right">
 
                           <div>
-                            <q-btn color="primary" label="Update" dense></q-btn>
+                            <q-btn @click="updateInvoice(person.id)" color="primary" label="Update" dense></q-btn>
                           </div>
                         </q-card-section>
                       </div>
@@ -258,8 +258,8 @@ include 'session/check_if_no_session.php';
           ],
           persons: [],
           unit: {
-            ele: 2000,
-            water: 1000,
+            ele: 1,
+            water: 1,
           },
           test: "Test"
         };
@@ -303,9 +303,11 @@ include 'session/check_if_no_session.php';
           }
           // 
           this.getAllInvoices(this.month, this.year)
+          this.getUnitPrice(this.month, this.year)
         },
         searchInvoice() {
           this.getAllInvoices(this.month, this.year);
+          this.getUnitPrice(this.month, this.year);
 
         },
         getAllInvoices(month, year) {
@@ -319,6 +321,29 @@ include 'session/check_if_no_session.php';
             console.log(res.data);
             this.persons = res.data
           })
+        },
+        updateInvoice(id) {
+          console.log(id);
+        },
+        getUnitPrice(month, year) {
+          // 
+          axios.post("action/index_action.php", {
+            action: 'getUnitPrice',
+            month: month,
+            year: year,
+          }).then(res => {
+            console.log("Price", res.data);
+            if (res.data == 'no data') {
+              this.unit.ele = 1
+              this.unit.water = 1
+
+            } else {
+              this.unit.ele = res.data.ele;
+              this.unit.water = res.data.water;
+            }
+          })
+
+
         }
       },
     });
