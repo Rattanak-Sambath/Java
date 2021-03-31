@@ -52,17 +52,17 @@ include 'session/check_if_no_session.php';
             <div>
               <q-card-section>
                 <!-- name -->
-                <div class="q-pa-sm" style="max-width: 600px;">
+                <div class="q-pa-sm">
                   <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
                 </div>
 
                 <!-- latin -->
-                <div class="q-pa-sm" style="max-width: 600px;">
+                <div class="q-pa-sm">
                   <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
                 </div>
 
                 <!-- description -->
-                <div class="q-pa-sm" style="max-width: 600px;">
+                <div class="q-pa-sm">
                   <q-input v-model="form.description" label="Description" outlined autogrow />
                 </div>
                 <!-- btn -->

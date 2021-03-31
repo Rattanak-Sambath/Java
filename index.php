@@ -88,8 +88,12 @@ include 'session/check_if_no_session.php';
                     <q-card bordered flat class="my-card">
                       <div>
                         <!-- name -->
-                        <q-card-section class="text-h5 row bg-positive">
-                          {{ person.name }}
+                        <q-card-section class="bg-positive">
+                          <q-btn flat :label="person.name">
+                            <q-tooltip content-class="bg-primary" content-style="font-size: 16px" :offset="[10, 10]" anchor="center right" self="center start">
+                              Home08
+                            </q-tooltip>
+                          </q-btn>
                         </q-card-section>
                       </div>
                       <div>
