@@ -103,33 +103,31 @@ include 'session/check_if_no_session.php';
                         <q-card-section>
                           <!-- eletronic -->
                           <div class="text-bold">
-                            Eletronic Old :
+                            Eletronic :
                             <q-badge color="red" class="text-white text-bold">
                               {{ person.ele_old }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                Old
+                              </q-tooltip>
                             </q-badge>
-                          </div>
-                          <div class="text-bold">
-                            Eletronic New :
-                            <q-badge color="red" class="text-white text-bold">
+                            -
+                            <q-badge color="blue" class="text-white text-bold">
                               {{ person.ele_new }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                New
+                              </q-tooltip>
+                            </q-badge>
+                            :
+                            <q-badge color="green" class="text-white text-bold">
+                              {{ person.ele_new - person.ele_old }}
+                              <q-tooltip content-class="bg-primary text-bold" anchor="top middle" self="center middle">
+                                Total
+                              </q-tooltip>
                             </q-badge>
                           </div>
-                          <!-- water -->
-                          <div class="text-bold">
-                            Water Old :
-                            <q-badge color="blue" class="text-white text-bold">
-                              {{ person.water_old }}
-                            </q-badge>
-                          </div>
-                          <div class="text-bold">
-                            Water New :
-                            <q-badge color="blue" class="text-white text-bold">
-                              {{ person.water_new }}
-                            </q-badge>
-                          </div>
-                          <div>
-                            <q-separator />
-                          </div>
+
+                          <q-separator></q-separator>
+
                           <!-- eletronic finish -->
                           <div class="text-bold">
                             Eletronic (
@@ -137,10 +135,48 @@ include 'session/check_if_no_session.php';
                               {{ unit.ele }}
                             </q-badge>
                             R ) :
+                            <q-badge color="green" class="text-white text-bold">
+                              {{ (person.ele_new - person.ele_old) * unit.ele }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                Money
+                              </q-tooltip>
+                            </q-badge> R
+                          </div>
+
+
+                          <q-separator></q-separator>
+
+
+
+                          <!-- water -->
+                          <div class="text-bold">
+                            Water :
                             <q-badge color="red" class="text-white text-bold">
-                              {{ person.ele_new - person.ele_old }}
+                              {{ person.water_old }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                Old
+                              </q-tooltip>
+                            </q-badge>
+                            -
+                            <q-badge color="blue" class="text-white text-bold">
+                              {{ person.water_new }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                New
+                              </q-tooltip>
+                            </q-badge>
+                            :
+                            <q-badge color="green" class="text-white text-bold">
+                              {{ person.water_new - person.water_old }}
+                              <q-tooltip content-class="bg-primary text-bold" anchor="top middle" self="center middle">
+                                Total
+                              </q-tooltip>
                             </q-badge>
                           </div>
+
+
+
+                          <q-separator></q-separator>
+
                           <!-- water finish -->
                           <div class="text-bold">
                             Water (
@@ -148,26 +184,24 @@ include 'session/check_if_no_session.php';
                               {{ unit.water }}
                             </q-badge>
                             R ) :
-                            <q-badge color="blue" class="text-white text-bold">
-                              {{ person.water_new - person.water_old }}
+                            <q-badge color="green" class="text-white text-bold">
+                              {{ (person.water_new - person.water_old) * unit.water }}
+                              <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
+                                Money
+                              </q-tooltip>
+                            </q-badge> R
+                          </div>
+
+                          <q-separator></q-separator>
+
+                          <div class="text-bold">
+                            Phone :
+                            <q-badge>
+                              {{ person.phone }}
                             </q-badge>
                           </div>
-                          <div>
-                            <q-separator />
-                          </div>
-                          <!-- money -->
-                          <div class="text-bold">
-                            Eletronic :
-                            <q-badge color="green" class="text-white text-bold">
-                              {{ (person.ele_new - person.ele_old)*unit.ele }}
-                            </q-badge> R
-                          </div>
-                          <div class="text-bold">
-                            Water :
-                            <q-badge color="green" class="text-white text-bold">
-                              {{ (person.water_new - person.water_old) * unit.ele }}
-                            </q-badge> R
-                          </div>
+
+
 
                         </q-card-section>
                       </div>
@@ -191,8 +225,143 @@ include 'session/check_if_no_session.php';
   <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
-  <script src="./js/index.js"></script>
+  <script>
+    var app = new Vue({
+      el: "#q-app",
+      name: "ex",
+      data: function() {
+        return {
+          year: null,
+          years: [],
+          checkboxText: false,
+          month: "",
+          months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ],
+          persons: [{
+              homeName: "កុដិលេខ០៨",
+              name: "Vann Sopeha",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+            {
+              homeName: "កុដិលេខ០៨",
+              name: "San Saren",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+            {
+              homeName: "កុដិលេខ០៨",
+              name: "Vann Sopeha",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+            {
+              homeName: "កុដិលេខ០៨",
+              name: "San Saren",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+            {
+              homeName: "កុដិលេខ០៨",
+              name: "Vann Sopeha",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+            {
+              homeName: "កុដិលេខ០៨",
+              name: "San Saren",
+              gender: "Male",
+              ele_old: 10,
+              ele_new: 15,
+              water_old: 5,
+              water_new: 8,
+              phone: "081622161",
+            },
+          ],
+          unit: {
+            ele: 2000,
+            water: 1000,
+          },
+        };
+      },
+      created() {
+        this.generateYear();
+        console.log("Hello");
+      },
+      methods: {
+        goPerson() {
+          window.location.href = "person.php";
+        },
+        goIndex() {
+          window.location.href = "index.php";
+        },
+        goHome() {
+          window.location.href = "home.php";
+        },
 
+        onLogout() {
+          axios
+            .post("action/index_action.php", {
+              action: "logout",
+            })
+            .then((res) => {
+              if (res.data.status == "logout") {
+                window.location.href = "login.php";
+              }
+            });
+        },
+        generateYear() {
+          //
+          console.log(this.months[new Date().getMonth()]);
+          this.month = this.months[new Date().getMonth()];
+          //
+          this.year = new Date().getFullYear();
+          this.years = [];
+          thisYear = new Date().getFullYear();
+          for (i = 0; i < 5; i++) {
+            this.years.push(thisYear);
+            thisYear += 1;
+          }
+        },
+        getAllMonths() {
+          console.log(this.month, this.year);
+          console.log(this.persons);
+        },
+      },
+    });
+  </script>
 </body>
 
 </html>
