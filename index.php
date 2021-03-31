@@ -27,6 +27,7 @@ include 'session/check_if_no_session.php';
             <q-btn disabled label="Ele-Water" flat color="white" @click="goIndex()"></q-btn>
             <q-btn label="Person" flat color="white" @click="goPerson()"></q-btn>
             <q-btn label="Home" flat color="white" @click="goHome()"></q-btn>
+            <q-btn label="Unit_Price" flat color="white" @click="goUnitPrice()"></q-btn>
 
           </q-toolbar-title>
           <!-- right side -->
@@ -68,6 +69,11 @@ include 'session/check_if_no_session.php';
                 <!-- btn search -->
                 <div class="q-pa-sm">
                   <q-btn label="Search" color="primary" @click="searchInvoice()" />
+                </div>
+
+                <!-- add invoice -->
+                <div class="q-pa-sm">
+                  <q-btn label="Add_Invoice" color="positive" />
                 </div>
 
 
@@ -277,6 +283,9 @@ include 'session/check_if_no_session.php';
         },
         goHome() {
           window.location.href = "home.php";
+        },
+        goUnitPrice() {
+          window.location.href = "unit-price.php";
         },
 
         onLogout() {
