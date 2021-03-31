@@ -67,7 +67,7 @@ include 'session/check_if_no_session.php';
 
                 <!-- btn search -->
                 <div class="q-pa-sm">
-                  <q-btn label="Search" color="primary" @click="getAllMonths()" />
+                  <q-btn label="Search" color="primary" @click="searchInvoice()" />
                 </div>
 
 
@@ -89,7 +89,7 @@ include 'session/check_if_no_session.php';
                       <div>
                         <!-- name -->
                         <q-card-section class="bg-positive">
-                          <q-btn flat :label="person.name">
+                          <q-btn flat :label="person.id">
                             <q-tooltip content-class="bg-primary" content-style="font-size: 16px" :offset="[10, 10]" anchor="center right" self="center start">
                               Home08
                             </q-tooltip>
@@ -197,12 +197,19 @@ include 'session/check_if_no_session.php';
                           <div class="text-bold">
                             Phone :
                             <q-badge>
-                              {{ person.phone }}
+                              {{ test }}
                             </q-badge>
                           </div>
 
 
+                          <q-separator></q-separator>
+                        </q-card-section>
 
+                        <q-card-section align="right">
+
+                          <div>
+                            <q-btn color="primary" label="Update" dense></q-btn>
+                          </div>
                         </q-card-section>
                       </div>
 
@@ -249,76 +256,17 @@ include 'session/check_if_no_session.php';
             "November",
             "December",
           ],
-          persons: [{
-              homeName: "កុដិលេខ០៨",
-              name: "Vann Sopeha",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-            {
-              homeName: "កុដិលេខ០៨",
-              name: "San Saren",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-            {
-              homeName: "កុដិលេខ០៨",
-              name: "Vann Sopeha",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-            {
-              homeName: "កុដិលេខ០៨",
-              name: "San Saren",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-            {
-              homeName: "កុដិលេខ០៨",
-              name: "Vann Sopeha",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-            {
-              homeName: "កុដិលេខ០៨",
-              name: "San Saren",
-              gender: "Male",
-              ele_old: 10,
-              ele_new: 15,
-              water_old: 5,
-              water_new: 8,
-              phone: "081622161",
-            },
-          ],
+          persons: [],
           unit: {
             ele: 2000,
             water: 1000,
           },
+          test: "Test"
         };
       },
       created() {
         this.generateYear();
-        console.log("Hello");
+
       },
       methods: {
         goPerson() {
@@ -333,7 +281,7 @@ include 'session/check_if_no_session.php';
 
         onLogout() {
           axios
-            .post("action/index_action.php", {
+            .post("action/logout_action.php", {
               action: "logout",
             })
             .then((res) => {
@@ -344,7 +292,6 @@ include 'session/check_if_no_session.php';
         },
         generateYear() {
           //
-          console.log(this.months[new Date().getMonth()]);
           this.month = this.months[new Date().getMonth()];
           //
           this.year = new Date().getFullYear();
@@ -354,11 +301,25 @@ include 'session/check_if_no_session.php';
             this.years.push(thisYear);
             thisYear += 1;
           }
+          // 
+          this.getAllInvoices(this.month, this.year)
         },
-        getAllMonths() {
-          console.log(this.month, this.year);
-          console.log(this.persons);
+        searchInvoice() {
+          this.getAllInvoices(this.month, this.year);
+
         },
+        getAllInvoices(month, year) {
+          console.log(month, year);
+          // 
+          axios.post("action/index_action.php", {
+            action: "getInvoice",
+            month: month,
+            year: year,
+          }).then(res => {
+            console.log(res.data);
+            this.persons = res.data
+          })
+        }
       },
     });
   </script>

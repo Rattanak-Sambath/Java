@@ -165,7 +165,7 @@ include 'session/check_if_no_session.php';
         },
         onLogout() {
           axios
-            .post("action/index_action.php", {
+            .post("action/logout_action.php", {
               action: "logout",
             })
             .then((res) => {
