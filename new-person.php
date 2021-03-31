@@ -43,7 +43,7 @@ include 'session/check_if_no_session.php';
           <q-card flat bordered class="my-card">
             <div>
               <q-card-section class="text-h5">
-                New Home
+                New Person
               </q-card-section>
             </div>
             <div>
