@@ -109,7 +109,7 @@ include 'session/check_if_no_session.php';
                         <q-card-section>
                           <!-- eletronic -->
                           <div class="text-bold">
-                            Eletronic :
+                            ចំនួនប្រើប្រាស់ភ្លើង :
                             <q-badge color="red" class="text-white text-bold">
                               {{ person.ele_old }}
                               <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
@@ -136,7 +136,7 @@ include 'session/check_if_no_session.php';
 
                           <!-- eletronic finish -->
                           <div v-show="unit.ele>1?true:false" class="text-bold">
-                            Eletronic (
+                            តម្លៃភ្លើង (
                             <q-badge color="amber" class="text-black text-bold">
                               {{ unit.ele }}
                             </q-badge>
@@ -156,7 +156,7 @@ include 'session/check_if_no_session.php';
 
                           <!-- water -->
                           <div class="text-bold">
-                            Water :
+                            ចំនួនប្រើប្រាស់ទឹក :
                             <q-badge color="red" class="text-white text-bold">
                               {{ person.water_old }}
                               <q-tooltip content-class="bg-amber text-black text-bold" anchor="top middle" self="center middle">
@@ -185,7 +185,7 @@ include 'session/check_if_no_session.php';
 
                           <!-- water finish -->
                           <div v-show="unit.water>1?true:false" class="text-bold">
-                            Water (
+                            តម្លៃទឹក (
                             <q-badge color="amber" class="text-black text-bold">
                               {{ unit.water }}
                             </q-badge>
