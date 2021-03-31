@@ -208,7 +208,7 @@ include 'session/check_if_no_session.php';
         },
         onEdit(id) {
           console.log(id);
-          window.location.href = "edit-home.php?id=" + id;
+          window.location.href = "edit-person.php?id=" + id;
         },
       },
     });
