@@ -73,7 +73,7 @@ include 'session/check_if_no_session.php';
 
                 <!-- add invoice -->
                 <div class="q-pa-sm">
-                  <q-btn label="Add_Invoice" color="positive" />
+                  <q-btn label="Add_Invoice" color="positive" @click="goNewInvoice()" />
                 </div>
 
 
@@ -286,6 +286,9 @@ include 'session/check_if_no_session.php';
         },
         goUnitPrice() {
           window.location.href = "unit-price.php";
+        },
+        goNewInvoice() {
+          window.location.href = "new-invoice.php";
         },
 
         onLogout() {
