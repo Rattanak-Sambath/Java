@@ -69,11 +69,6 @@ include 'session/check_if_no_session.php';
                 </div>
 
 
-
-
-
-
-
                 <!-- select person -->
                 <div class="q-pa-sm">
                   <q-select @input="getSomeInvoices(form.personId)" ref="person" outlined v-model="form.personId" options-dense :options="persons" label="Person" map-options emit-value option-label="name" option-value="id" :rules="[val => !!val || 'Person is required']" />
@@ -104,11 +99,17 @@ include 'session/check_if_no_session.php';
                 </div>
 
 
+
+
+              </q-card-section>
+
+              <q-separator></q-separator>
+
+              <q-card-section align="right">
                 <!-- btn -->
                 <div class="q-pa-sm">
                   <q-btn label="Add" color="positive" @click="onSubmit()" />
                 </div>
-
               </q-card-section>
 
               <q-separator></q-separator>
