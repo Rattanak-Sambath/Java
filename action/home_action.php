@@ -6,9 +6,9 @@ include '../connection/db.php';
 // 
 if ($received_data->action == 'getTblHome') {
   // sql
-  $query = "select * from tbl_home ORDER BY latin ASC";
-  // execure query
-  $result = mysqli_query($conn, $query);
+  $sql = "select * from tbl_home ORDER BY latin ASC";
+  // execure sql
+  $result = mysqli_query($conn, $sql);
 
   while ($row = $result->fetch_array()) {
     $data[] = $row;

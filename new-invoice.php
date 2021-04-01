@@ -46,31 +46,62 @@ include 'session/check_if_no_session.php';
                 New Invoice
               </q-card-section>
             </div>
-            <div>
-              <q-separator />
-            </div>
+
+            <q-separator></q-separator>
+
             <!--  -->
             <div>
 
               <q-card-section>
 
-                <!-- year -->
-                <div class="q-pa-sm">
-                  <q-input ref="year" v-model="form.year" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
+
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+
+                  <!-- year -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="year" v-model="form.year" @input="getIdPersonInInvoice(form.month,form.year)" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
+                  </div>
+
+                  <!-- select month -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-select ref="month" outlined v-model="form.month" @input="getIdPersonInInvoice(form.month,form.year)" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
+                  </div>
                 </div>
 
-                <!-- select month -->
+
+
+
+
+
+
+                <!-- select person -->
                 <div class="q-pa-sm">
-                  <q-select ref="month" outlined v-model="form.month" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
+                  <q-select @input="getSomeInvoices(form.personId)" ref="person" outlined v-model="form.personId" options-dense :options="persons" label="Person" map-options emit-value option-label="name" option-value="id" :rules="[val => !!val || 'Person is required']" />
                 </div>
 
+                <!-- eletronic -->
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Eletronic Old" outlined :rules="[val => !!val || 'Eletronic old is required']"></q-input>
+                  </div>
 
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Eletronic New" outlined :rules="[val => !!val || 'Eletronic new is required', val => val >= form.eleOld || 'Eletronic New must bigger than Eletronic Old']"></q-input>
+                  </div>
+                </div>
 
-                <!-- phone -->
-                <!-- <div class="q-pa-sm">
-                  <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
-                </div> -->
+                <!-- water -->
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="waterOld" type="number" v-model.number="form.waterOld" label="Water Old" outlined :rules="[val => !!val || 'Water old is required']"></q-input>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="waterNew" type="number" v-model.number="form.waterNew" label="Water New" outlined :rules="[val => !!val || 'Water new is required', val => val >= form.waterOld || 'Water New must bigger than Water Old']"></q-input>
+                  </div>
+                </div>
 
 
                 <!-- btn -->
@@ -79,6 +110,38 @@ include 'session/check_if_no_session.php';
                 </div>
 
               </q-card-section>
+
+              <q-separator></q-separator>
+
+              <q-card-section>
+                <q-table flat :columns="columns" :data="invoices">
+                  <!-- index -->
+                  <template slot="body-cell-index" slot-scope="props" :props="props.row">
+                    <q-td>
+                      {{ props.pageIndex + 1 }}
+                    </q-td>
+                  </template>
+                  <!-- eletronic new -->
+                  <template slot="body-cell-ele_new" slot-scope="props" :props="props.row">
+                    <q-td>
+                      <q-badge color="red" class="text-bold">
+                        {{ props.row.ele_new }}
+                      </q-badge>
+                    </q-td>
+                  </template>
+                  <!-- water new -->
+                  <template slot="body-cell-water_new" slot-scope="props" :props="props.row">
+                    <q-td>
+                      <q-badge color="blue" class="text-bold">
+                        {{ props.row.water_new }}
+                      </q-badge>
+                    </q-td>
+                  </template>
+
+                </q-table>
+              </q-card-section>
+
+
             </div>
           </q-card>
 
@@ -94,7 +157,7 @@ include 'session/check_if_no_session.php';
   <script>
     var app = new Vue({
       el: "#q-app",
-      name: "new-person",
+      name: "new-invoice",
       data: function() {
         return {
           notInId: "",
@@ -102,11 +165,54 @@ include 'session/check_if_no_session.php';
             year: null,
             month: "",
             personId: "",
+            eleOld: null,
+            eleNew: null,
+            waterOld: null,
+            waterNew: null,
           },
-          options: {
-            gender: ["Male", "Female"],
-            home: [],
-          },
+          persons: [],
+          invoices: [],
+          columns: [{
+            name: "index",
+            label: "No",
+            align: "left",
+          }, {
+            name: 'month',
+            label: 'Month',
+            align: 'left',
+            field: row => row.month,
+
+          }, {
+            name: 'year',
+            label: 'Year',
+            align: 'left',
+            field: row => row.year,
+
+          }, {
+            name: 'ele_old',
+            label: 'Eletronic Old',
+            align: 'left',
+            field: row => row.ele_old,
+
+          }, {
+            name: 'ele_new',
+            label: 'Eletronic New',
+            align: 'left',
+            field: row => row.ele_new,
+
+          }, {
+            name: 'water_old',
+            label: 'Water Old',
+            align: 'left',
+            field: row => row.water_old,
+
+          }, {
+            name: 'water_new',
+            label: 'Water New',
+            align: 'left',
+            field: row => row.water_new,
+
+          }, ],
           months: [
             "January",
             "February",
@@ -128,59 +234,71 @@ include 'session/check_if_no_session.php';
         this.generateMonthAndYear()
       },
       methods: {
+        testInput(month, year) {
+          console.log(month, year);
+
+        },
         onSubmit() {
-          this.$refs.homeId.validate();
-          this.$refs.name.validate();
-          this.$refs.latin.validate();
-          this.$refs.gender.validate();
-          this.$refs.phone.validate();
+          this.$refs.year.validate();
+          this.$refs.month.validate();
+          this.$refs.person.validate();
+          this.$refs.eleOld.validate();
+          this.$refs.eleNew.validate();
+          this.$refs.waterOld.validate();
+          this.$refs.waterNew.validate();
+
 
           if (
-            this.$refs.name.hasError ||
-            this.$refs.latin.hasError ||
-            this.$refs.homeId.hasError ||
-            this.$refs.gender.hasError ||
-            this.$refs.phone.hasError
+            this.$refs.year.hasError ||
+            this.$refs.month.hasError ||
+            this.$refs.person.hasError ||
+            this.$refs.eleOld.hasError ||
+            this.$refs.eleNew.hasError ||
+            this.$refs.waterOld.hasError ||
+            this.$refs.waterNew.hasError
           ) {
             // check when value null
           } else {
-            // console.log(this.form);
-            axios
-              .post("action/new-person_action.php", {
-                action: "addNewPerson",
-                homeId: this.form.homeId,
-                name: this.form.name,
-                latin: this.form.latin,
-                gender: this.form.gender,
-                phone: this.form.phone,
-                created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-              })
-              .then((res) => {
-                console.log(res.data);
-                if (res.data.status == "inserted") {
-                  this.$q.notify({
-                    message: "Inserted successfully",
-                    type: "positive",
-                    position: "top-right",
-                  });
-                  //
-                  setTimeout(() => {
-                    window.location.href = "person.php";
-                  }, 500);
-                } else {
-                  this.$q.notify({
-                    message: "Cannot Inserted!!!",
-                    type: "negative",
-                    position: "top-right",
-                  });
-                  this.$q.notify({
-                    message: res.data.err,
-                    type: "negative",
-                    position: "top-right",
-                  });
-                }
-              });
+            console.log(this.form);
+            // 
+            axios.post("action/new-invoice_action.php", {
+              action: "addNewInvoice",
+              personId: this.form.personId,
+              month: this.form.month,
+              year: this.form.year,
+              eleOld: this.form.eleOld,
+              eleNew: this.form.eleNew,
+              waterOld: this.form.waterOld,
+              waterNew: this.form.waterNew,
+              created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+              updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+
+            }).then(res => {
+
+              console.log(res.data);
+              if (res.data.status == "inserted") {
+                this.$q.notify({
+                  message: "Inserted successfully",
+                  type: "positive",
+                  position: "top-right",
+                });
+                //
+                setTimeout(() => {
+                  window.location.href = "index.php";
+                }, 500);
+              } else {
+                this.$q.notify({
+                  message: "Cannot Inserted!!!",
+                  type: "negative",
+                  position: "top-right",
+                });
+                this.$q.notify({
+                  message: res.data.err,
+                  type: "negative",
+                  position: "top-right",
+                });
+              }
+            })
           }
         },
         goPerson() {
@@ -206,15 +324,23 @@ include 'session/check_if_no_session.php';
         convertDate(d) {
           return dayjs(d).format("YYYY-MM-DD");
         },
-        getPersonFilterNotIn(id) {
-          // axios
-          //   .post("action/new-invoice_action.php", {
-          //     action: "getPerson",
-          //   })
-          //   .then((res) => {
-          //     this.options.home = res.data;
-          //   });
-          console.log(id);
+        getPersonFilterNotIn(objId) {
+          axios
+            .post("action/new-invoice_action.php", {
+              action: "getPersonFilterNotIn",
+              objId: objId,
+            })
+            .then((res) => {
+              this.form.personId = ""
+              this.persons = []
+              // console.log(res.data);
+              if (res.data.length > 0) {
+                this.persons = res.data
+              }
+
+
+            });
+
         },
         generateMonthAndYear() {
           this.form.year = new Date().getFullYear();
@@ -224,7 +350,7 @@ include 'session/check_if_no_session.php';
           this.getIdPersonInInvoice(this.form.month, this.form.year)
         },
         getIdPersonInInvoice(month, year) {
-          console.log(month, year);
+          // console.log(month, year);
           // 
           axios
             .post("action/new-invoice_action.php", {
@@ -242,11 +368,27 @@ include 'session/check_if_no_session.php';
                   this.notInId += res.data[i].person_id + ","
                 }
               }
-              console.log(this.notInId);
+              // console.log(this.notInId);
+              // 
+              this.getPersonFilterNotIn(this.notInId)
 
             });
 
 
+        },
+        getSomeInvoices(id) {
+          console.log(id);
+          // 
+          axios.post("action/new-invoice_action.php", {
+            action: "getSomeInvoices",
+            id: id,
+          }).then(res => {
+            console.log(res.data);
+            this.invoices = []
+            if (res.data.length > 0) {
+              this.invoices = res.data
+            }
+          })
         }
       },
     });

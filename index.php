@@ -95,9 +95,9 @@ include 'session/check_if_no_session.php';
                       <div>
                         <!-- name -->
                         <q-card-section :class="unit.ele>1?'bg-positive':'bg-negative'">
-                          <q-btn flat :label="person.name">
-                            <q-tooltip content-class="bg-primary" content-style="font-size: 16px" :offset="[10, 10]" anchor="center right" self="center start">
-                              {{ person.homeName }}
+                          <q-btn flat :label="person.latin" class="text-bold" no-caps>
+                            <q-tooltip content-class="bg-primary text-bold" content-style="font-size: 16px" :offset="[10, 10]" anchor="center right" self="center start">
+                              {{ person.name }} - {{ person.homeName }}
                             </q-tooltip>
                           </q-btn>
                         </q-card-section>

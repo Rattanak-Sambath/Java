@@ -10,7 +10,7 @@ if ($received_data->action == 'getInvoice') {
   $year = $received_data->year;
   // sql
   $sql = "SELECT tbl_invoice.id, tbl_invoice.ele_old, tbl_invoice.ele_new, tbl_invoice.water_old, tbl_invoice.water_new,
-  tbl_person.latin as name, tbl_person.phone,
+  tbl_person.name, tbl_person.phone, tbl_person.latin,
   tbl_home.name as homeName
   FROM tbl_invoice
   INNER JOIN tbl_person
