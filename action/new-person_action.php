@@ -39,7 +39,7 @@ if ($received_data->action == 'addNewPerson') {
 // get home
 if ($received_data->action == "getHome") {
   // 
-  $sql = "select * from tbl_home";
+  $sql = "select * from tbl_home ORDER BY latin ASC";
   // execure query
   $result = mysqli_query($conn, $sql);
 
