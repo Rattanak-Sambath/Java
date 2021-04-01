@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Ele-Water</title>
+  <title>Eletronic-Water</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -335,7 +335,8 @@ include 'session/check_if_no_session.php';
           })
         },
         updateInvoice(id) {
-          console.log(id);
+          // console.log(id);
+          window.location.href = "edit-invoice.php?id=" + id;
         },
         getUnitPrice(month, year) {
           // 
