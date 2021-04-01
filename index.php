@@ -53,23 +53,23 @@ include 'session/check_if_no_session.php';
 
                 <!-- select year -->
                 <div v-show="!checkboxText" style="width: 200px;" class="q-pa-sm">
-                  <q-select outlined v-model="year" dense options-dense :options="years" label="Select Year" clearable />
+                  <q-select @input="searchInvoice()" outlined v-model="year" dense options-dense :options="years" label="Select Year" clearable />
                 </div>
 
                 <!-- input -->
                 <div v-show="checkboxText" style="width: 200px;" class="q-pa-sm">
-                  <q-input outlined type="number" v-model.number="year" dense label="Input Year" clearable />
+                  <q-input @input="searchInvoice()" outlined type="number" v-model.number="year" dense label="Input Year" clearable />
                 </div>
 
                 <!-- select month -->
                 <div style="width: 200px;" class="q-pa-sm">
-                  <q-select outlined v-model="month" dense options-dense :options="months" label="Select Month" clearable />
+                  <q-select @input="searchInvoice()" outlined v-model="month" dense options-dense :options="months" label="Select Month" clearable />
                 </div>
 
                 <!-- btn search -->
-                <div class="q-pa-sm">
+                <!-- <div class="q-pa-sm">
                   <q-btn label="Search" color="primary" @click="searchInvoice()" />
-                </div>
+                </div> -->
 
                 <!-- add invoice -->
                 <div class="q-pa-sm">
