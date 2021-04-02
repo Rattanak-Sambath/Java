@@ -139,7 +139,7 @@ include 'session/check_if_no_session.php';
 
             {
               name: "ele",
-              label: "Eletronic",
+              label: "Electric",
               align: "left",
             },
             {

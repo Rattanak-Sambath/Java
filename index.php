@@ -5,7 +5,7 @@ include 'session/check_if_no_session.php';
 <html>
 
 <head>
-  <title>Eletronic-Water</title>
+  <title>Electric-Water</title>
   <!-- quasar -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.min.css" rel="stylesheet" type="text/css">
@@ -107,7 +107,7 @@ include 'session/check_if_no_session.php';
                       </div>
                       <div>
                         <q-card-section>
-                          <!-- eletronic -->
+                          <!-- electric -->
                           <div class="text-bold">
                             ចំនួនប្រើប្រាស់ភ្លើង :
                             <q-badge color="red" class="text-white text-bold">
@@ -134,7 +134,7 @@ include 'session/check_if_no_session.php';
 
                           <q-separator></q-separator>
 
-                          <!-- eletronic finish -->
+                          <!-- electric finish -->
                           <div v-show="unit.ele>1?true:false" class="text-bold">
                             តម្លៃភ្លើង (
                             <q-badge color="amber" class="text-black text-bold">

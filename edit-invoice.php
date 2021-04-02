@@ -74,15 +74,15 @@ include 'session/check_if_no_session.php';
                   <q-select @input="getSomeInvoices(form.personId)" ref="person" outlined v-model="form.personId" options-dense :options="persons" label="Person" map-options emit-value option-label="name" option-value="id" :rules="[val => !!val || 'Person is required']" />
                 </div>
 
-                <!-- eletronic -->
+                <!-- electric -->
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Eletronic Old" outlined :rules="[val => !!val || 'Eletronic old is required']"></q-input>
+                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Electric Old" outlined :rules="[val => !!val || 'Electric old is required']"></q-input>
                   </div>
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Eletronic New" outlined :rules="[val => !!val || 'Eletronic new is required', val => val >= form.eleOld || 'Eletronic New must bigger than Eletronic Old']"></q-input>
+                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Electric New" outlined :rules="[val => !!val || 'Electric new is required', val => val >= form.eleOld || 'Electric New must bigger than Electric Old']"></q-input>
                   </div>
                 </div>
 
@@ -122,7 +122,7 @@ include 'session/check_if_no_session.php';
                       {{ props.pageIndex + 1 }}
                     </q-td>
                   </template>
-                  <!-- eletronic new -->
+                  <!-- electric new -->
                   <template slot="body-cell-ele_new" slot-scope="props" :props="props.row">
                     <q-td>
                       <q-badge color="red" class="text-bold">
@@ -191,13 +191,13 @@ include 'session/check_if_no_session.php';
 
           }, {
             name: 'ele_old',
-            label: 'Eletronic Old',
+            label: 'Electric Old',
             align: 'left',
             field: row => row.ele_old,
 
           }, {
             name: 'ele_new',
-            label: 'Eletronic New',
+            label: 'Electric New',
             align: 'left',
             field: row => row.ele_new,
 

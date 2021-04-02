@@ -64,9 +64,9 @@ include 'session/check_if_no_session.php';
                   <q-select readonly ref="month" outlined v-model="form.month" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
                 </div>
 
-                <!-- eletronic price -->
+                <!-- electric price -->
                 <div class="q-pa-sm">
-                  <q-input ref="ele" type="number" v-model.number="form.ele" label="Eletronic Price" outlined :rules="[val => !!val || 'Eletronic is required']" />
+                  <q-input ref="ele" type="number" v-model.number="form.ele" label="Electric Price" outlined :rules="[val => !!val || 'Electric is required']" />
                 </div>
 
                 <!-- water price -->
