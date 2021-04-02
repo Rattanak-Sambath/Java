@@ -59,30 +59,30 @@ include 'session/check_if_no_session.php';
 
                   <!-- year -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="year" v-model="form.year" @input="getIdPersonInInvoice(form.month,form.year)" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
+                    <q-input readonly ref="year" v-model="form.year" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
                   </div>
 
-                  <!-- select month -->
+                  <!-- month -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-select ref="month" outlined v-model="form.month" @input="getIdPersonInInvoice(form.month,form.year)" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
+                    <q-input readonly ref="month" outlined v-model="form.month" label="Month" :rules="[val => !!val || 'Month is required']" />
                   </div>
                 </div>
 
 
-                <!-- select person -->
+                <!-- person -->
                 <div class="q-pa-sm">
-                  <q-select @input="getSomeInvoices(form.personId)" ref="person" outlined v-model="form.personId" options-dense :options="persons" label="Person" map-options emit-value option-label="name" option-value="id" :rules="[val => !!val || 'Person is required']" />
+                  <q-input readonly ref="person" outlined v-model="form.personName" label="Person" :rules="[val => !!val || 'Person is required']" />
                 </div>
 
                 <!-- electric -->
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Electric Old" outlined :rules="[val => !!val || 'Electric old is required']"></q-input>
+                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Electric Old" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Electric old is required']"></q-input>
                   </div>
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Electric New" outlined :rules="[val => !!val || 'Electric new is required', val => val >= form.eleOld || 'Electric New must bigger than Electric Old']"></q-input>
+                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Electric New" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Electric new is required', val => val >= form.eleOld || 'Electric New must bigger than Electric Old']"></q-input>
                   </div>
                 </div>
 
@@ -90,11 +90,11 @@ include 'session/check_if_no_session.php';
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="waterOld" type="number" v-model.number="form.waterOld" label="Water Old" outlined :rules="[val => !!val || 'Water old is required']"></q-input>
+                    <q-input ref="waterOld" type="number" v-model.number="form.waterOld" label="Water Old" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Water old is required']"></q-input>
                   </div>
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="waterNew" type="number" v-model.number="form.waterNew" label="Water New" outlined :rules="[val => !!val || 'Water new is required', val => val >= form.waterOld || 'Water New must bigger than Water Old']"></q-input>
+                    <q-input ref="waterNew" type="number" v-model.number="form.waterNew" label="Water New" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Water new is required', val => val >= form.waterOld || 'Water New must bigger than Water Old']"></q-input>
                   </div>
                 </div>
 
@@ -165,13 +165,13 @@ include 'session/check_if_no_session.php';
           form: {
             year: null,
             month: "",
-            personId: "",
+            personName: "",
             eleOld: null,
             eleNew: null,
             waterOld: null,
             waterNew: null,
           },
-          persons: [],
+
           invoices: [],
           columns: [{
             name: "index",
@@ -214,31 +214,12 @@ include 'session/check_if_no_session.php';
             field: row => row.water_new,
 
           }, ],
-          months: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ],
         };
       },
       created() {
-        // this.getHome();
-        this.generateMonthAndYear()
+        this.getInvoice();
       },
       methods: {
-        testInput(month, year) {
-          console.log(month, year);
-
-        },
         onSubmit() {
           this.$refs.year.validate();
           this.$refs.month.validate();
@@ -260,45 +241,31 @@ include 'session/check_if_no_session.php';
           ) {
             // check when value null
           } else {
-            console.log(this.form);
-            // 
-            axios.post("action/new-invoice_action.php", {
-              action: "addNewInvoice",
-              personId: this.form.personId,
-              month: this.form.month,
-              year: this.form.year,
+            let uri = window.location.search.substring(1);
+            let params = new URLSearchParams(uri);
+            let id = params.get("id");
+            console.log(id);
+            //  
+            axios.post("action/edit-invoice_action.php", {
+              action: "updateInvoice",
+              id: id,
               eleOld: this.form.eleOld,
               eleNew: this.form.eleNew,
               waterOld: this.form.waterOld,
               waterNew: this.form.waterNew,
-              created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
               updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-
-            }).then(res => {
-
-              console.log(res.data);
-              if (res.data.status == "inserted") {
+            }).then((res) => {
+              if (res.data == "updated") {
                 this.$q.notify({
-                  message: "Inserted successfully",
+                  message: "Updated",
                   type: "positive",
                   position: "top-right",
                 });
-                //
                 setTimeout(() => {
                   window.location.href = "index.php";
                 }, 500);
-              } else {
-                this.$q.notify({
-                  message: "Cannot Inserted!!!",
-                  type: "negative",
-                  position: "top-right",
-                });
-                this.$q.notify({
-                  message: res.data.err,
-                  type: "negative",
-                  position: "top-right",
-                });
               }
+
             })
           }
         },
@@ -322,60 +289,45 @@ include 'session/check_if_no_session.php';
               }
             });
         },
-        convertDate(d) {
-          return dayjs(d).format("YYYY-MM-DD");
-        },
-        getPersonFilterNotIn(objId) {
-          axios
-            .post("action/new-invoice_action.php", {
-              action: "getPersonFilterNotIn",
-              objId: objId,
-            })
-            .then((res) => {
-              this.form.personId = ""
-              this.persons = []
-              // console.log(res.data);
-              if (res.data.length > 0) {
-                this.persons = res.data
-              }
+        getInvoice() {
+          let uri = window.location.search.substring(1);
+          let params = new URLSearchParams(uri);
+          let id = params.get("id");
+          console.log(id);
+          // 
+          axios.post("action/edit-invoice_action.php", {
+            action: "getInvoice",
+            id: id,
+          }).then((res) => {
+            console.log(res.data);
+            if (res.data == "no data") {
+              this.$q.notify({
+                message: "This ID not found !",
+                type: "warning",
+                position: "top-right",
+              });
+              setTimeout(() => {
+                window.location.href = "index.php";
+              }, 2000);
+            } else {
+              this.form.year = Number(res.data.year);
+              this.form.month = res.data.month;
+              this.form.personName = res.data.latin + " - " + res.data.name
+              this.form.eleOld = Number(res.data.ele_old)
+              this.form.eleNew = Number(res.data.ele_new)
+              this.form.waterOld = Number(res.data.water_old)
+              this.form.waterNew = Number(res.data.water_new)
+              // 
+              this.getSomeInvoices(res.data.person_id)
+            }
 
-
-            });
-
+          })
         },
         generateMonthAndYear() {
           this.form.year = new Date().getFullYear();
           //
           this.form.month = this.months[new Date().getMonth()];
           // 
-          this.getIdPersonInInvoice(this.form.month, this.form.year)
-        },
-        getIdPersonInInvoice(month, year) {
-          // console.log(month, year);
-          // 
-          axios
-            .post("action/new-invoice_action.php", {
-              action: "getIdPersonInInvoice",
-              month: month,
-              year: year
-            })
-            .then((res) => {
-              // console.log(res.data);
-              this.notInId = "";
-              for (let i = 0; i < res.data.length; i++) {
-                if ((i + 1) == res.data.length) {
-                  this.notInId += res.data[i].person_id;
-                } else {
-                  this.notInId += res.data[i].person_id + ","
-                }
-              }
-              // console.log(this.notInId);
-              // 
-              // this.getPersonFilterNotIn(this.notInId)
-
-            });
-
-
         },
         getSomeInvoices(id) {
           console.log(id);
