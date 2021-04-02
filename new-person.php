@@ -85,7 +85,7 @@ include 'session/check_if_no_session.php';
 
                   <!-- phone -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                    <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required',val => val.length <= 10 || 'Phone length must 10']" />
                   </div>
                 </div>
 
