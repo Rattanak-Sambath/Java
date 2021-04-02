@@ -143,12 +143,10 @@ include 'session/check_if_no_session.php';
           ) {
             // check when value null
           } else {
-            console.log(this.form);
             // 
             let uri = window.location.search.substring(1);
             let params = new URLSearchParams(uri);
             let id = params.get("id");
-            console.log(id);
             // 
             axios.post("action/edit-unit-price_action.php", {
               action: "updateUnitPrice",
@@ -206,13 +204,11 @@ include 'session/check_if_no_session.php';
           let uri = window.location.search.substring(1);
           let params = new URLSearchParams(uri);
           let id = params.get("id");
-          console.log(id);
           // 
           axios.post("action/edit-unit-price_action.php", {
             action: "getUnitPrice",
             id: id
           }).then(res => {
-            console.log(res.data);
             // 
             if (res.data == "no data") {
               this.$q.notify({

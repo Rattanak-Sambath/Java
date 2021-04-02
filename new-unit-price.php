@@ -142,7 +142,6 @@ include 'session/check_if_no_session.php';
           ) {
             // check when value null
           } else {
-            console.log(this.form);
             // 
             axios.post("action/new-unit-price_action.php", {
               action: "addNewUnitPrice",

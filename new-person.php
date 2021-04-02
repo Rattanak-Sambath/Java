@@ -138,7 +138,6 @@ include 'session/check_if_no_session.php';
           ) {
             // check when value null
           } else {
-            // console.log(this.form);
             axios
               .post("action/new-person_action.php", {
                 action: "addNewPerson",
@@ -151,7 +150,6 @@ include 'session/check_if_no_session.php';
                 updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
               })
               .then((res) => {
-                console.log(res.data);
                 if (res.data.status == "inserted") {
                   this.$q.notify({
                     message: "Inserted successfully",

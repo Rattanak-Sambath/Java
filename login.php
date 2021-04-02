@@ -82,8 +82,6 @@ include 'session/check_if_session.php';
               })
               .then((res) => {
                 if (res.data.status == "login_success") {
-                  console.log(res.data.status);
-                  console.log(res.data);
                   this.$q.notify({
                     message: "Login",
                     position: "top-right",
@@ -102,7 +100,6 @@ include 'session/check_if_session.php';
                       type: "negative",
                     });
                   }, 500);
-                  console.log(res.data.status);
                 }
               });
           }

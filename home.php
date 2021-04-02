@@ -139,7 +139,6 @@ include 'session/check_if_no_session.php';
         };
       },
       created() {
-        // console.log(dayjs().format('YYYY-MM-DD'));
         this.getAllData();
       },
       methods: {
@@ -171,7 +170,6 @@ include 'session/check_if_no_session.php';
         },
         generateYear() {
           //
-          console.log(this.months[new Date().getMonth()]);
           this.month = this.months[new Date().getMonth()];
           //
           this.year = new Date().getFullYear();
@@ -188,22 +186,13 @@ include 'session/check_if_no_session.php';
               action: "getTblHome",
             })
             .then((res) => {
-              console.log(res.data);
               this.data = res.data;
             });
-        },
-        testGet(a) {
-          console.log(a);
-          let uri = window.location.search.substring(1);
-          let params = new URLSearchParams(uri);
-          let id = params.get("id");
-          // console.log(id);
         },
         convertDate(d) {
           return dayjs(d).format("YYYY-MM-DD");
         },
         onEdit(id) {
-          console.log(id);
           window.location.href = "edit-home.php?id=" + id;
         },
       },

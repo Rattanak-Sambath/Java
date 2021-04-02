@@ -323,19 +323,16 @@ include 'session/check_if_no_session.php';
 
         },
         getAllInvoices(month, year) {
-          console.log(month, year);
           // 
           axios.post("action/index_action.php", {
             action: "getInvoice",
             month: month,
             year: year,
           }).then(res => {
-            console.log(res.data);
             this.persons = res.data
           })
         },
         updateInvoice(id) {
-          // console.log(id);
           window.location.href = "edit-invoice.php?id=" + id;
         },
         getUnitPrice(month, year) {
@@ -345,7 +342,6 @@ include 'session/check_if_no_session.php';
             month: month,
             year: year,
           }).then(res => {
-            console.log("Price", res.data);
             if (res.data == 'no data') {
               this.unit.ele = 1
               this.unit.water = 1

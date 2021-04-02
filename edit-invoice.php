@@ -245,7 +245,6 @@ include 'session/check_if_no_session.php';
             let uri = window.location.search.substring(1);
             let params = new URLSearchParams(uri);
             let id = params.get("id");
-            console.log(id);
             //  
             axios.post("action/edit-invoice_action.php", {
               action: "updateInvoice",
@@ -297,13 +296,11 @@ include 'session/check_if_no_session.php';
           let uri = window.location.search.substring(1);
           let params = new URLSearchParams(uri);
           let id = params.get("id");
-          console.log(id);
           // 
           axios.post("action/edit-invoice_action.php", {
             action: "getInvoice",
             id: id,
           }).then((res) => {
-            console.log(res.data);
             if (res.data == "no data") {
               this.$q.notify({
                 message: "This ID not found !",
@@ -334,13 +331,11 @@ include 'session/check_if_no_session.php';
           // 
         },
         getSomeInvoices(id) {
-          console.log(id);
           // 
           axios.post("action/new-invoice_action.php", {
             action: "getSomeInvoices",
             id: id,
           }).then(res => {
-            console.log(res.data);
             this.invoices = []
             if (res.data.length > 0) {
               this.invoices = res.data

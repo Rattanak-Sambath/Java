@@ -107,7 +107,7 @@ include 'session/check_if_no_session.php';
           if (this.$refs.name.hasError || this.$refs.latin.hasError) {
             // check when value null
           } else {
-            console.log(dayjs().format("YYYY-MM-DD HH:mm:ss"));
+            // 
             axios
               .post("action/new-home_action.php", {
                 action: "addNewHome",
@@ -118,7 +118,6 @@ include 'session/check_if_no_session.php';
                 updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
               })
               .then((res) => {
-                console.log(res.data);
                 if (res.data.status == "inserted") {
                   this.$q.notify({
                     message: "Inserted successfully",

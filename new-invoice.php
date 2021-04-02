@@ -236,10 +236,6 @@ include 'session/check_if_no_session.php';
         this.generateMonthAndYear()
       },
       methods: {
-        testInput(month, year) {
-          console.log(month, year);
-
-        },
         onSubmit() {
           this.$refs.year.validate();
           this.$refs.month.validate();
@@ -261,7 +257,6 @@ include 'session/check_if_no_session.php';
           ) {
             // check when value null
           } else {
-            console.log(this.form);
             // 
             axios.post("action/new-invoice_action.php", {
               action: "addNewInvoice",
@@ -277,7 +272,6 @@ include 'session/check_if_no_session.php';
 
             }).then(res => {
 
-              console.log(res.data);
               if (res.data.status == "inserted") {
                 this.$q.notify({
                   message: "Inserted successfully",
@@ -338,7 +332,6 @@ include 'session/check_if_no_session.php';
             .then((res) => {
               this.form.personId = ""
               this.persons = []
-              // console.log(res.data);
               if (res.data.length > 0) {
                 this.persons = res.data
               }
@@ -355,7 +348,6 @@ include 'session/check_if_no_session.php';
           this.getIdPersonInInvoice(this.form.month, this.form.year)
         },
         getIdPersonInInvoice(month, year) {
-          // console.log(month, year);
           // 
           axios
             .post("action/new-invoice_action.php", {
@@ -364,7 +356,6 @@ include 'session/check_if_no_session.php';
               year: year
             })
             .then((res) => {
-              // console.log(res.data);
               this.notInId = "";
               for (let i = 0; i < res.data.length; i++) {
                 if ((i + 1) == res.data.length) {
@@ -373,7 +364,6 @@ include 'session/check_if_no_session.php';
                   this.notInId += res.data[i].person_id + ","
                 }
               }
-              // console.log(this.notInId);
               // 
               this.getPersonFilterNotIn(this.notInId)
 
@@ -382,13 +372,11 @@ include 'session/check_if_no_session.php';
 
         },
         getSomeInvoices(id) {
-          console.log(id);
           // 
           axios.post("action/new-invoice_action.php", {
             action: "getSomeInvoices",
             id: id,
           }).then(res => {
-            console.log(res.data);
             this.invoices = []
             if (res.data.length > 0) {
               this.invoices = res.data

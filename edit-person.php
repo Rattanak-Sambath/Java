@@ -143,7 +143,6 @@ include 'session/check_if_no_session.php';
             let uri = window.location.search.substring(1);
             let params = new URLSearchParams(uri);
             let id = params.get("id");
-            console.log(id);
             // 
             axios
               .post("action/edit-person_action.php", {
@@ -206,7 +205,6 @@ include 'session/check_if_no_session.php';
           let uri = window.location.search.substring(1);
           let params = new URLSearchParams(uri);
           let id = params.get("id");
-          console.log(id);
           //
           axios
             .post("action/edit-person_action.php", {
@@ -214,7 +212,6 @@ include 'session/check_if_no_session.php';
               id: id,
             })
             .then((res) => {
-              console.log(res.data);
               if (res.data == "no data") {
                 this.$q.notify({
                   message: "This ID not found !",
