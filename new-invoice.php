@@ -78,11 +78,11 @@ include 'session/check_if_no_session.php';
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Electric Old" outlined :rules="[val => !!val || 'Electric old is required']"></q-input>
+                    <q-input ref="eleOld" type="number" v-model.number="form.eleOld" label="Electric Old" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Electric old is required']"></q-input>
                   </div>
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Electric New" outlined :rules="[val => !!val || 'Electric new is required', val => val >= form.eleOld || 'Electric New must bigger than Electric Old']"></q-input>
+                    <q-input ref="eleNew" type="number" v-model.number="form.eleNew" label="Electric New" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Electric new is required', val => val >= form.eleOld || 'Electric New must bigger than Electric Old']"></q-input>
                   </div>
                 </div>
 
@@ -90,11 +90,11 @@ include 'session/check_if_no_session.php';
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="waterOld" type="number" v-model.number="form.waterOld" label="Water Old" outlined :rules="[val => !!val || 'Water old is required']"></q-input>
+                    <q-input ref="waterOld" type="number" v-model.number="form.waterOld" label="Water Old" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Water old is required']"></q-input>
                   </div>
 
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="waterNew" type="number" v-model.number="form.waterNew" label="Water New" outlined :rules="[val => !!val || 'Water new is required', val => val >= form.waterOld || 'Water New must bigger than Water Old']"></q-input>
+                    <q-input ref="waterNew" type="number" v-model.number="form.waterNew" label="Water New" outlined :rules="[val => val !== null && val !== '' && val >= 0 || 'Water new is required', val => val >= form.waterOld || 'Water New must bigger than Water Old']"></q-input>
                   </div>
                 </div>
 
