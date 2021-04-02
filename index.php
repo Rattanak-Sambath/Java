@@ -275,11 +275,11 @@ include 'session/check_if_no_session.php';
 
       },
       methods: {
-        goPerson() {
-          window.location.href = "person.php";
-        },
         goIndex() {
           window.location.href = "index.php";
+        },
+        goPerson() {
+          window.location.href = "person.php";
         },
         goHome() {
           window.location.href = "home.php";
