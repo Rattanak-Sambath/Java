@@ -60,24 +60,30 @@ include 'session/check_if_no_session.php';
                   <q-select options-dense ref="homeId" v-model="form.homeId" :options="options.home" option-label="name" option-value="id" map-options emit-value label="Home" outlined :rules="[val => !!val || 'Home is required']" />
                 </div>
 
-                <!-- name -->
-                <div class="q-pa-sm">
-                  <q-input ref="name" hint="Khmer" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                  <!-- name -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="name" hint="Khmer" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                  </div>
+
+                  <!-- latin -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="latin" hint="English" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                  </div>
                 </div>
 
-                <!-- latin -->
-                <div class="q-pa-sm">
-                  <q-input ref="latin" hint="English" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
-                </div>
 
-                <!-- gender -->
-                <div class="q-pa-sm">
-                  <q-select ref="gender" v-model="form.gender" label="Gender" :options="options.gender" outlined :rules="[val => !!val || 'Name is required']" />
-                </div>
 
-                <!-- phone -->
-                <div class="q-pa-sm">
-                  <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                  <!-- gender -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-select ref="gender" v-model="form.gender" label="Gender" :options="options.gender" outlined :rules="[val => !!val || 'Name is required']" />
+                  </div>
+
+                  <!-- phone -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="phone" v-model="form.phone" label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                  </div>
                 </div>
 
 
