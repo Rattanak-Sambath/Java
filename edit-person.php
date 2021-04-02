@@ -47,9 +47,9 @@ include 'session/check_if_no_session.php';
                 Edit Person
               </q-card-section>
             </div>
-            <div>
-              <q-separator />
-            </div>
+
+            <q-separator></q-separator>
+
             <!--  -->
             <div>
 
@@ -87,12 +87,20 @@ include 'session/check_if_no_session.php';
                 </div>
 
 
+
+
+              </q-card-section>
+
+              <q-separator></q-separator>
+
+              <q-card-section align="right">
                 <!-- btn -->
                 <div class="q-pa-sm">
                   <q-btn label="Update" color="positive" @click="onSubmit()" />
                 </div>
-
               </q-card-section>
+
+
             </div>
           </q-card>
 
