@@ -47,31 +47,41 @@ include 'session/check_if_no_session.php';
                 New Home
               </q-card-section>
             </div>
-            <div>
-              <q-separator />
-            </div>
+
+
+            <q-separator></q-separator>
+
             <!--  -->
             <div>
               <q-card-section>
-                <!-- name -->
-                <div class="q-pa-sm">
-                  <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
-                </div>
 
-                <!-- latin -->
-                <div class="q-pa-sm">
-                  <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                  <!-- name -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                  </div>
+
+                  <!-- latin -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                  </div>
                 </div>
 
                 <!-- description -->
                 <div class="q-pa-sm">
                   <q-input v-model="form.description" label="Description" outlined autogrow />
                 </div>
+
+
+              </q-card-section>
+
+              <q-separator></q-separator>
+
+              <q-card-section align="right">
                 <!-- btn -->
                 <div class="q-pa-sm">
                   <q-btn label="Add" color="positive" @click="onSubmit()" />
                 </div>
-
               </q-card-section>
             </div>
           </q-card>
