@@ -58,12 +58,12 @@ include 'session/check_if_no_session.php';
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                   <!-- name -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
+                    <q-input hint="Khmer : (កុដិលេខ០១)" ref="name" v-model="form.name" label="Name" outlined :rules="[val => !!val || 'Name is required']" />
                   </div>
 
                   <!-- latin -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
+                    <q-input hint="English : (Home01)" ref="latin" v-model="form.latin" label="Latin" outlined :rules="[val => !!val || 'Latin is required']" />
                   </div>
                 </div>
 

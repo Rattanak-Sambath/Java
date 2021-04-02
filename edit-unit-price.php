@@ -70,12 +70,12 @@ include 'session/check_if_no_session.php';
                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                   <!-- electric price -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="ele" type="number" v-model.number="form.ele" label="Electric Price" outlined :rules="[val => !!val || 'Electric is required']" />
+                    <q-input hint="Khmer : 2000 រៀល" ref="ele" type="number" v-model.number="form.ele" label="Electric Price" outlined :rules="[val => !!val || 'Electric is required']" />
                   </div>
 
                   <!-- water price -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
-                    <q-input ref="water" type="number" v-model.number="form.water" label="Water Price" outlined :rules="[val => !!val || 'Water is required']" />
+                    <q-input hint="Khmer : 2000 រៀល" ref="water" type="number" v-model.number="form.water" label="Water Price" outlined :rules="[val => !!val || 'Water is required']" />
                   </div>
                 </div>
 
