@@ -55,24 +55,28 @@ include 'session/check_if_no_session.php';
 
               <q-card-section>
 
-                <!-- year -->
-                <div class="q-pa-sm">
-                  <q-input readonly ref="year" type="number" v-model.number="form.year" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                  <!-- year -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input readonly ref="year" type="number" v-model.number="form.year" label="Year" outlined :rules="[val => !!val || 'Year is required']" />
+                  </div>
+
+                  <!-- select month -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-select readonly ref="month" outlined v-model="form.month" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
+                  </div>
                 </div>
 
-                <!-- select month -->
-                <div class="q-pa-sm">
-                  <q-select readonly ref="month" outlined v-model="form.month" options-dense :options="months" label="Month" :rules="[val => !!val || 'Month is required']" />
-                </div>
+                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                  <!-- electric price -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="ele" type="number" v-model.number="form.ele" label="Electric Price" outlined :rules="[val => !!val || 'Electric is required']" />
+                  </div>
 
-                <!-- electric price -->
-                <div class="q-pa-sm">
-                  <q-input ref="ele" type="number" v-model.number="form.ele" label="Electric Price" outlined :rules="[val => !!val || 'Electric is required']" />
-                </div>
-
-                <!-- water price -->
-                <div class="q-pa-sm">
-                  <q-input ref="water" type="number" v-model.number="form.water" label="Water Price" outlined :rules="[val => !!val || 'Water is required']" />
+                  <!-- water price -->
+                  <div class="col-xs-12 col-sm-12 col-md-6">
+                    <q-input ref="water" type="number" v-model.number="form.water" label="Water Price" outlined :rules="[val => !!val || 'Water is required']" />
+                  </div>
                 </div>
 
 
