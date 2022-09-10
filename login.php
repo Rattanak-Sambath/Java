@@ -20,11 +20,18 @@ include 'session/check_if_session.php';
       <div class="column">
         <div class="row">
           <q-card flat bordered class="q-pa-lg shadow-1 bg-grey-3">
+            
             <q-card-section>
+              <div class="text-center q-mb-lg">
+                  
+                  <q-toolbar-title >
+                      Rabbit Technology
+                  </q-toolbar-title>
+              </div>
               <q-form class="q-gutter-xs" @submit.prevent.stop="onLogin()">
                 <!-- username -->
                 <div class="q-pa-xs">
-                  <q-input ref="username" v-model="form.username" autofocus outlined label="Username" :rules="[val => !!val || 'Username is required']" />
+                  <q-input ref="email" v-model="form.email" autofocus outlined label="Username" :rules="[val => !!val || 'email is required']" />
                 </div>
 
                 <!-- password -->
@@ -37,9 +44,7 @@ include 'session/check_if_session.php';
 
                   </q-btn>
                 </div>
-                <div class="q-pa-sm">
-                  <q-btn push color="primary" size="lg" class="full-width" label="Show Info" @click="showInfo()" />
-                </div>
+               
               </q-form>
             </q-card-section>
           </q-card>
@@ -59,7 +64,7 @@ include 'session/check_if_session.php';
       data: function() {
         return {
           form: {
-            username: "",
+            email: "",
             password: "",
           },
           loading: false,
@@ -67,17 +72,17 @@ include 'session/check_if_session.php';
       },
       methods: {
         onLogin() {
-          this.$refs.username.validate();
+          this.$refs.email.validate();
           this.$refs.password.validate();
 
-          if (this.$refs.username.hasError || this.$refs.password.hasError) {
+          if (this.$refs.email.hasError || this.$refs.password.hasError) {
             // check when value null
           } else {
             this.loading = true;
             axios
               .post("./action/login_action.php", {
                 action: "login",
-                username: this.form.username,
+                email: this.form.email,
                 password: this.form.password,
               })
               .then((res) => {
@@ -89,7 +94,7 @@ include 'session/check_if_session.php';
                   });
                   setTimeout(() => {
                     this.loading = false;
-                    window.location.href = "index.php";
+                    window.location.href = "new-home.php";
                   }, 500);
                 } else {
                   setTimeout(() => {
@@ -104,9 +109,7 @@ include 'session/check_if_session.php';
               });
           }
         },
-        showInfo() {
-          window.location.href = "public/index.php";
-        },
+        
       },
     });
   </script>

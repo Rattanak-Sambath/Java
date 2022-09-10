@@ -3,7 +3,7 @@ $server = "localhost";
 // local
 $username = "root";
 $password = "";
-$database = "pagoda";
+$database = "library";
 // 
 // webhost
 // $username = "id16458928_sophea";

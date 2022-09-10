@@ -3,16 +3,15 @@ session_start();
 $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 // connection
-include '../connection/db.php';
-// 
+include "../connection/db.php";// 
 if ($received_data->action == 'login') {
   // data member
-  $username = $received_data->username;
+  $email = $received_data->email;
   $password = $received_data->password;
   // sql statement
   $query = "
  SELECT * FROM tbl_user
- WHERE username='$username' limit 1";
+ WHERE email='$email' limit 1";
   //  execute($query)
   $result = mysqli_query($conn, $query);
   if ($result) {
@@ -20,10 +19,10 @@ if ($received_data->action == 'login') {
       $user_data = mysqli_fetch_assoc($result);
       // return $user_data;
       if ($user_data['password'] === $password) {
-        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $email;
         $_SESSION['uid'] = $user_data['uid'];
         $data = array(
-          'username' => $user_data['username'],
+          'email' => $user_data['email'],
           'password' => $user_data['password'],
           'uid' => $user_data['uid'],
           'status' => 'login_success'
