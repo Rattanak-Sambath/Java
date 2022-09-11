@@ -23,7 +23,7 @@ include 'session/check_if_session.php';
             
             <q-card-section>
               <div class="text-center q-mb-lg">
-                  
+              <img src="/public/rabbit.png" alt="" />
                   <q-toolbar-title >
                       Rabbit Technology
                   </q-toolbar-title>
