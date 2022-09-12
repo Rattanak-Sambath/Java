@@ -94,7 +94,7 @@ include 'session/check_if_session.php';
                   });
                   setTimeout(() => {
                     this.loading = false;
-                    window.location.href = "new-home.php";
+                    window.location.href = "staff.php";
                   }, 500);
                 } else {
                   setTimeout(() => {

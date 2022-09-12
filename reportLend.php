@@ -20,7 +20,7 @@ include 'session/check_if_no_session.php';
   <!-- Add the following at the end of your body tag -->
   <div id="q-app">
     <q-layout view="lHh Lpr lFf" class="bg-white">
-      <q-header elevated>
+      <q-header class="bg-indigo-10" elevated>
         <q-toolbar>
          
           <q-toolbar-title class="row">
