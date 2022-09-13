@@ -248,10 +248,11 @@ include 'session/check_if_no_session.php';
                                 </q-table>
                             </q-card-section>
                         </div>
+
+                        <!-- dialog section -->
                         <q-dialog v-model="dialog" persistent :maximized="maximizedToggle" transition-show="slide-up"
                             transition-hide="slide-down">>
-                            <q-card flat bordered class="my-card">
-
+                            <q-card flat bordered class="my-card" style="width: 800px">
 
                                 <div class="row justify-between">
 
@@ -309,7 +310,7 @@ include 'session/check_if_no_session.php';
                                 <q-card-section align="right">
 
                                     <div class="q-pa-sm">
-                                        <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
+                                        <q-btn icon="edit" label="Update" color="indigo-10" push @click="OnUpdate()" />
                                     </div>
                                 </q-card-section>
 
@@ -318,7 +319,7 @@ include 'session/check_if_no_session.php';
                                 <!-- end table -->
                             </q-card>
                         </q-dialog>
-
+                        <!-- end dialog section -->
 
                         <!-- <q-card-section align="right">
                 <!-- btn -->
@@ -388,6 +389,7 @@ include 'session/check_if_no_session.php';
                 genderOpt: ["Male", "Female"],
                 data: [],
                 leftDrawerOpen: true,
+                showId: '',
                 form: {
                     name: "",
                     phone: "",
@@ -400,55 +402,62 @@ include 'session/check_if_no_session.php';
         methods: {
             close() {
                 this.dialog = false
-                this.form = ""
+                this.form = "";
+
             },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            // onSubmit() {
-            //     this.$refs.name.validate();
-            //     this.$refs.latin.validate();
+            OnUpdate() {
 
-            //     if (this.$refs.name.hasError || this.$refs.latin.hasError) {
-            //         // check when value null
-            //     } else {
-            //         // 
-            //         axios
-            //             .post("action/staff_action.php", {
-            //                 action: "addStaff",
-            //                 name: this.form.name,
-            //                 phone: this.form.phone,
-            //                 description: this.form.description,
-            //                 address: this.form.address,
-            //                 // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //                 // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //             })
-            //             .then((res) => {
-            //                 if (res.data.status == "inserted") {
-            //                     this.$q.notify({
-            //                         message: "Inserted successfully",
-            //                         type: "positive",
-            //                         position: "top-right",
-            //                     });
-            //                     //
-            //                     setTimeout(() => {
-            //                         window.location.href = "home.php";
-            //                     }, 500);
-            //                 } else {
-            //                     this.$q.notify({
-            //                         message: "Cannot Inserted!!!",
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                     this.$q.notify({
-            //                         message: res.data.err,
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                 }
-            //             });
-            //     }
-            // },
+                this.$refs.name.validate();
+                this.$refs.phone.validate();
+                this.$refs.address.validate();
+                this.$refs.gender.validate();
+
+
+                if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
+                    .$refs.gender.hasError) {
+                    // check when value null
+                } else {
+                    // 
+                    axios
+                        .post("action/staff_action.php", {
+                            action: "updateStaff",
+                            id: this.showId,
+                            name: this.form.name,
+                            phone: this.form.phone,
+                            gender: this.form.gender,
+                            address: this.form.address,
+                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        })
+                        .then((res) => {
+                            if (res.data.status == "update") {
+                                this.$q.notify({
+                                    message: "Update successfully",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                                //
+                                setTimeout(() => {
+                                    window.location.href = "staff.php";
+                                }, 500);
+                            } else {
+                                this.$q.notify({
+                                    message: "Cannot Update !!!",
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                this.$q.notify({
+                                    message: res.data.err,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                            }
+                        });
+                }
+            },
             goAddStaff() {
                 window.location.href = "staffForm.php";
             },
@@ -513,8 +522,30 @@ include 'session/check_if_no_session.php';
 
                 })
             },
-            onEdit() {
-                this.dialog = true
+            onEdit(id) {
+                this.showId = id;
+
+                this.dialog = true;
+                axios
+                    .post("action/staff_action.php", {
+                        action: "getStaffbyId",
+                        id: id,
+                    })
+                    .then((res) => {
+                        if (res.data == "no data") {
+                            this.$q.notify({
+                                message: "This Staff not found !",
+                                type: "warning",
+                                position: "top-right",
+                            });
+                            setTimeout(() => {
+                                window.location.href = "staff.php";
+                            }, 2000);
+                        } else {
+                            this.form = res.data
+                            console.log(res.data);
+                        }
+                    });
             },
             onLogout() {
                 axios
@@ -530,7 +561,7 @@ include 'session/check_if_no_session.php';
             getAllData() {
                 axios
                     .post("action/staff_action.php", {
-                        action: "getTblPerson",
+                        action: "getAllStaff",
                     })
                     .then((res) => {
                         this.data = res.data;
@@ -544,6 +575,9 @@ include 'session/check_if_no_session.php';
         },
         mounted() {
             this.getAllData()
+            if (props.row.id) {
+                this.onEdit();
+            }
         },
     });
     </script>

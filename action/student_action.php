@@ -4,7 +4,7 @@ $data = array();
 // connection
 include '../connection/db.php';
 // 
-if ($received_data->action == 'addNewStaff') {
+if ($received_data->action == 'addNewStudent') {
 
   $name = $received_data->name;
   $phone = $received_data->phone;
@@ -15,13 +15,13 @@ if ($received_data->action == 'addNewStaff') {
 //   $updated = $received_data->updated;
   // 
   // sql
-  $sql = "insert into tbl_staff (name, phone, address, gender) values('$name', '$phone', '$address', '$gender')";
+  $sql = "insert into tbl_student (name, phone, address, gender) values('$name', '$phone', '$address', '$gender')";
   // execure query
   $result = mysqli_query($conn, $sql);
 
   if ($result === true) {
     $data = array(
-      'status' => 'inserted',
+      'status' => 'insert',
       'name' => $name,
     );
   } else {
@@ -41,9 +41,9 @@ if ($received_data->action == 'addNewStaff') {
   echo json_encode($data);
 }
 
-if ($received_data->action == 'getAllStaff') {
+if ($received_data->action == 'getAllStudent') {
   // sql
-  $query = "select * from tbl_staff";
+  $query = "select * from tbl_student ";
   // execure query
   $result = mysqli_query($conn, $query);
 
@@ -57,10 +57,10 @@ if ($received_data->action == 'getAllStaff') {
   // echo
   echo json_encode($data);
 }
-if ($received_data->action == 'deleteStaff') {
+if ($received_data->action == 'deleteStudent') {
   // var_dump($received_data->id);
   $id = $received_data->id;
-  $query = "DELETE FROM tbl_staff WHERE id = $id ";
+  $query = "DELETE FROM tbl_student WHERE id = $id ";
   // execure query
   $result = mysqli_query($conn, $query);
 
@@ -80,11 +80,11 @@ if ($received_data->action == 'deleteStaff') {
 
 
 // get by id
-if ($received_data->action == 'getStaffbyId') {
+if ($received_data->action == 'getStudentbyId') {
   $id = $received_data->id;
   // 
   // sql
-  $query = "select * from tbl_staff where id=$id limit 1";
+  $query = "select * from tbl_student where id=$id limit 1";
   // execure query
   $result = mysqli_query($conn, $query);
   if ($result && mysqli_num_rows($result) > 0) {
@@ -96,7 +96,7 @@ if ($received_data->action == 'getStaffbyId') {
 }
 
 // update staff 
-if ($received_data->action == 'updateStaff') {
+if ($received_data->action == 'updateStudent') {
   $id = $received_data->id;
   $name = $received_data->name;
   $phone = $received_data->phone;
@@ -104,7 +104,7 @@ if ($received_data->action == 'updateStaff') {
   $address = $received_data->address;
  
   // 
-  $sql = "update tbl_staff set name='$name',phone='$phone',gender='$gender',address='$address' where id=$id";
+  $sql = "update tbl_student set name='$name',phone='$phone',gender='$gender',address='$address' where id=$id";
   // 
   $result = mysqli_query($conn, $sql);
   // 
