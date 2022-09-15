@@ -224,7 +224,7 @@ include 'session/check_if_no_session.php';
                         <!--  -->
                         <div>
                             <q-card-section>
-                                <q-table flat :columns="columns" :data="data">
+                                <q-table flat :columns="columns" row-key="name" :data="data" :filter="filter">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
@@ -243,7 +243,13 @@ include 'session/check_if_no_session.php';
 
 
                                     </template>
-
+                                    <template v-slot:top-right>
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                    </template>
 
                                 </q-table>
                             </q-card-section>
@@ -396,6 +402,7 @@ include 'session/check_if_no_session.php';
                     address: "",
                     gender: ""
                 },
+                filter: '',
             };
         },
         created() {},

@@ -224,7 +224,7 @@ include 'session/check_if_no_session.php';
                         <!--  -->
                         <div>
                             <q-card-section>
-                                <q-table flat :columns="columns" :data="data">
+                                <q-table flat :columns="columns" :filter="filter" :data="data">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
@@ -242,6 +242,13 @@ include 'session/check_if_no_session.php';
                                         </q-td>
 
 
+                                    </template>
+                                    <template v-slot:top-right>
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
                                     </template>
 
 
@@ -362,6 +369,12 @@ include 'session/check_if_no_session.php';
                         field: (row) => row.title,
                     },
                     {
+                        name: "qty",
+                        label: "Qty",
+                        align: "left",
+                        field: (row) => row.qty,
+                    },
+                    {
                         name: "type",
                         label: "Type",
                         align: "left",
@@ -385,6 +398,7 @@ include 'session/check_if_no_session.php';
                     address: "",
                     gender: ""
                 },
+                filter: ""
             };
         },
         created() {},
@@ -549,8 +563,8 @@ include 'session/check_if_no_session.php';
             },
             getAllData() {
                 axios
-                    .post("action/student_action.php", {
-                        action: "getAllStudent",
+                    .post("action/book_action.php", {
+                        action: "getAllBook",
                     })
                     .then((res) => {
                         this.data = res.data;

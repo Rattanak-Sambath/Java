@@ -218,10 +218,10 @@
 
             <q-page-container>
                 <q-page class="q-pa-md">
-                    <q-card flat bordered class="my-card">
+                    <q-card flat bordered class="my-card text-center">
 
 
-                        <div class="row justify-between">
+                        <div class=" row justify-between">
 
                             <!-- btn search -->
                             <q-card-section class="text-h5">
@@ -247,28 +247,36 @@
                                     <!-- name -->
 
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Username" ref="name" v-model="form.name" label="Name"
-                                            outlined :rules="[val => !!val || 'Name is required']" />
+                                        <q-input dense hint="Username" ref="title" v-model="form.title" label="Title"
+                                            outlined :rules="[val => !!val || 'Title is required']" />
                                     </div>
 
                                     <!-- latin -->
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Phone Number" ref="phone" v-model="form.phone"
-                                            label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                                        <q-input dense hint="Qty " ref="qty" v-model="form.qty" label="Qty" outlined
+                                            :rules="[val => !!val || 'Qty is required']" />
                                     </div>
 
                                 </div>
-
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input dense hint="Date" type="date" ref="date" v-model="form.date" outlined
+                                            :rules="[val => !!val || 'Date is required']" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-select dense hint="Type of Book" ref="type" :options="typeOpt"
+                                            v-model="form.type" label="Type of Book" outlined
+                                            :rules="[val => !!val || 'Type is required']" />
+                                    </div>
+                                </div>
                                 <!-- description -->
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Address" ref="address" v-model="form.address"
-                                            label="Address" outlined :rules="[val => !!val || 'Address is required']" />
+                                        <q-input dense hint="Date" type="file" ref="file" v-model="form.file" outlined
+                                            :rules="[val => !!val || 'File is required']" />
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-select dense hint="Gender" ref="gender" :options="genderOpt"
-                                            v-model="form.gender" label="Gender" outlined
-                                            :rules="[val => !!val || 'GEnder is required']" />
+                                        <q-input />
                                     </div>
 
                                 </div>
@@ -295,7 +303,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js"
+        integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
     var app = new Vue({
         el: "#q-app",
@@ -347,12 +357,12 @@
                 data: [],
                 leftDrawerOpen: true,
                 form: {
-                    name: "",
-                    phone: "",
-                    address: "",
-
-                    gender: ""
+                    title: "",
+                    qty: "",
+                    date: dayjs(new Date()).format("YYYY-MM-DD"),
+                    type: ""
                 },
+                typeOpt: []
             };
         },
         created() {},

@@ -41,15 +41,15 @@ include 'session/check_if_no_session.php';
 
                 </q-toolbar>
             </q-header>
-            <q-drawer :width="230" :breakpoint="400" v-model="leftDrawerOpen" bordered class=" text-black ">
+            <q-drawer :width="230" :breakpoint="400" v-model="leftDrawerOpen" bordered class=" text-black  ">
                 <div>
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                         <div class="absolute-bottom bg-transparent">
                             <q-avatar size="56px" class="q-mb-sm">
                                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
                             </q-avatar>
-                            <div class="text-weight-bold">Rattanak</div>
-                            <div>nak@gmail.com</div>
+                            <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
+
                         </div>
                     </q-img>
                 </div>
