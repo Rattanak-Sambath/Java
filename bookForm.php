@@ -272,7 +272,7 @@
                                 <!-- description -->
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Date" type="file" ref="file" v-model="form.file" outlined
+                                        <q-input dense hint="Image" type="file" ref="file" v-model="form.file" outlined
                                             :rules="[val => !!val || 'File is required']" />
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -351,7 +351,7 @@
                 //       name: "action",
                 //       label: "Action",
                 //       align: "center",
-                //     },
+                //     },type
                 //   ],
                 genderOpt: ["Male", "Female"],
                 data: [],
@@ -360,7 +360,8 @@
                     title: "",
                     qty: "",
                     date: dayjs(new Date()).format("YYYY-MM-DD"),
-                    type: ""
+                    type: "",
+                    image: ''
                 },
                 typeOpt: []
             };
@@ -380,16 +381,18 @@
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
             onSubmit() {
-                this.$refs.name.validate();
-                this.$refs.phone.validate();
-                this.$refs.address.validate();
-                this.$refs.gender.validate();
+                this.$refs.title.validate();
+                this.$refs.qty.validate();
+                this.$refs.date.validate();
+                this.$refs.type.validate();
+                this.$refs.image.validate();
 
 
 
 
-                if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-                    .$refs.gender.hasError) {
+
+                if (this.$refs.title.hasError || this.$refs.qty.hasError || this.$refs.date.hasError || this
+                    .$refs.type.hasError || this.$refs.image.hasError) {
                     // check when value null
                 } else {
                     //

@@ -19,7 +19,7 @@ if ($received_data->action == 'bookAdd') {
      $extension = pathinfo($filename, PATHINFO_EXTENSION);
       if(in_array(strtolower($extension),$allowed_extensions) ) {     
          if(move_uploaded_file($_FILES['file']['tmp_name'], "upload/".$filename)){
-            $sql = "insert into tbl_book (title, qty, date, type, image) values('$title', '$qty', '$date', '$type', '$image')";
+            $sql = "insert into tbl_book (title, qty, date, type, image) values('$title', '$qty', '$date', '$type', '$filename')";
             // execure query
             $result = mysqli_query($conn, $sql);
           
