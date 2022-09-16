@@ -238,61 +238,65 @@
                         </div>
                         <!--  -->
                         <div>
-                            <q-card-section>
-                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                            <q-form method="post" action="#" enctype="multipart/form-data">
+
+                                <q-card-section>
 
 
-                                </div>
-                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                    <!-- name -->
+                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
 
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Username" ref="title" v-model="form.title" label="Title"
-                                            outlined :rules="[val => !!val || 'Title is required']" />
+
+                                    </div>
+                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                        <!-- name -->
+
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-input dense hint="Username" ref="title" v-model="form.title"
+                                                label="Title" outlined :rules="[val => !!val || 'Title is required']" />
+                                        </div>
+
+                                        <!-- latin -->
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-input dense hint="Qty " ref="qty" v-model="form.qty" label="Qty" outlined
+                                                :rules="[val => !!val || 'Qty is required']" />
+                                        </div>
+
+                                    </div>
+                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-input dense hint="Date" type="date" ref="date" v-model="form.date"
+                                                outlined :rules="[val => !!val || 'Date is required']" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-select clearable dense hint="Type of Book" ref="type" :options="typeOpt"
+                                                v-model="form.type" label="Type of Book" outlined
+                                                :rules="[val => !!val || 'Type is required']" />
+                                        </div>
+                                    </div>
+                                    <!-- description -->
+                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-input dense hint="Image" type="file" id="file" ref="file"
+                                                v-model="form.file" outlined
+                                                :rules="[val => !!val || 'File is required']" />
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <q-input />
+                                        </div>
+
                                     </div>
 
-                                    <!-- latin -->
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Qty " ref="qty" v-model="form.qty" label="Qty" outlined
-                                            :rules="[val => !!val || 'Qty is required']" />
-                                    </div>
+                                </q-card-section>
+                                <q-card-section align="right">
 
-                                </div>
-                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Date" type="date" ref="date" v-model="form.date" outlined
-                                            :rules="[val => !!val || 'Date is required']" />
+                                    <div class="q-pa-sm">
+                                        <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-select dense hint="Type of Book" ref="type" :options="typeOpt"
-                                            v-model="form.type" label="Type of Book" outlined
-                                            :rules="[val => !!val || 'Type is required']" />
-                                    </div>
-                                </div>
-                                <!-- description -->
-                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Image" type="file" ref="file" v-model="form.file" outlined
-                                            :rules="[val => !!val || 'File is required']" />
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input />
-                                    </div>
-
-                                </div>
-                            </q-card-section>
+                                </q-card-section>
+                            </q-form>
                         </div>
 
-                        <q-card-section align="right">
 
-                            <div class="q-pa-sm">
-                                <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
-                            </div>
-                        </q-card-section>
-
-
-
-                        <!-- end table -->
                     </q-card>
 
 
@@ -363,7 +367,8 @@
                     type: "",
                     image: ''
                 },
-                typeOpt: []
+                typeOpt: ["Science", "Biology", "Scienfiction"],
+
             };
         },
         created() {},
@@ -380,33 +385,49 @@
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
+            // uploadFile() {
+            //     this.file = this.$refs.file.files[0];
+            //     let formData = new FormData();
+            //     formData.append('file', this.file);
+            //     formData.append('title', this.title);
+            //     this.$refs.file.value = '';
+            //     axios.post('action/upload.php', formData, {
+            //             headers: {
+            //                 'Content-Type': 'multipart/form-data'
+            //             }
+            //         })
+            //         .then(function(response) {
+            //             if (!response.data) {
+            //                 alert('File not uploaded.');
+            //             } else {
+            //                 alert('File uploaded successfully.');
+            //             }
+            //         })
+            //         .catch(function(error) {
+            //             console.log(error);
+            //         });
+            // },
             onSubmit() {
                 this.$refs.title.validate();
                 this.$refs.qty.validate();
                 this.$refs.date.validate();
                 this.$refs.type.validate();
-                this.$refs.image.validate();
-
-
-
-
-
                 if (this.$refs.title.hasError || this.$refs.qty.hasError || this.$refs.date.hasError || this
-                    .$refs.type.hasError || this.$refs.image.hasError) {
+                    .$refs.type.hasError) {
                     // check when value null
                 } else {
-                    //
+                    let data = new FormData();
+                    data.append('title', this.form.title);
+                    data.append('qty', this.form.qty);
+                    data.append('date', this.form.date);
+                    data.append('type', this.form.type);
+                    data.append('image', this.form.image);
                     axios
-                        .post("action/student_action.php", {
-                            action: "addNewStudent",
-                            name: this.form.name,
-                            phone: this.form.phone,
-                            address: this.form.address,
-                            gender: this.form.gender,
+                        .post("action/book_action.php", data, {
 
-                            // description: this.form.description,
-                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            header: {
+
+                            }
                         })
                         .then((res) => {
                             if (res.data.status == "insert") {
