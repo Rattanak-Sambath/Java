@@ -243,6 +243,17 @@ include 'session/check_if_no_session.php';
 
 
                                     </template>
+                                    <template slot="body-cell-image" slot-scope="props" :props="props.row">
+                                        <q-td align="center">
+                                           <img src="" style="width:50px; height: 50px" />
+                                        </q-td>
+                                        <q-td align="center">
+                                            <q-btn dense color="negative" icon="delete"
+                                                @click="onDelete(props.row.id)" />
+                                        </q-td>
+
+
+                                    </template>
                                     <template v-slot:top-right>
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
@@ -373,6 +384,12 @@ include 'session/check_if_no_session.php';
                         label: "Qty",
                         align: "left",
                         field: (row) => row.qty,
+                    },
+                    {
+                        name: "image",
+                        label: "Image",
+                        align: "left",
+                        field: (row) => row.image,
                     },
                     {
                         name: "type",
