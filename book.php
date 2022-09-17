@@ -244,8 +244,9 @@ include 'session/check_if_no_session.php';
 
                                     </template>
                                     <template slot="body-cell-image" slot-scope="props" :props="props.row">
-                                        <q-td align="center">
-                                           <img src="" style="width:50px; height: 50px" />
+                                        <q-td align="left">                          
+                                           <img :src="'upload/' + props.row.image" style="width:50px; height: 50px" />
+                                            {{props.row.image}}
                                         </q-td>
                                         <q-td align="center">
                                             <q-btn dense color="negative" icon="delete"
@@ -254,7 +255,7 @@ include 'session/check_if_no_session.php';
 
 
                                     </template>
-                                    <template v-slot:top-right>
+                                    <template v-slot:top-right slot="body-cell-title">
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
                                                 <q-icon name="search" />
@@ -586,6 +587,7 @@ include 'session/check_if_no_session.php';
                     .then((res) => {
                         this.data = res.data;
                         console.log(res.data)
+                        
 
                     });
             },

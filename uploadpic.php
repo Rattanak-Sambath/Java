@@ -30,11 +30,15 @@
                     <input type="date" class="form-control" id="exampleInputPassword1" name="date" required>
                 </div>
                 <div class="mb-3">
+
+                    <label for="exampleInputPassword1" class="form-label">Type : </label>
+                    <input name="type" class="form-control"></input>
+                </div>
+                <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Image : </label>
                     <input type="file" class="form-control" id="exampleInputPassword1" name="image">
                 </div>
-                <label for="exampleInputPassword1" class="form-label">Detail : </label>
-                <textarea name="detail" class="form-control"></textarea>
+               
                 <br>
                 <button type="submit" name="submit" class="btn btn-primary">Create</button>
             </form>
@@ -46,8 +50,7 @@
         if(isset($_POST['submit'])) {
             $title = $_POST['title'];
             $qty = $_POST['qty'];
-            $date = $_POST['date'];
-            $date = $_POST['date'];
+            $date = $_POST['date'];           
             $type = $_POST['type'];
             $image = $_FILES['image']['name'];
             $tmp_name = $_FILES['image']['tmp_name'];

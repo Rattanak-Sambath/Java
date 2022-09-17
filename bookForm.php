@@ -1,3 +1,27 @@
+<?php
+        include "connection/db.php";
+        if(isset($_POST['submit'])) {
+            $title = $_POST['title'];
+            $qty = $_POST['qty'];
+            $date = $_POST['date'];           
+            $type = $_POST['type'];
+            $image = $_FILES['image']['name'];
+            $tmp_name = $_FILES['image']['tmp_name'];
+            
+            $insert = "INSERT INTO tbl_book(title, qty, date, type, image)
+                       VALUES ('$title', '$qty', '$date', '$type', '$image')";
+            $run_insert = mysqli_query($conn, $insert);
+            if($run_insert === true) {
+                echo "Data has been installed"; 
+                move_uploaded_file($tmp_name, "upload/$image");
+                header('Location: book.php');
+            } else {
+                echo "Error";
+            }
+
+        }
+    ?>
+
 <!-- <q-drawer
 
       :width="230"
@@ -189,6 +213,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
         integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
         crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
 </head>
 
@@ -197,22 +223,7 @@
     <div id="q-app">
         <q-layout view="lHh Lpr lFf" class="bg-white">
             <q-header class="bg-indigo-10" elevated>
-                <q-toolbar>
-
-                    <q-toolbar-title class="row">
-                        <div>
-                            <q-btn flat dense round @click="toggleLeftDrawer" icon="menu" aria-label="Menu" />
-                        </div>
-                        <div class="text-h5">
-                            Library-System
-                        </div>
-
-
-                    </q-toolbar-title>
-                    <!-- right side -->
-                    <!-- <q-btn dense icon="logout" color="white" flat @click="onLogout()" /> -->
-
-                </q-toolbar>
+               
             </q-header>
 
 
@@ -221,7 +232,7 @@
                     <q-card flat bordered class="my-card text-center">
 
 
-                        <div class=" row justify-between">
+                        <div class="d-flex justify-between">
 
                             <!-- btn search -->
                             <q-card-section class="text-h5">
@@ -237,63 +248,46 @@
                             <q-separator />
                         </div>
                         <!--  -->
-                        <div>
-                            <q-form method="post" action="#" enctype="multipart/form-data">
+                        <div class="container p-4">
+                            <form method="post" action="#" enctype="multipart/form-data">
 
-                                <q-card-section>
-
-
-                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-
-
-                                    </div>
-                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                        <!-- name -->
-
+                                <q-card class="row my-4 ">
+                                 
+                                  <form style="width: 50%; margin: auto; margin-top: 30px;" action="" method="post" enctype="multipart/form-data">
+                                     <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                         <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-input dense hint="Username" ref="title" v-model="form.title"
-                                                label="Title" outlined :rules="[val => !!val || 'Title is required']" />
-                                        </div>
+                                           
+                                              <input type="text" placeholder="Title" class="form-control" id="exampleInputEmail1" name="title" required>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-6">
+                                           
+                                              <input type="text " placeholder="Qty" class="form-control" name="qty" required>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-6">
+                                            
+                                              <input type="date" class="form-control" id="exampleInputPassword1" name="date" required>
+                                          </div>
+                                          
+                                      </div>
+                                     <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                           <div class="col-xs-12 col-sm-6 col-md-6">          
+                                          <input placeholder="Type" name="type" class="form-control"></input>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-6">
+                                         
+                                          <input type="file" class="form-control" id="exampleInputPassword1" name="image">
+                                          </div>
+                                          <div class="col-xs-12 col-sm-6 col-md-6"></div>
+                                      </div>
+                                     
+                                    
+                                      <br>
+                                      <button type="submit" name="submit" class="btn btn-primary">Create</button>
+                                  </form>
+                              </q-card>
 
-                                        <!-- latin -->
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-input dense hint="Qty " ref="qty" v-model="form.qty" label="Qty" outlined
-                                                :rules="[val => !!val || 'Qty is required']" />
-                                        </div>
 
-                                    </div>
-                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-input dense hint="Date" type="date" ref="date" v-model="form.date"
-                                                outlined :rules="[val => !!val || 'Date is required']" />
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-select clearable dense hint="Type of Book" ref="type" :options="typeOpt"
-                                                v-model="form.type" label="Type of Book" outlined
-                                                :rules="[val => !!val || 'Type is required']" />
-                                        </div>
-                                    </div>
-                                    <!-- description -->
-                                    <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-input dense hint="Image" type="file" id="file" ref="file"
-                                                v-model="form.file" outlined
-                                                :rules="[val => !!val || 'File is required']" />
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <q-input />
-                                        </div>
-
-                                    </div>
-
-                                </q-card-section>
-                                <q-card-section align="right">
-
-                                    <div class="q-pa-sm">
-                                        <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
-                                    </div>
-                                </q-card-section>
-                            </q-form>
+                            </form>
                         </div>
 
 
@@ -304,7 +298,7 @@
             </q-page-container>
         </q-layout>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js"
@@ -360,12 +354,12 @@
                 genderOpt: ["Male", "Female"],
                 data: [],
                 leftDrawerOpen: true,
-                form: {
+                form: {  
                     title: "",
                     qty: "",
                     date: dayjs(new Date()).format("YYYY-MM-DD"),
                     type: "",
-                    image: ''
+                    image: '',
                 },
                 typeOpt: ["Science", "Biology", "Scienfiction"],
 
