@@ -70,7 +70,7 @@ if ($received_data->action == 'getAllBook') {
   // echo
   echo json_encode($data);
 }
-if ($received_data->action == 'deleteStudent') {
+if ($received_data->action == 'deleteBook') {
   // var_dump($received_data->id);
   $id = $received_data->id;
   $query = "DELETE FROM tbl_student WHERE id = $id ";

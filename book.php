@@ -232,25 +232,11 @@ include 'session/check_if_no_session.php';
                                         </q-td>
                                     </template>
                                     <!-- action -->
-                                    <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                                        <q-td align="center">
-                                            <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
-                                        </q-td>
-                                        <q-td align="center">
-                                            <q-btn dense color="negative" icon="delete"
-                                                @click="onDelete(props.row.id)" />
-                                        </q-td>
 
-
-                                    </template>
                                     <template slot="body-cell-image" slot-scope="props" :props="props.row">
-                                        <q-td align="left">                          
-                                           <img :src="'upload/' + props.row.image" style="width:50px; height: 50px" />
-                                            {{props.row.image}}
-                                        </q-td>
-                                        <q-td align="center">
-                                            <q-btn dense color="negative" icon="delete"
-                                                @click="onDelete(props.row.id)" />
+                                        <q-td align="center" class="vertical-align-middle">
+                                            <img :src="'upload/' + props.row.image" style="width:50px; height: 50px" />
+                                            <div>{{props.row.image}}</div>
                                         </q-td>
 
 
@@ -262,9 +248,20 @@ include 'session/check_if_no_session.php';
                                             </template>
                                         </q-input>
                                     </template>
+                                    <template slot="body-cell-action" slot-scope="props" :props="props.row">
+                                        <q-td align="center">
+                                            <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                        </q-td>
+                                        <q-td align="center">
+                                            <q-btn dense color="negative" icon="delete"
+                                                @click="onDelete(props.row.id)" />
+                                        </q-td>
 
+
+                                    </template>
 
                                 </q-table>
+                                <q-separator />
                             </q-card-section>
                         </div>
 
@@ -383,19 +380,19 @@ include 'session/check_if_no_session.php';
                     {
                         name: "qty",
                         label: "Qty",
-                        align: "left",
+                        align: "center",
                         field: (row) => row.qty,
                     },
                     {
                         name: "image",
                         label: "Image",
-                        align: "left",
+                        align: "center",
                         field: (row) => row.image,
                     },
                     {
                         name: "type",
                         label: "Type",
-                        align: "left",
+                        align: "center",
                         field: (row) => row.type,
                     },
                     {
@@ -403,6 +400,12 @@ include 'session/check_if_no_session.php';
                         label: "Date",
                         align: "left",
                         field: (row) => row.date,
+                    },
+                    {
+                        name: "action",
+                        label: "Action",
+                        align: "center",
+
                     },
 
                 ],
@@ -516,22 +519,22 @@ include 'session/check_if_no_session.php';
                 window.location.href = "maintenance.php";
             },
             onDelete(id) {
-                axios.post("action/student_action.php", {
-                    action: "deleteStudent",
+                axios.post("action/book_action.php", {
+                    action: "deleteBook",
                     id: id
 
                 }).then((res) => {
                     if (res.data.status == "delete") {
                         this.$q.notify({
-                            message: "Delete successfully",
+                            message: "Delete Book successfully",
                             type: "positive",
                             position: "top-right",
 
                         });
                         //
                         setTimeout(() => {
-                            window.location.href = "student.php";
-                        }, 2000);
+                            window.location.href = "book.php";
+                        }, 1000);
                     } else {
                         this.$q.notify({
                             message: "Delete unsuccessful",
@@ -587,7 +590,7 @@ include 'session/check_if_no_session.php';
                     .then((res) => {
                         this.data = res.data;
                         console.log(res.data)
-                        
+
 
                     });
             },
