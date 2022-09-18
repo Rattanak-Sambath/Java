@@ -534,7 +534,7 @@ include 'session/check_if_no_session.php';
                         //
                         setTimeout(() => {
                             window.location.href = "book.php";
-                        }, 1000);
+                        }, 700);
                     } else {
                         this.$q.notify({
                             message: "Delete unsuccessful",
@@ -547,29 +547,9 @@ include 'session/check_if_no_session.php';
                 })
             },
             onEdit(id) {
-                this.showId = id;
+                window.location.href = "Editbook.php?id=" + id;
+                // this.showId = id;
 
-                this.dialog = true;
-                axios
-                    .post("action/student_action.php", {
-                        action: "getStudentbyId",
-                        id: id,
-                    })
-                    .then((res) => {
-                        if (res.data == "no data") {
-                            this.$q.notify({
-                                message: "This Staff not found !",
-                                type: "warning",
-                                position: "top-right",
-                            });
-                            setTimeout(() => {
-                                window.location.href = "student.php";
-                            }, 2000);
-                        } else {
-                            this.form = res.data
-                            console.log(res.data);
-                        }
-                    });
             },
             onLogout() {
                 axios
@@ -600,9 +580,7 @@ include 'session/check_if_no_session.php';
         },
         mounted() {
             this.getAllData()
-            if (props.row.id) {
-                this.onEdit();
-            }
+
         },
     });
     </script>

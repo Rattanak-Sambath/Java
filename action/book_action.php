@@ -73,7 +73,7 @@ if ($received_data->action == 'getAllBook') {
 if ($received_data->action == 'deleteBook') {
   // var_dump($received_data->id);
   $id = $received_data->id;
-  $query = "DELETE FROM tbl_student WHERE id = $id ";
+  $query = "DELETE FROM tbl_book WHERE id = $id ";
   // execure query
   $result = mysqli_query($conn, $query);
 
@@ -93,19 +93,20 @@ if ($received_data->action == 'deleteBook') {
 
 
 // get by id
-if ($received_data->action == 'getStudentbyId') {
+if ($received_data->action == 'getDataById') {
   $id = $received_data->id;
   // 
   // sql
-  $query = "select * from tbl_student where id=$id limit 1";
+  $query = "select * from tbl_book where id=$id limit 1";
   // execure query
+ 
   $result = mysqli_query($conn, $query);
-  if ($result && mysqli_num_rows($result) > 0) {
-    $person_data = mysqli_fetch_assoc($result);
-    echo json_encode($person_data);
-  } else {
-    echo json_encode("no data");
+
+  while ($row = $result->fetch_array()) {
+    $data[] = $row;
   }
+  echo json_encode($data);
+  //
 }
 
 // update staff 
