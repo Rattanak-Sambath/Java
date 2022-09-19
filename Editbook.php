@@ -1,15 +1,16 @@
 <?php
         include "connection/db.php";
-        if(isset($_POST['submit'])) {
+        if(isset($_POST['update'])) {
+            $id = $_GET['id'];
             $title = $_POST['title'];
             $qty = $_POST['qty'];
             $date = $_POST['date'];           
             $type = $_POST['type'];
             $image = $_FILES['image']['name'];
             $tmp_name = $_FILES['image']['tmp_name'];
+           
             
-            $insert = "INSERT INTO tbl_book(title, qty, date, type, image)
-                       VALUES ('$title', '$qty', '$date', '$type', '$image')";
+            $insert = "update tbl_book set title='$title', qty='$qty', date='$date', type='$type', image='$image' where id=$id";
             $run_insert = mysqli_query($conn, $insert);
             if($run_insert === true) {
                 echo "Data has been installed"; 
@@ -19,6 +20,20 @@
                 echo "Error";
             }
 
+        }
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $insert = " select * from tbl_book where id = $id";
+            $run_insert = mysqli_query($conn, $insert);
+            while($row = $run_insert->fetch_array()) {
+                $title = $row['title'];
+                $qty = $row['qty'];
+                $type = $row['type'];
+                $date = $row['date'];
+                $image = $row['image'];
+               
+            } 
+            
         }
       
 
@@ -91,35 +106,36 @@
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
                                                 <input type="text" placeholder="Title" class="form-control"
-                                                    id="exampleInputEmail1" name="title" required>
+                                                    id="exampleInputEmail1" name="title" value="<?= $title ?>" required>
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
                                                 <input type="text " placeholder="Qty" class="form-control" name="qty"
-                                                    required>
+                                                    required value="<?= $qty ?>">
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
                                                 <input type="date" class="form-control" id="exampleInputPassword1"
-                                                    name="date" required>
+                                                    name="date" required value="<?= $date ?>">
                                             </div>
 
                                         </div>
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <input placeholder="Type" name="type" class="form-control"></input>
+                                                <input placeholder="Type" name="type" value="<?= $type ?>"
+                                                    class="form-control"></input>
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
                                                 <input type="file" class="form-control" id="exampleInputPassword1"
-                                                    name="image">
+                                                    name="image" value="<?= $image ?>">
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6"></div>
                                         </div>
 
 
                                         <br>
-                                        <button type="submit" name="submit" class="btn btn-primary">Create</button>
+                                        <button type="submit" name="update" class="btn btn-primary">Upadte</button>
                                     </form>
                                 </q-card>
 
@@ -164,35 +180,33 @@
         },
         created() {},
         methods: {
-            // getDataById() {
-            //     let uri = window.location.search.substring(1);
-            //     let params = new URLSearchParams(uri);
-            //     let id = params.get("id");
-            //     //
-            //     axios
-            //         .post("action/book_action.php", {
-            //             action: "getDataById",
-            //             id: id,
-            //         })
-            //         .then((res) => {
+            getDataById() {
 
-            //             if (res.data == "no data") {
-            //                 this.$q.notify({
-            //                     message: "This ID not found !",
-            //                     type: "warning",
-            //                     position: "top-right",
-            //                 });
-            //                 setTimeout(() => {
-            //                     window.location.href = "home.php";
-            //                 }, 2000);
-            //             } else {
+                //
+                axios
+                    .post("action/book_action.php", {
+                        action: "getDataById",
+                        id: id,
+                    })
+                    .then((res) => {
 
-            //                 this.data = res.data
-            //                 console.log(res.data);
+                        if (res.data == "no data") {
+                            this.$q.notify({
+                                message: "This ID not found !",
+                                type: "warning",
+                                position: "top-right",
+                            });
+                            setTimeout(() => {
+                                window.location.href = "home.php";
+                            }, 2000);
+                        } else {
 
-            //             }
-            //         });
-            // },
+                            this.data = res.data
+                            console.log(res.data);
+
+                        }
+                    });
+            },
             // getAllData() {
             //     axios
             //       .post("action/person_action.php", {

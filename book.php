@@ -235,8 +235,15 @@ include 'session/check_if_no_session.php';
 
                                     <template slot="body-cell-image" slot-scope="props" :props="props.row">
                                         <q-td align="center" class="vertical-align-middle">
-                                            <img :src="'upload/' + props.row.image" style="width:50px; height: 50px" />
-                                            <div>{{props.row.image}}</div>
+
+                                            <div v-show="!props.row.id">
+                                                <img style="width:50px ; height: 50px" alt="">
+                                            </div>
+                                            <div v-show="props.row.id">
+                                                <img :src="'upload/' + props.row.image"
+                                                    style="width:50px ; height: 50px" alt="">
+                                            </div>
+
                                         </q-td>
 
 
@@ -250,6 +257,7 @@ include 'session/check_if_no_session.php';
                                     </template>
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
                                         <q-td align="center">
+                                            <!-- <a href="Editbook.php?id="+ ID>Edit</a> -->
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
                                         </q-td>
                                         <q-td align="center">
@@ -417,7 +425,9 @@ include 'session/check_if_no_session.php';
                     name: "",
                     phone: "",
                     address: "",
-                    gender: ""
+                    gender: "",
+                    image: ''
+
                 },
                 filter: ""
             };

@@ -214,7 +214,7 @@ include 'session/check_if_no_session.php';
                             </q-card-section>
 
                             <div class="q-pa-sm">
-                                <q-btn label="Add" color="primary" @click="goAddBook()"></q-btn>
+                                <q-btn label="Add" color="primary" @click="goAddLengBook()"></q-btn>
                             </div>
 
                         </div>
@@ -372,6 +372,12 @@ include 'session/check_if_no_session.php';
                         align: "left",
                     },
                     {
+                        name: "student",
+                        label: "Student",
+                        align: "left",
+                        field: (row) => row.student,
+                    },
+                    {
                         name: "title",
                         label: "Title",
                         align: "left",
@@ -383,12 +389,7 @@ include 'session/check_if_no_session.php';
                         align: "left",
                         field: (row) => row.qty,
                     },
-                    {
-                        name: "type",
-                        label: "Type",
-                        align: "left",
-                        field: (row) => row.type,
-                    },
+
                     {
                         name: "date",
                         label: "Date",
@@ -446,6 +447,9 @@ include 'session/check_if_no_session.php';
                             }
                         });
                 }
+            },
+            goAddLengBook() {
+                window.location.href = "LendBookForm.php";
             },
             toDashboard() {
                 window.location.href = "dashboard.php"

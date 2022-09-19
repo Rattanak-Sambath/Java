@@ -1,202 +1,60 @@
 <?php
+        
         include "connection/db.php";
+        // if(isset($_POST['book'])){
+        //     $id = $_GET['book'];
+        //     $sql = "SELECT * FROM tbl_book WHERE title = $id";
+        //     $res = mysqli_query($conn, $sql);
+        //     if($res === true) {
+        //         var_dump($res);
+        //     } else {
+               
+        //     }
+            
+        // }
+        
         if(isset($_POST['submit'])) {
-            $title = $_POST['title'];
-            $qty = $_POST['qty'];
+            $student = $_POST['student'];
+            $book = $_POST['book'];
             $date = $_POST['date'];           
-            $type = $_POST['type'];
-            $image = $_FILES['image']['name'];
+            $qty = $_POST['qty'];
+            $image =$findImage;
             $tmp_name = $_FILES['image']['tmp_name'];
             
-            $insert = "INSERT INTO tbl_book(title, qty, date, type, image)
-                       VALUES ('$title', '$qty', '$date', '$type', '$image')";
+            $insert = "INSERT INTO tbl_lendbook(student,title, qty, date, image)
+                       VALUES ('$student','$book', '$qty', '$date', '$image')";
             $run_insert = mysqli_query($conn, $insert);
             if($run_insert === true) {
-                echo "Data has been installed"; 
+              
                 move_uploaded_file($tmp_name, "upload/$image");
-                header('Location: book.php');
+                header('Location:lendBook.php');
             } else {
                 echo "Error";
             }
 
         }
+     
+            $student = "select * from tbl_student";
+            $fetchstudent = mysqli_query($conn, $student);
+        
+        
+            $book = "select * from tbl_book";
+            $fetchbook = mysqli_query($conn, $book);
+
+            
+             if(!empty($_POST['student'])) {
+                    $selected = $_POST['student'];
+                    var_dump($selected);
+                    echo 'Please select the value.' + $selected;
+                
+                    
+                } 
+                    
+           
+            
     ?>
 
-<!-- <q-drawer
 
-      :width="230"
-
-      :breakpoint="400"
-        v-model="leftDrawerOpen"
-
-        bordered
-        class=" text-black " >
-        <div>
-          <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
-              <div class="absolute-bottom bg-transparent">
-                    <q-avatar size="56px" class="q-mb-sm">
-                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                    </q-avatar>
-                    <div class="text-weight-bold"></div>
-
-              </div>
-          </q-img>
-        </div> -->
-<!-- <q-list @click="toDashboard()"  style="margin-top:160px; "  >
-                <q-item to="/dasboard"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="dashboard"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Dashboard</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toStaff" >
-                <q-item to="/staff"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="person"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Staff</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toStudent()" >
-                <q-item  to="/student"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="badge"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Student</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list  @click="toBook()">
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="import_contacts"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toLendBook()" >
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="list_alt"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Lend-Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-
-
-              <q-list  @click="toReturnBook()">
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_returned"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Return-Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list> -->
-<!-- <q-list>
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                    <q-item-section avatar>
-                      <q-icon name="group_2"/>
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Staff</q-item-label>
-                    </q-item-section>
-                  </q-item>
-              </q-list> -->
-<!-- <q-expansion-item
-              icon="assignment_add"
-              label="Reports"
-
-            >
-
-              <q-list  class="q-pl-lg">
-                <q-list @click="toReportBook()">
-                <q-item to="/Login-1" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_turned_in"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Book</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-              <q-list @click="toReportLend()">
-                <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="list_alt"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Lend</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-
-              <q-list @click="toReportReturn()">
-                <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_returned"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Return</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-              </q-list>
-
-                </q-list>
-                </q-expansion-item>
-
-              <q-expansion-item
-              icon="settings"
-              label="Settings"
-
-            >
-              <q-list class="q-pl-lg">
-
-                <q-list @click="toProfile()">
-                    <q-item to="/Profile" active-class="q-item-no-link-highlighting">
-                      <q-item-section avatar>
-                        <q-icon name="person"/>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>User Profile</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                </q-list>
-
-                <q-list @click="toMaintenance()">
-                    <q-item to="/Maintenance" active-class="q-item-no-link-highlighting">
-                      <q-item-section avatar>
-                        <q-icon name="construction"/>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Maintenance</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                </q-list>
-
-              </q-list>
-            </q-expansion-item>
-           -->
-<!-- </q-list>
-      </q-drawer> -->
 
 <!DOCTYPE html>
 <html>
@@ -239,7 +97,7 @@
 
                             <!-- btn search -->
                             <q-card-section class="text-h5">
-                                New Book
+                                New LendBook
                             </q-card-section>
 
                             <div class="q-pa-sm">
@@ -259,33 +117,45 @@
                                     <form style="width: 50%; margin: auto; margin-top: 30px;" action="" method="post"
                                         enctype="multipart/form-data">
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-
-                                                <input type="text" placeholder="Title" class="form-control"
-                                                    id="exampleInputEmail1" name="title" required>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 text-left">
+                                                <label class="form-label">Student *</label>
+                                                <select class="form-select" name="student">
+                                                    <option>Student</option>
+                                                    <?php
+                                                        foreach ($fetchstudent as $row){
+                                                            echo '<option value="'.$row['name'].'">'.$row['name'].'</option>'; 
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-
+                                            <div class="col-xs-12 col-sm-6 col-md-6 text-left">
+                                                <label class="form-label">Qty *</label>
                                                 <input type="text " placeholder="Qty" class="form-control" name="qty"
                                                     required>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-
+                                            <div class="col-xs-12 col-sm-6 col-md-6 text-left">
+                                                <label class="form-label">BookTitle *</label>
+                                                <select class="form-select" name="book">
+                                                    <option>BookTitle</option>
+                                                    <?php
+                                                        foreach ($fetchbook as $row){
+                                                            echo '<option value="'.$row['title'].'">'.$row['title'].'</option>'; 
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 text-left">
+                                                <label class="form-label">Date *</label>
                                                 <input type="date" class="form-control" id="exampleInputPassword1"
                                                     name="date" required>
                                             </div>
 
+
                                         </div>
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <input placeholder="Type" name="type" class="form-control"></input>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
 
-                                                <input type="file" class="form-control" id="exampleInputPassword1"
-                                                    name="image">
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6"></div>
+
+
                                         </div>
 
 
