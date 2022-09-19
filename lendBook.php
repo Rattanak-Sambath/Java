@@ -224,14 +224,22 @@ include 'session/check_if_no_session.php';
                         <!--  -->
                         <div>
                             <q-card-section>
-                                <q-table flat :columns="columns" :filter="filter" :data="data">
+                                <q-table flat :columns="columns" :data="dataTable">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
                                             {{ props.pageIndex + 1 }}
                                         </q-td>
                                     </template>
+                                    <template slot="body-cell-image" slot-scope="props" :props="props.row">
+                                        <q-td align="center">
+                                            <img :src="'upload/' + props.row.image" style="width:50px ; height: 50px"
+                                                alt="">
+                                        </q-td>
+
+                                    </template>
                                     <!-- action -->
+
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
                                         <q-td align="center">
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
@@ -283,15 +291,15 @@ include 'session/check_if_no_session.php';
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                             <!-- name -->
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Username" ref="name" v-model="form.name"
-                                                    label="Name" outlined
+                                                <q-input dense hint="Username" ref="name" v-model="form.student"
+                                                    label="Student" outlined
                                                     :rules="[val => !!val || 'Name is required']" />
                                             </div>
 
                                             <!-- latin -->
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Phone Number" ref="phone" v-model="form.phone"
-                                                    label="Phone" outlined
+                                                <q-input dense hint="Title" ref="title" v-model="form.title"
+                                                    label="Title" outlined
                                                     :rules="[val => !!val || 'Phone is required']" />
                                             </div>
 
@@ -300,14 +308,13 @@ include 'session/check_if_no_session.php';
                                         <!-- description -->
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Address" ref="address" v-model="form.address"
-                                                    label="Address" outlined
-                                                    :rules="[val => !!val || 'Address is required']" />
+                                                <q-input dense hint="Qty" ref="qty" v-model="form.qty" label="Qty"
+                                                    outlined :rules="[val => !!val || 'Address is required']" />
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-select dense hint="Gender" ref="gender" :options="genderOpt"
-                                                    v-model="form.gender" label="Gender" outlined
-                                                    :rules="[val => !!val || 'GEnder is required']" />
+                                                <q-input type="date" dense hint="Qty" ref="start_date"
+                                                    v-model="form.start_date" outlined
+                                                    :rules="[val => !!val || 'Date is required']" />
                                             </div>
 
                                         </div>
@@ -356,8 +363,8 @@ include 'session/check_if_no_session.php';
         data: function() {
             return {
                 leftDrawerOpen: true,
-                filter: "filter",
-                data: [],
+                filter: "",
+                dataTable: [],
                 maximizedToggle: false,
                 dialog: false,
                 genderOpt: [],
@@ -384,6 +391,12 @@ include 'session/check_if_no_session.php';
                         field: (row) => row.title,
                     },
                     {
+                        name: "image",
+                        label: "Image",
+                        align: "left",
+                        field: (row) => row.image,
+                    },
+                    {
                         name: "qty",
                         label: "Qty",
                         align: "left",
@@ -391,65 +404,80 @@ include 'session/check_if_no_session.php';
                     },
 
                     {
-                        name: "date",
+                        name: "start_date",
                         label: "Date",
                         align: "left",
-                        field: (row) => row.date,
+                        field: (row) => row.start_date,
                     },
+                    {
+                        name: "expired_date",
+                        label: "Expired Date",
+                        align: "left",
+                        field: (row) => row.end_date,
+                    },
+                    {
+                        name: "action",
+                        label: "Action",
+                        align: "left",
+
+                    },
+
 
                 ],
             };
         },
-        created() {},
+
         methods: {
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            onSubmit() {
-                this.$refs.name.validate();
-                this.$refs.latin.validate();
+            onDelete(id) {
+                axios.post("action/lendBook_action.php", {
+                    action: "deleteLendBook",
+                    id: id
 
-                if (this.$refs.name.hasError || this.$refs.latin.hasError) {
-                    // check when value null
-                } else {
-                    // 
-                    axios
-                        .post("action/new-home_action.php", {
-                            action: "addNewHome",
-                            name: this.form.name,
-                            latin: this.form.latin,
-                            description: this.form.description,
-                            created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                            updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        })
-                        .then((res) => {
-                            if (res.data.status == "inserted") {
-                                this.$q.notify({
-                                    message: "Inserted successfully",
-                                    type: "positive",
-                                    position: "top-right",
-                                });
-                                //
-                                setTimeout(() => {
-                                    window.location.href = "home.php";
-                                }, 500);
-                            } else {
-                                this.$q.notify({
-                                    message: "Cannot Inserted!!!",
-                                    type: "negative",
-                                    position: "top-right",
-                                });
-                                this.$q.notify({
-                                    message: res.data.err,
-                                    type: "negative",
-                                    position: "top-right",
-                                });
-                            }
+                }).then((res) => {
+                    if (res.data.status == "delete") {
+                        this.$q.notify({
+                            message: "delete Delete successfully",
+                            type: "positive",
+                            position: "top-right",
+
                         });
-                }
+                        //
+                        setTimeout(() => {
+                            window.location.href = "lendBook.php";
+                        }, 500);
+                    } else {
+                        this.$q.notify({
+                            message: "Delete unsuccessful",
+                            type: "negative",
+                            position: "top-right",
+
+                        });
+                    }
+
+                })
+            },
+            close() {
+                this.dialog = false;
+                this.form = ""
+            },
+            onEdit(id) {
+                this.dialog = true
+                axios.post("action/lendBook_action.php", {
+                    action: "findLendBookById",
+                    id: id
+
+                }).then((res) => {
+                    this.form = res.data
+                    console.log(res.data)
+
+                })
+
             },
             goAddLengBook() {
-                window.location.href = "LendBookForm.php";
+                window.location.href = "lendBookForm.php";
             },
             toDashboard() {
                 window.location.href = "dashboard.php"
@@ -495,9 +523,25 @@ include 'session/check_if_no_session.php';
                         }
                     });
             },
+
             convertDate(d) {
                 return dayjs(d).format("YYYY-MM-DD");
             },
+            getAllData() {
+                axios
+                    .post("action/lendBook_action.php", {
+                        action: "getAllLendBook",
+                    })
+                    .then((res) => {
+                        this.dataTable = res.data;
+                        console.log(res.data)
+
+                    });
+            },
+        },
+        mounted() {
+            this.getAllData()
+
         },
     });
     </script>
