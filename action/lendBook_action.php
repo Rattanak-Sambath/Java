@@ -8,11 +8,12 @@ include '../connection/db.php';
 
 
 if ($received_data->action == 'addLendBook') {
+  $staff = $received_data->staff;
 
   $student = $received_data->student;
   $book = $received_data->book;
   $qty = $received_data->qty;
-  $start_date = $received_data->start_date;
+  $startDate = $received_data->startDate;
   $end_date = $received_data->end_date;
   
 
@@ -22,22 +23,20 @@ if ($received_data->action == 'addLendBook') {
 
   // 
   // sql
-  $sql = " insert into tbl_lendbook (student ,title,qty, start_date, end_date) values('$student','$book','$qty', '$start_date','$end_date')";
+  $sql = " insert into tbl_lendBook (staff,student ,book,qty, startDate, end_date) values('$staff','$student','$book','$qty', '$startDate','$end_date')";
   // execure query
   $result = mysqli_query($conn, $sql);
 
   if ($result === true) {
     $data = array(
       'status' => 'insert',
-      'name' => $name,
+      
       
     );
   } else {
     $data = array(
       'status' => 'cannot inserted',
-     
-      'err' => $conn->error,
-
+  
     );
   }
 
@@ -48,8 +47,8 @@ if ($received_data->action == 'addLendBook') {
 
 
 if ($received_data->action == 'getAllLendBook') {
-  // $query = "select * from tbl_lendbook ";
-  $query = "select tbl_lendbook.student, tbl_lendbook.title, tbl_lendbook.qty, tbl_lendbook.start_date, tbl_lendbook.end_date, tbl_book.image from tbl_lendbook  inner join tbl_book on tbl_lendbook.title = tbl_book.title";
+  $query = "select tbl_lendBook.* , tbl_book.image from tbl_lendBook inner join tbl_book on tbl_lendBook.book = tbl_book.title";
+  // $query = "select tbl_lendBook.student, tbl_lendBook.book, tbl_lendBook.qty, tbl_lendBook.start_date, tbl_lendBook.end_date, tbl_book.image from tbl_lendBook  inner join tbl_book on tbl_lendBook.title = tbl_book.title";
   // execure query
   $result = mysqli_query($conn, $query);
 
@@ -67,8 +66,8 @@ if ($received_data->action == 'getAllLendBook') {
 if ($received_data->action == 'deleteLendBook') {
     // var_dump($received_data->id);
     $id = $received_data->id;
-    
-    $query = "DELETE tbl_lendbook.* , tbl_book.* FROM  tbl_lendbook INNER JOIN  tbl_book ON tbl_book.id = tbl_lendbook.id WHERE tbl_book.id = $id";
+    $query = "delete from tbl_lendBook where id = $id";
+    // $query = "DELETE tbl_lendbook.* , tbl_book.* FROM  tbl_lendbook INNER JOIN  tbl_book ON tbl_book.id = tbl_lendbook.id WHERE tbl_book.id = $id";
     // execure query
     $result = mysqli_query($conn, $query);
   
@@ -79,7 +78,7 @@ if ($received_data->action == 'deleteLendBook') {
       );
     }else {
       $data = array(
-        'status' => 'cannot Delete',
+        'status' => 'cannot Delete' + $id ,
     
       );
     }
@@ -90,7 +89,7 @@ if ($received_data->action == 'findLendBookById') {
   $id = $received_data->id;
   // 
   // sql
-  $query = "select * from tbl_lendbook where id=$id ";
+  $query = "select * from tbl_lendBook where id=$id ";
   // execure query
   $result = mysqli_query($conn, $query);
   while ($row = mysqli_fetch_array($result)) {
@@ -98,6 +97,34 @@ if ($received_data->action == 'findLendBookById') {
     echo json_encode($data);
   } 
 }
+if ($received_data->action == 'updateLendBook') {
+  $id = $received_data->id;
+  $staff = $received_data->staff;
+  
+  $student = $received_data->student;
+  $book = $received_data->book;
+  $qty = $received_data->qty;
+  $startDate = $received_data->startDate;
+  $end_date = $received_data->end_date;
+
+  $sql = "update tbl_lendBook set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date ='$end_date' where id=$id";
+  // 
+  $result = mysqli_query($conn, $sql);
+  // u
+
+    if($result === true){
+      $data = array(
+        'status' => 'update',
+        
+      );
+    }else {
+      $data = array(
+        'status' => 'cannot Update',
+    
+      );
+    }
+    echo json_encode($data);
+  } 
 
   
   

@@ -1,179 +1,3 @@
-<!-- <q-drawer
-
-      :width="230"
-
-      :breakpoint="400"
-        v-model="leftDrawerOpen"
-
-        bordered
-        class=" text-black " >
-        <div>
-          <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
-              <div class="absolute-bottom bg-transparent">
-                    <q-avatar size="56px" class="q-mb-sm">
-                        <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                    </q-avatar>
-                    <div class="text-weight-bold"></div>
-
-              </div>
-          </q-img>
-        </div> -->
-<!-- <q-list @click="toDashboard()"  style="margin-top:160px; "  >
-                <q-item to="/dasboard"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="dashboard"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Dashboard</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toStaff" >
-                <q-item to="/staff"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="person"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Staff</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toStudent()" >
-                <q-item  to="/student"  active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="badge"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Student</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list  @click="toBook()">
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="import_contacts"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-              <q-list @click="toLendBook()" >
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="list_alt"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Lend-Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list>
-
-
-              <q-list  @click="toReturnBook()">
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_returned"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Return-Book</q-item-label>
-                  </q-item-section>
-                </q-item>  -->
-<!-- section one  -->
-<!-- </q-list> -->
-<!-- <q-list>
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                    <q-item-section avatar>
-                      <q-icon name="group_2"/>
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Staff</q-item-label>
-                    </q-item-section>
-                  </q-item>
-              </q-list> -->
-<!-- <q-expansion-item
-              icon="assignment_add"
-              label="Reports"
-
-            >
-
-              <q-list  class="q-pl-lg">
-                <q-list @click="toReportBook()">
-                <q-item to="/Login-1" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_turned_in"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Book</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-              <q-list @click="toReportLend()">
-                <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="list_alt"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Lend</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-
-              <q-list @click="toReportReturn()">
-                <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                  <q-item-section avatar>
-                    <q-icon name="assignment_returned"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Report-Return</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-              </q-list>
-
-                </q-list>
-                </q-expansion-item>
-
-              <q-expansion-item
-              icon="settings"
-              label="Settings"
-
-            >
-              <q-list class="q-pl-lg">
-
-                <q-list @click="toProfile()">
-                    <q-item to="/Profile" active-class="q-item-no-link-highlighting">
-                      <q-item-section avatar>
-                        <q-icon name="person"/>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>User Profile</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                </q-list>
-
-                <q-list @click="toMaintenance()">
-                    <q-item to="/Maintenance" active-class="q-item-no-link-highlighting">
-                      <q-item-section avatar>
-                        <q-icon name="construction"/>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label>Maintenance</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                </q-list>
-
-              </q-list>
-            </q-expansion-item>
-           -->
-<!-- </q-list>
-      </q-drawer> -->
-
 <!DOCTYPE html>
 <html>
 
@@ -248,15 +72,12 @@
                                             emit-value label="Student" outlined
                                             :rules="[val => !!val || 'Student is required']" />
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input type="date" dense hint="Start Date" ref="start_date"
-                                            v-model="form.start_date" outlined
-                                            :rules="[val => !!val || 'Date is required']" />
-                                    </div>
 
                                     <!-- latin -->
-
-
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input dense hint="Qty" ref="qty" v-model="form.qty" label="Qty" outlined
+                                            :rules="[val => !!val || 'Address is required']" />
+                                    </div>
 
 
                                 </div>
@@ -264,26 +85,34 @@
                                 <!-- description -->
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-select clearable dense hint="Staff" ref="staff" v-model="form.staff"
+                                            :options="staffOpt" option-label="name" option-value="name" map-options
+                                            emit-value label="Staff" outlined
+                                            :rules="[val => !!val || 'Staff is required']" />
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input type="date" dense hint="startDate" ref="startDate"
+                                            v-model="form.startDate" outlined
+                                            :rules="[val => !!val || 'Date is required']" />
+                                    </div>
+
+
+
+                                </div>
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
                                         <q-select clearable dense hint="Book" ref="book" v-model="form.book"
                                             :options="bookOpt" option-label="title" option-value="title" map-options
                                             emit-value label="Book" outlined
                                             :rules="[val => !!val || 'Book is required']" />
                                     </div>
-
-
-
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input type="date" dense hint="Expired Date" ref="expired_date"
+                                        <q-input type="date" dense hint="Expired_date" ref="end_date"
                                             v-model="form.end_date" outlined
                                             :rules="[val => !!val || 'Date is required']" />
                                     </div>
 
-                                </div>
-                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <q-input dense hint="Qty" v-model="form.qty" ref="qty" label="Qty" outlined
-                                            :rules="[val => !!val || 'Qty is required']" />
-                                    </div>
                                 </div>
 
                             </q-card-section>
@@ -320,14 +149,17 @@
             return {
                 studentOpt: [],
                 bookOpt: [],
+                staffOpt: [],
                 data: [],
                 leftDrawerOpen: true,
                 form: {
+                    staff: '',
                     student: "",
-                    start_date: dayjs(new Date()).format('YYYY-MM-DD'),
+                    startDate: dayjs(new Date()).format('YYYY-MM-DD'),
                     book: "",
                     end_date: "",
-                    qty: ""
+                    qty: "",
+                    showid: ""
                 },
             };
         },
@@ -360,10 +192,11 @@
                     axios
                         .post("action/lendBook_action.php", {
                             action: "addLendBook",
+                            staff: this.form.staff,
                             student: this.form.student,
                             book: this.form.book,
                             qty: this.form.qty,
-                            start_date: this.form.start_date,
+                            startDate: this.form.startDate,
                             end_date: this.form.end_date
 
                             // description: this.form.description,
@@ -373,9 +206,6 @@
                         .then((res) => {
 
                             if (res.data.status == "insert") {
-
-
-                            } else {
                                 this.$q.notify({
                                     message: "Inserted successfully",
                                     type: "positive",
@@ -386,16 +216,19 @@
                                     history.go(-1);
 
                                 }, 500);
-                                // this.$q.notify({
-                                //     message: "Cannot Inserted!!!",
-                                //     type: "negative",
-                                //     position: "top-right",
-                                // });
-                                // this.$q.notify({
-                                //     message: res.data.err,
-                                //     type: "negative",
-                                //     position: "top-right",
-                                // });
+
+                            } else {
+
+                                this.$q.notify({
+                                    message: "Cannot Inserted!!!" + res.status,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                this.$q.notify({
+                                    message: res.data.err,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
                             }
                         });
                 }
@@ -436,6 +269,18 @@
             toMaintenance() {
                 window.location.href = "maintenance.php";
             },
+            findById(id) {
+                axios.post("action/lendBook_action.php", {
+                    action: "findLendBookById",
+                    id: id
+
+                }).then((res) => {
+                    this.form = res.data
+                    console.log(res.data)
+
+                })
+
+            },
             // onLogout() {
             //     axios
             //         .post("action/logout_action.php", {
@@ -472,10 +317,22 @@
 
                     });
             },
+            getStaff() {
+                axios
+                    .post("action/staff_action.php", {
+                        action: "getAllStaff",
+                    })
+                    .then((res) => {
+                        this.staffOpt = res.data;
+                        console.log('staff', res.data)
+
+                    });
+            },
         },
         mounted() {
             this.getStudent();
             this.getBook();
+            this.getStaff()
         },
     });
     </script>

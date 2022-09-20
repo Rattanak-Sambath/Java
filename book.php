@@ -267,6 +267,13 @@ include 'session/check_if_no_session.php';
 
 
                                     </template>
+                                    <template v-slot:top-right>
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                    </template>
 
                                 </q-table>
                                 <q-separator />
@@ -419,6 +426,7 @@ include 'session/check_if_no_session.php';
                 ],
                 genderOpt: ["Male", "Female"],
                 data: [],
+                filter: "",
                 leftDrawerOpen: true,
                 showId: '',
                 form: {

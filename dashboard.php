@@ -289,7 +289,7 @@ include 'session/check_if_no_session.php';
                                                     class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
                                                     <div class="q-item__label text-white text-h6 text-weight-bolder">
                                                         Lend Book</div>
-                                                    <div class="q-item__label">2</div>
+                                                    <div class="q-item__label">{{lendBook.length}}</div>
                                                 </div>
                                                 <!---->
                                             </div>
@@ -390,7 +390,8 @@ include 'session/check_if_no_session.php';
                 leftDrawerOpen: true,
                 staff: [],
                 student: [],
-                book: []
+                book: [],
+                lendBook: [],
 
             };
         },
@@ -476,12 +477,24 @@ include 'session/check_if_no_session.php';
                         console.log(res.data)
 
                     });
+            },
+            findLendBook() {
+                axios
+                    .post("action/lendBook_action.php", {
+                        action: "getAllLendBook",
+                    })
+                    .then((res) => {
+                        this.lendBook = res.data;
+                        console.log(res.data)
+
+                    });
             }
         },
         mounted() {
             this.findStaff();
             this.findStudent();
-            this.findBook()
+            this.findBook();
+            this.findLendBook();
         },
     });
     </script>
