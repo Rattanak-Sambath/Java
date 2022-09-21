@@ -387,6 +387,12 @@ include 'session/check_if_no_session.php';
                         align: "left",
                     },
                     {
+                        name: "staff",
+                        label: "Staff",
+                        align: "left",
+                        field: (row) => row.staff,
+                    },
+                    {
                         name: "title",
                         label: "Title",
                         align: "left",
@@ -456,10 +462,11 @@ include 'session/check_if_no_session.php';
                 this.$refs.phone.validate();
                 this.$refs.address.validate();
                 this.$refs.gender.validate();
+                this.$refs.staff.validate();
 
 
                 if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-                    .$refs.gender.hasError) {
+                    .$refs.gender.hasError || this.$refs.staff.validate()) {
                     // check when value null
                 } else {
                     // 
@@ -467,6 +474,7 @@ include 'session/check_if_no_session.php';
                         .post("action/student_action.php", {
                             action: "updateStudent",
                             id: this.showId,
+                            staff: this.form.staff,
                             name: this.form.name,
                             phone: this.form.phone,
                             gender: this.form.gender,

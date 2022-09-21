@@ -235,8 +235,8 @@ include 'session/check_if_no_session.php';
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
                                         </q-td> -->
                                         <q-td align="center">
-                                            <q-btn dense color="negative" icon="delete"
-                                                @click="onDelete(props.row.id)" />
+                                            <q-btn v-if="<?php $_SESSION['name'] == "rattanak" ?>" dense
+                                                color="negative" icon="delete" @click="onDelete(props.row.id)" />
                                         </q-td>
 
 

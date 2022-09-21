@@ -3,6 +3,7 @@
         if(isset($_POST['update'])) {
             $id = $_GET['id'];
             $title = $_POST['title'];
+            $staff = $_POST['staff'];
             $qty = $_POST['qty'];
             $date = $_POST['date'];           
             $type = $_POST['type'];
@@ -10,7 +11,7 @@
             $tmp_name = $_FILES['image']['tmp_name'];
            
             
-            $insert = "update tbl_book set title='$title', qty='$qty', date='$date', type='$type', image='$image' where id=$id";
+            $insert = "update tbl_book set title='$title',staff='$staff', qty='$qty', date='$date', type='$type', image='$image' where id=$id";
             $run_insert = mysqli_query($conn, $insert);
             if($run_insert === true) {
                 echo "Data has been installed"; 
@@ -27,6 +28,8 @@
             $run_insert = mysqli_query($conn, $insert);
             while($row = $run_insert->fetch_array()) {
                 $title = $row['title'];
+                $staff = $row['staff'];
+
                 $qty = $row['qty'];
                 $type = $row['type'];
                 $date = $row['date'];
@@ -35,7 +38,8 @@
             } 
             
         }
-      
+        $fetchStaff = "select * from tbl_staff";
+        $result =mysqli_query($conn,$fetchStaff);
 
 
     ?>
@@ -108,6 +112,17 @@
                                                 <input type="text" placeholder="Title" class="form-control"
                                                     id="exampleInputEmail1" name="title" value="<?= $title ?>" required>
                                             </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+
+                                                <select type="text" class="form-control" id="exampleInputPassword1"
+                                                    name="staff" required value="<?= $staff ?>">
+                                                    <?php  while($row = $result->fetch_array()){
+                                                    echo '<option value="'.$row["name"].'">'.$row["name"].'</option>';
+                                                      } ?>
+                                                </select>
+
+                                            </div>
+
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
                                                 <input type="text " placeholder="Qty" class="form-control" name="qty"

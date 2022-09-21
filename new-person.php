@@ -132,16 +132,11 @@ include 'session/check_if_no_session.php';
         data: function() {
             return {
                 form: {
-                    homeId: "",
-                    name: "",
-                    latin: "",
-                    gender: "",
-                    phone: "",
+                    username: "",
+                    password_verify: "",
+                   
                 },
-                options: {
-                    gender: ["Male", "Female"],
-                    home: [],
-                },
+               
             };
         },
         created() {
@@ -149,18 +144,16 @@ include 'session/check_if_no_session.php';
         },
         methods: {
             onSubmit() {
-                this.$refs.homeId.validate();
-                this.$refs.name.validate();
-                this.$refs.latin.validate();
-                this.$refs.gender.validate();
-                this.$refs.phone.validate();
+
+                this.$refs.username.validate();
+                this.$refs.password.validate();
+
 
                 if (
-                    this.$refs.name.hasError ||
-                    this.$refs.latin.hasError ||
-                    this.$refs.homeId.hasError ||
-                    this.$refs.gender.hasError ||
-                    this.$refs.phone.hasError
+                    this.$refs.username.hasError ||
+                    this.$refs.password.hasError ||
+
+
                 ) {
                     // check when value null
                 } else {
@@ -168,12 +161,9 @@ include 'session/check_if_no_session.php';
                         .post("action/new-person_action.php", {
                             action: "addNewPerson",
                             homeId: this.form.homeId,
-                            name: this.form.name,
-                            latin: this.form.latin,
-                            gender: this.form.gender,
-                            phone: this.form.phone,
-                            created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                            updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            username: this.form.username,
+                            password: this.form.password,
+
                         })
                         .then((res) => {
                             if (res.data.status == "inserted") {
