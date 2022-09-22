@@ -37,6 +37,11 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
+                            4
+                        </q-badge>
+                    </q-btn>
                     <q-btn dense icon="logout" color="white" flat @click="onLogout()" />
 
                 </q-toolbar>
@@ -211,7 +216,7 @@ include 'session/check_if_no_session.php';
 
                             <!-- btn search -->
                             <q-card-section class="text-h5">
-                                New Staff
+                                Report Book
                             </q-card-section>
 
                             <div class="q-pa-sm">
@@ -229,19 +234,20 @@ include 'session/check_if_no_session.php';
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <!-- name -->
                                     <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-select clearable dense hint="Username" ref="name" v-model="form.staff"
+                                        <q-select clearable dense hint="Username" ref="staff" v-model="form.staff"
                                             outlined :options="staffOpt" option-label="name" option-value="name"
                                             map-options emit-value label="Staff"
                                             :rules="[val => !!val || 'Staff is required']" />
                                     </div>
                                     <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-input dense type="date" hint="StartDate" ref="name" v-model="form.startDate"
-                                            outlined :rules="[val => !!val || 'Date is required']" />
+                                        <q-input dense type="date" hint="StartDate" ref="startDate"
+                                            v-model="form.startDate" outlined
+                                            :rules="[val => !!val || 'Date is required']" />
                                     </div>
 
                                     <!-- latin -->
                                     <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-input dense hint="End Date" type="date" ref="phone" v-model="form.endDate"
+                                        <q-input dense hint="End Date" type="date" ref="endDate" v-model="form.endDate"
                                             outlined :rules="[val => !!val || 'Phone is required']" />
                                     </div>
 
@@ -255,7 +261,7 @@ include 'session/check_if_no_session.php';
                         <q-card-section align="right">
 
                             <div class="q-pa-sm">
-                                <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
+                                <q-btn icon="add" label="Add" color="indigo-10" push @click="onFind()" />
                             </div>
                         </q-card-section>
 
@@ -269,10 +275,16 @@ include 'session/check_if_no_session.php';
 
                     <q-card class="my-card q-my-sm ">
                         <!--  -->
+                        <q-card class="text-indigo-10 text-center">
+                            <q-card-section>
+                                <q-card-title class="text-h5 text-bold q-mt-sm q-mb-xs">បណ្ណាល័យ សកលវិទ្យាល័យជាតិ
+                                    បាត់ដំបង
+                                </q-card-title>
+                                <p class="text-h5 text-bold q-mt-sm q-mb-xs">Book_report</p>
+                            </q-card-section>
 
-
-
-
+                        </q-card>
+                        <hr>
                         <q-card-section>
                             <q-table flat :columns="columns" :filter="filter" :data="data">
                                 <!-- index -->
@@ -418,56 +430,49 @@ include 'session/check_if_no_session.php';
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            // OnUpdate() {
+            onFind() {
 
-            //     this.$refs.name.validate();
-            //     this.$refs.phone.validate();
-            //     this.$refs.address.validate();
-            //     this.$refs.gender.validate();
+                this.$refs.staff.validate();
+                // this.$refs.startDate.validate();
+                // this.$refs.endDate.validate();
 
+                // || this.$refs.startDate.hasError || this.$refs.endDate.hasError
 
-            //     if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-            //         .$refs.gender.hasError) {
-            //         // check when value null
-            //     } else {
-            //         // 
-            //         axios
-            //             .post("action/student_action.php", {
-            //                 action: "updateStudent",
-            //                 id: this.showId,
-            //                 name: this.form.name,
-            //                 phone: this.form.phone,
-            //                 gender: this.form.gender,
-            //                 address: this.form.address,
-            //                 // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //                 // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //             })
-            //             .then((res) => {
-            //                 if (res.data.status == "update") {
-            //                     this.$q.notify({
-            //                         message: "Update successfully",
-            //                         type: "positive",
-            //                         position: "top-right",
-            //                     });
-            //                     //
-            //                     setTimeout(() => {
-            //                         window.location.href = "student.php";
-            //                     }, 2000);
-            //                 } else {
-            //                     this.$q.notify({
-            //                         message: "Cannot Update !!!",
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                     this.$q.notify({
-            //                         message: res.data.err,
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                 }
-            //             });
-            //     }
-            // },
+                if (this.$refs.staff.hasError) {
+                    // check when value null
+                } else {
+                    // 
+                    axios
+                        .post("action/reports.php", {
+                            action: "findBookReport",
+
+                            staff: this.form.staff,
+                            startDate: this.form.startDate,
+                            endDate: this.form.endDate,
+
+                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        })
+                        .then((res) => {
+                            if (res.data.status == "find") {
+                                this.data = res.data;
+                                console.log(res.data);
+
+                            } else {
+                                this.$q.notify({
+                                    message: "Cannot find !!!",
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                this.$q.notify({
+                                    message: res.data.err,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                            }
+                        });
+                }
+            },
             goAddBook() {
                 window.location.href = "bookForm.php";
             },

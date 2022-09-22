@@ -37,6 +37,11 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
+                            4
+                        </q-badge>
+                    </q-btn>
                     <q-btn dense icon="logout" color="white" flat @click="onLogout()" />
 
                 </q-toolbar>
@@ -222,7 +227,7 @@ include 'session/check_if_no_session.php';
                         <!--  -->
                         <div>
                             <q-card-section>
-                                <q-table flat :columns="columns" row-key="name" :data="data" :filter="filter">
+                                <q-table shadow-7 :columns="columns" row-key="name" :data="dataTable" :filter="filter">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
@@ -235,8 +240,10 @@ include 'session/check_if_no_session.php';
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
                                         </q-td> -->
                                         <q-td align="center">
-                                            <q-btn v-if="<?php $_SESSION['name'] == "rattanak" ?>" dense
-                                                color="negative" icon="delete" @click="onDelete(props.row.id)" />
+
+                                            <q-btn dense color="negative" icon="delete"
+                                                @click="onDelete(props.row.id)" />
+
                                         </q-td>
 
 
@@ -352,6 +359,7 @@ include 'session/check_if_no_session.php';
         name: "new-home",
         data: function() {
             return {
+                role: '',
                 dialog: false,
                 maximizedToggle: false,
                 columns: [{
@@ -359,17 +367,18 @@ include 'session/check_if_no_session.php';
                         label: "No",
                         align: "left",
                     },
-                    {
-                        name: "name",
-                        label: "Username",
-                        align: "left",
-                        field: (row) => row.name,
-                    },
+
                     {
                         name: "email",
                         label: "Email",
                         align: "left",
                         field: (row) => row.email,
+                    },
+                    {
+                        name: "role",
+                        label: "Role",
+                        align: "left",
+                        field: (row) => row.role,
                     },
                     {
                         name: "password",
@@ -386,7 +395,7 @@ include 'session/check_if_no_session.php';
                     },
                 ],
                 genderOpt: ["Male", "Female"],
-                data: [],
+                dataTable: [],
                 leftDrawerOpen: true,
                 showId: '',
                 form: {
@@ -564,10 +573,12 @@ include 'session/check_if_no_session.php';
                         action: "getUser",
                     })
                     .then((res) => {
-                        this.data = res.data;
-                        console.log(res.data)
+                        this.dataTable = res.data;
+
+
 
                     });
+
             },
             convertDate(d) {
                 return dayjs(d).format("YYYY-MM-DD");

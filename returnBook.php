@@ -37,6 +37,11 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
+                            4
+                        </q-badge>
+                    </q-btn>
                     <q-btn dense icon="logout" color="negative" flat @click="onLogout()" />
 
                 </q-toolbar>
