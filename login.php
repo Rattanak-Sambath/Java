@@ -47,7 +47,7 @@ include 'session/check_if_session.php';
                                         label="Login" type="submit">
 
                                     </q-btn>
-                                    <q-btn :loading="loading" push color="indigo-10" size="lg"
+                                    <q-btn :loading="loading1" push color="indigo-10" size="lg"
                                         class="full-width q-my-xs" dense label="Register" type="register"
                                         @click="register()">
 
@@ -77,6 +77,7 @@ include 'session/check_if_session.php';
                     password: "",
                 },
                 loading: false,
+                loading1: false,
             };
         },
         methods: {

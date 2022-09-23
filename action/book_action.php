@@ -3,56 +3,56 @@ $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 // connection
 include '../connection/db.php';
-// 
-if ($received_data->action == 'bookAdd') {
-    header('Access-Control-Allow-Origin: *');  
-    $filename = $_FILES['file']['name'];
-    $allowed_extensions = array('jpg','jpeg','png','pdf');
-    $title = $received_data->title;
-  $qty = $received_data->qty;
-  // $description = $received_data->description;
-  $type = $received_data->type;
-  $date = $received_data->date;
-//   $created = $received_data->created;
-//   $updated = $received_data->updated;
-  // 
-     $extension = pathinfo($filename, PATHINFO_EXTENSION);
-      if(in_array(strtolower($extension),$allowed_extensions) ) {     
-         if(move_uploaded_file($_FILES['file']['tmp_name'], "upload/".$filename)){
-            $sql = "insert into tbl_book (title, qty, date, type, image) values('$title', '$qty', '$date', '$type', '$filename')";
-            // execure query
-            $result = mysqli_query($conn, $sql);
+// // 
+// if ($received_data->action == 'bookAdd') {
+//     header('Access-Control-Allow-Origin: *');  
+//     $filename = $_FILES['file']['name'];
+//     $allowed_extensions = array('jpg','jpeg','png','pdf');
+//     $title = $received_data->title;
+//   $qty = $received_data->qty;
+//   // $description = $received_data->description;
+//   $type = $received_data->type;
+//   $date = $received_data->date;
+// //   $created = $received_data->created;
+// //   $updated = $received_data->updated;
+//   // 
+//      $extension = pathinfo($filename, PATHINFO_EXTENSION);
+//       if(in_array(strtolower($extension),$allowed_extensions) ) {     
+//          if(move_uploaded_file($_FILES['file']['tmp_name'], "upload/".$filename)){
+//             $sql = "insert into tbl_book (title, qty, date, type, image) values('$title', '$qty', '$date', '$type', '$filename')";
+//             // execure query
+//             $result = mysqli_query($conn, $sql);
           
-            if ($result === true) {
-              $data = array(
-                'status' => 'insert',
-                'name' => $name,
-              );
-            } else {
-              $data = array(
-                'status' => 'cannot inserted',
-                'name' => $name,
-                'err' => $conn->error,
+//             if ($result === true) {
+//               $data = array(
+//                 'status' => 'insert',
+//                 'name' => $name,
+//               );
+//             } else {
+//               $data = array(
+//                 'status' => 'cannot inserted',
+//                 'name' => $name,
+//                 'err' => $conn->error,
           
-              );
-            }
+//               );
+//             }
           
-            // while ($row = $result->fetch_array()) {
-            //   $data[] = $row;
-            // }
+//             // while ($row = $result->fetch_array()) {
+//             //   $data[] = $row;
+//             // }
           
-            // echo
-            echo json_encode($data);
-         }else{
-             echo 0;
-         }
-   }else{
-       echo 0;
-   } 
+//             // echo
+//             echo json_encode($data);
+//          }else{
+//              echo 0;
+//          }
+//    }else{
+//        echo 0;
+//    } 
   
-  // sql
+//   // sql
  
-}
+// }
 
 if ($received_data->action == 'getAllBook') {
   // sql

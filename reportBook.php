@@ -275,19 +275,23 @@ include 'session/check_if_no_session.php';
 
                     <q-card class="my-card q-my-sm ">
                         <!--  -->
-                        <q-card class="text-indigo-10 text-center">
+                        <q-card class="purple-10 text-center">
                             <q-card-section>
-                                <q-card-title class="text-h5 text-bold q-mt-sm q-mb-xs">បណ្ណាល័យ សកលវិទ្យាល័យជាតិ
+                                <p class="text-h5 text-bold-5 q-mt-sm q-mb-xs text-weight-bolder">
+                                    បណ្ណាល័យ
+                                    សកលវិទ្យាល័យជាតិ
                                     បាត់ដំបង
-                                </q-card-title>
+                                </p>
                                 <p class="text-h5 text-bold q-mt-sm q-mb-xs">Book_report</p>
                             </q-card-section>
 
                         </q-card>
                         <hr>
                         <q-card-section>
-                            <q-table flat :columns="columns" :filter="filter" :data="data">
+
+                            <q-table :columns="columns" :filter="filter" :data="datatable">
                                 <!-- index -->
+
                                 <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                     <q-td>
                                         {{ props.pageIndex + 1 }}
@@ -317,18 +321,29 @@ include 'session/check_if_no_session.php';
                                         </template>
                                     </q-input>
                                 </template>
-                                <template slot="body-cell-action" slot-scope="props" :props="props.row">
+                                <template slot="body-cell-image" slot-scope="props" :props="props.row">
                                     <q-td align="center">
-                                        <!-- <a href="Editbook.php?id="+ ID>Edit</a> -->
-                                        <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                        <div v-show="props.row.id">
+                                            <img :src="'upload/' + props.row.image" style="width:50px ; height: 50px"
+                                                alt="">
+                                        </div>
+
                                     </q-td>
-                                    <q-td align="center">
-                                        <q-btn dense color="negative" icon="delete" @click="onDelete(props.row.id)" />
-                                    </q-td>
+
 
 
                                 </template>
+                                <template slot="body-cell-status" slot-scope="props" :props="props.row">
+                                    <td align="center">
+                                        <q-badge outline color="primary" label="Instock">
+                                        </q-badge>
+
+                                    </td>
+                                </template>
                                 <template v-slot:top-right>
+                                    <q-btn dense color="indigo-10" round icon="menu_book" class="q-ma-md">
+                                        <q-badge color="red-10" floating>{{datatable.length}}</q-badge>
+                                    </q-btn>
                                     <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                         <template v-slot:append>
                                             <q-icon name="search" />
@@ -340,9 +355,18 @@ include 'session/check_if_no_session.php';
                             <q-separator />
                         </q-card-section>
 
+                    </q-card>
+                    <q-card style="width: 100%">
+
+                        <div style="width:300px" class="shadow-7 q-ma-md  float-right">
+
+                            <div class="text-right" style="width: 300px">Total Book:{{datatable.length}} </div>
+
+                        </div>
 
 
                     </q-card>
+
                 </div>
 
 
@@ -408,15 +432,15 @@ include 'session/check_if_no_session.php';
                         field: (row) => row.date,
                     },
                     {
-                        name: "action",
-                        label: "Action",
+                        name: "status",
+                        label: "Status",
                         align: "center",
 
                     },
 
                 ],
                 genderOpt: ["Male", "Female"],
-                data: [],
+                datatable: [],
                 filter: "",
                 leftDrawerOpen: true,
                 showId: '',
@@ -425,6 +449,15 @@ include 'session/check_if_no_session.php';
             };
         },
         created() {},
+        watch: {
+            staff: {
+                handler: function(val, oldVal) {
+                    console.log(oldVal, val);
+                },
+                deep: true,
+                immediate: true
+            },
+        },
         methods: {
 
             toggleLeftDrawer() {
@@ -433,8 +466,8 @@ include 'session/check_if_no_session.php';
             onFind() {
 
                 this.$refs.staff.validate();
-                // this.$refs.startDate.validate();
-                // this.$refs.endDate.validate();
+                this.$refs.startDate.validate();
+                this.$refs.endDate.validate();
 
                 // || this.$refs.startDate.hasError || this.$refs.endDate.hasError
 
@@ -445,7 +478,6 @@ include 'session/check_if_no_session.php';
                     axios
                         .post("action/reports.php", {
                             action: "findBookReport",
-
                             staff: this.form.staff,
                             startDate: this.form.startDate,
                             endDate: this.form.endDate,
@@ -454,8 +486,8 @@ include 'session/check_if_no_session.php';
                             // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                         })
                         .then((res) => {
-                            if (res.data.status == "find") {
-                                this.data = res.data;
+                            if (res) {
+                                this.datatable = res.data;
                                 console.log(res.data);
 
                             } else {
@@ -529,18 +561,19 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         this.staffOpt = res.data;
-                        console.log('staff', res.data)
+
 
                     });
             },
             goBack() {
-                history.go(-1);
+                window.location.href = "staff.php";
             }
 
 
         },
         mounted() {
             this.getStaff();
+
 
         },
     });

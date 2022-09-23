@@ -233,20 +233,27 @@ include 'session/check_if_no_session.php';
 
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <!-- name -->
-                                    <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-select clearable dense hint="Username" ref="name" v-model="form.staff"
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <q-select clearable dense hint="Student" ref="staff" v-model="form.student"
+                                            outlined :options="studentOpt" option-label="name" option-value="name"
+                                            map-options emit-value label="Student"
+                                            :rules="[val => !!val || 'Student is required']" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <q-select clearable dense hint="Username" ref="staff" v-model="form.staff"
                                             outlined :options="staffOpt" option-label="name" option-value="name"
                                             map-options emit-value label="Staff"
                                             :rules="[val => !!val || 'Staff is required']" />
                                     </div>
-                                    <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-input dense type="date" hint="StartDate" ref="name" v-model="form.startDate"
-                                            outlined :rules="[val => !!val || 'Date is required']" />
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <q-input dense type="date" hint="StartDate" ref="startDate"
+                                            v-model="form.startDate" outlined
+                                            :rules="[val => !!val || 'Date is required']" />
                                     </div>
 
                                     <!-- latin -->
-                                    <div class="col-xs-12 col-sm-4 col-md-4">
-                                        <q-input dense hint="End Date" type="date" ref="phone" v-model="form.endDate"
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <q-input dense hint="End Date" type="date" ref="endDate" v-model="form.endDate"
                                             outlined :rules="[val => !!val || 'Phone is required']" />
                                     </div>
 
@@ -260,7 +267,7 @@ include 'session/check_if_no_session.php';
                         <q-card-section align="right">
 
                             <div class="q-pa-sm">
-                                <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
+                                <q-btn icon="add" label="Add" color="indigo-10" push @click="onFind()" />
                             </div>
                         </q-card-section>
 
@@ -274,19 +281,23 @@ include 'session/check_if_no_session.php';
 
                     <q-card class="my-card q-my-sm ">
                         <!--  -->
-                        <q-card class="text-indigo-10 text-center">
+                        <q-card class="purple-10 text-center">
                             <q-card-section>
-                                <q-card-title class="text-h5 text-bold q-mt-sm q-mb-xs">បណ្ណាល័យ សកលវិទ្យាល័យជាតិ
+                                <p class="text-h5 text-bold-5 q-mt-sm q-mb-xs text-weight-bolder">
+                                    បណ្ណាល័យ
+                                    សកលវិទ្យាល័យជាតិ
                                     បាត់ដំបង
-                                </q-card-title>
-                                <p class="text-h5 text-bold q-mt-sm q-mb-xs">LendBook_Report</p>
+                                </p>
+                                <p class="text-h5 text-bold q-mt-sm q-mb-xs">LendBook Report</p>
                             </q-card-section>
 
                         </q-card>
                         <hr>
                         <q-card-section>
-                            <q-table flat :columns="columns" :filter="filter" :data="data">
+
+                            <q-table :columns="columns" :filter="filter" :data="datatable">
                                 <!-- index -->
+
                                 <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                     <q-td>
                                         {{ props.pageIndex + 1 }}
@@ -316,18 +327,23 @@ include 'session/check_if_no_session.php';
                                         </template>
                                     </q-input>
                                 </template>
-                                <template slot="body-cell-action" slot-scope="props" :props="props.row">
+                                <template slot="body-cell-image" slot-scope="props" :props="props.row">
                                     <q-td align="center">
-                                        <!-- <a href="Editbook.php?id="+ ID>Edit</a> -->
-                                        <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                        <div v-show="props.row.id">
+                                            <img :src="'upload/' + props.row.image" style="width:50px ; height: 50px"
+                                                alt="">
+                                        </div>
+
                                     </q-td>
-                                    <q-td align="center">
-                                        <q-btn dense color="negative" icon="delete" @click="onDelete(props.row.id)" />
-                                    </q-td>
+
 
 
                                 </template>
+
                                 <template v-slot:top-right>
+                                    <q-btn dense color="indigo-10" round icon="menu_book" class="q-ma-md">
+                                        <q-badge color="red-10" floating>{{datatable.length}}</q-badge>
+                                    </q-btn>
                                     <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                         <template v-slot:append>
                                             <q-icon name="search" />
@@ -339,9 +355,18 @@ include 'session/check_if_no_session.php';
                             <q-separator />
                         </q-card-section>
 
+                    </q-card>
+                    <q-card style="width: 100%">
+
+                        <div style="width:300px" class="shadow-7 q-ma-md  float-right">
+
+                            <div class="text-right" style="width: 300px">Total Book:{{datatable.length}} </div>
+
+                        </div>
 
 
                     </q-card>
+
                 </div>
 
 
@@ -366,10 +391,12 @@ include 'session/check_if_no_session.php';
                 dialog: false,
                 maximizedToggle: false,
                 staffOpt: [],
+                studentOpt: [],
                 form: {
                     startDate: '',
                     endDate: dayjs(new Date()).format('YYYY-MM-DD'),
                     staff: '',
+                    student: ''
                 },
                 columns: [{
                         name: "index",
@@ -377,45 +404,54 @@ include 'session/check_if_no_session.php';
                         align: "left",
                     },
                     {
+                        name: "staff",
+                        label: "Staff",
+                        align: "left",
+                        field: (row) => row.staff,
+                    },
+                    {
+                        name: "student",
+                        label: "Student",
+                        align: "left",
+                        field: (row) => row.student,
+                    },
+                    {
                         name: "title",
                         label: "Title",
                         align: "left",
-                        field: (row) => row.title,
-                    },
-                    {
-                        name: "qty",
-                        label: "Qty",
-                        align: "center",
-                        field: (row) => row.qty,
+                        field: (row) => row.book,
                     },
                     {
                         name: "image",
                         label: "Image",
-                        align: "center",
+                        align: "left",
                         field: (row) => row.image,
                     },
                     {
-                        name: "type",
-                        label: "Type",
-                        align: "center",
-                        field: (row) => row.type,
+                        name: "qty",
+                        label: "Qty",
+                        align: "left",
+                        field: (row) => row.qty,
                     },
+
                     {
-                        name: "date",
+                        name: "start_date",
                         label: "Date",
                         align: "left",
-                        field: (row) => row.date,
+                        field: (row) => row.startDate,
                     },
                     {
-                        name: "action",
-                        label: "Action",
-                        align: "center",
-
+                        name: "expired_date",
+                        label: "Expired Date",
+                        align: "left",
+                        field: (row) => row.end_date,
                     },
+
+
 
                 ],
                 genderOpt: ["Male", "Female"],
-                data: [],
+                datatable: [],
                 filter: "",
                 leftDrawerOpen: true,
                 showId: '',
@@ -424,61 +460,62 @@ include 'session/check_if_no_session.php';
             };
         },
         created() {},
+        watch: {
+            staff: {
+                handler: function(val, oldVal) {
+                    console.log(oldVal, val);
+                },
+                deep: true,
+                immediate: true
+            },
+        },
         methods: {
 
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            // OnUpdate() {
+            onFind() {
 
-            //     this.$refs.name.validate();
-            //     this.$refs.phone.validate();
-            //     this.$refs.address.validate();
-            //     this.$refs.gender.validate();
+                this.$refs.staff.validate();
+                this.$refs.startDate.validate();
+                this.$refs.endDate.validate();
 
+                // || this.$refs.startDate.hasError || this.$refs.endDate.hasError
 
-            //     if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-            //         .$refs.gender.hasError) {
-            //         // check when value null
-            //     } else {
-            //         // 
-            //         axios
-            //             .post("action/student_action.php", {
-            //                 action: "updateStudent",
-            //                 id: this.showId,
-            //                 name: this.form.name,
-            //                 phone: this.form.phone,
-            //                 gender: this.form.gender,
-            //                 address: this.form.address,
-            //                 // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //                 // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-            //             })
-            //             .then((res) => {
-            //                 if (res.data.status == "update") {
-            //                     this.$q.notify({
-            //                         message: "Update successfully",
-            //                         type: "positive",
-            //                         position: "top-right",
-            //                     });
-            //                     //
-            //                     setTimeout(() => {
-            //                         window.location.href = "student.php";
-            //                     }, 2000);
-            //                 } else {
-            //                     this.$q.notify({
-            //                         message: "Cannot Update !!!",
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                     this.$q.notify({
-            //                         message: res.data.err,
-            //                         type: "negative",
-            //                         position: "top-right",
-            //                     });
-            //                 }
-            //             });
-            //     }
-            // },
+                if (this.$refs.staff.hasError) {
+                    // check when value null
+                } else {
+                    // 
+                    axios
+                        .post("action/reports.php", {
+                            action: "findBookReport",
+                            staff: this.form.staff,
+                            startDate: this.form.startDate,
+                            endDate: this.form.endDate,
+
+                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        })
+                        .then((res) => {
+                            if (res) {
+                                this.datatable = res.data;
+                                console.log(res.data);
+
+                            } else {
+                                this.$q.notify({
+                                    message: "Cannot find !!!",
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                this.$q.notify({
+                                    message: res.data.err,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                            }
+                        });
+                }
+            },
             goAddBook() {
                 window.location.href = "bookForm.php";
             },
@@ -535,18 +572,42 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         this.staffOpt = res.data;
-                        console.log('staff', res.data)
+
 
                     });
             },
             goBack() {
-                history.go(-1);
-            }
+                window.location.href = "staff.php";
+            },
+            getAllData() {
+                axios
+                    .post("action/lendBook_action.php", {
+                        action: "getAllLendBook",
+                    })
+                    .then((res) => {
+                        this.datatable = res.data;
+                        console.log(res.data)
+
+                    });
+            },
+            getStudent() {
+                axios
+                    .post("action/student_action.php", {
+                        action: "getAllStudent",
+                    })
+                    .then((res) => {
+                        this.studentOpt = res.data;
+
+
+                    });
+            },
 
 
         },
         mounted() {
             this.getStaff();
+            this.getAllData();
+            this.getStudent();
 
         },
     });
