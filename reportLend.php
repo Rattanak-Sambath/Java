@@ -488,8 +488,9 @@ include 'session/check_if_no_session.php';
                     // 
                     axios
                         .post("action/reports.php", {
-                            action: "findBookReport",
+                            action: "findBookLendReport",
                             staff: this.form.staff,
+                            student: this.form.student,
                             startDate: this.form.startDate,
                             endDate: this.form.endDate,
 

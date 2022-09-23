@@ -23,28 +23,25 @@ if ($received_data->action == 'findBookReport') {
   // echo
   echo json_encode($data);
 }
-// if ($received_data->action == 'findBookReport') {
-//     $staff = $received_data->staff;
- 
-//     // $startDate = $received_data->startDate;
-//     // $endDate = $received_data->endDate;
-//     // sql
-//     $query = "select * from tbl_book ";
-//     // execure query
-//     $result = mysqli_query($conn, $query);
+if ($received_data->action == 'findBookLendReport') {
+    $staff = $received_data->staff;
+    $student = $received_data->student;
+    $startDate = $received_data->startDate;
+    $endDate = $received_data->endDate;
+    // sql
+    $query = "select tbl_lendbook.* , tbl_book.image from tbl_lendbook inner join tbl_book on tbl_lendbook.book = tbl_book.title where tbl_lendbook = '$staff'   ";
+    // execure query
+    $result = mysqli_query($conn, $query);
   
-//     if($result === true){
-//         $data = array(
-//           'status' => 'find',        
-//         );
-//       }else {
-//         $data = array(
-//           'status' => 'cannot find report',
-      
-//         );
-//       }
+    while ($row = $result->fetch_array()) {
+      $data[] = $row;
+      $data = array(
+        'status' => 'find',        
+      );
+    }
+    
   
-//     echo json_encode($data);
-//   }
-// 
+    echo json_encode($data);
+  }
+
 ?>

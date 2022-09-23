@@ -450,14 +450,16 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         watch: {
-            staff: {
-                handler: function(val, oldVal) {
-                    console.log(oldVal, val);
+            'form' : {
+               handler:  function (newValue, oldValue) {
+                    if(newValue){
+                        this.datatable = []
+                    }
                 },
-                deep: true,
+                deep : true,
                 immediate: true
-            },
-        },
+            }
+         },
         methods: {
 
             toggleLeftDrawer() {
@@ -474,7 +476,7 @@ include 'session/check_if_no_session.php';
                 if (this.$refs.staff.hasError) {
                     // check when value null
                 } else {
-                    // 
+                    this.datatable =[];
                     axios
                         .post("action/reports.php", {
                             action: "findBookReport",
@@ -567,12 +569,25 @@ include 'session/check_if_no_session.php';
             },
             goBack() {
                 window.location.href = "staff.php";
-            }
+            },
+            getAllData() {
+                axios
+                    .post("action/book_action.php", {
+                        action: "getAllBook",
+                    })
+                    .then((res) => {
+                        this.datatable = res.data;
+                        console.log(res.data)
+
+
+                    });
+            },
 
 
         },
         mounted() {
             this.getStaff();
+            this.getAllData();
 
 
         },
