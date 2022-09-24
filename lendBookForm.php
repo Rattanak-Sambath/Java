@@ -159,7 +159,8 @@
                     book: "",
                     end_date: "",
                     qty: "",
-                    showid: ""
+                    showid: "",
+                    status: "lendBook",
                 },
             };
         },
@@ -197,7 +198,8 @@
                             book: this.form.book,
                             qty: this.form.qty,
                             startDate: this.form.startDate,
-                            end_date: this.form.end_date
+                            end_date: this.form.end_date,
+                            status: this.form.status
 
                             // description: this.form.description,
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),

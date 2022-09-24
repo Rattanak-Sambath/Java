@@ -111,7 +111,7 @@ include 'session/check_if_no_session.php';
                             <q-icon name="list_alt" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Lend-Book</q-item-label>
+                            <q-item-label>Borrow-Book</q-item-label>
                         </q-item-section>
                     </q-item>
                     <!-- section one  -->

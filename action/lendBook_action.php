@@ -15,7 +15,9 @@ if ($received_data->action == 'addLendBook') {
   $qty = $received_data->qty;
   $startDate = $received_data->startDate;
   $end_date = $received_data->end_date;
-  
+  $status = $received_data->status;
+ 
+  var_dump($status);
 
   
 //   $created = $received_data->created;
@@ -24,15 +26,18 @@ if ($received_data->action == 'addLendBook') {
   // 
   // sql
   $sql = " insert into tbl_lendBook (staff,student ,book,qty, startDate, end_date) values('$staff','$student','$book','$qty', '$startDate','$end_date')";
-  // execure query
   $result = mysqli_query($conn, $sql);
+ 
+  if ($result === true ) {
+          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date, status) values('$staff','$student','$book','$qty', '$startDate','$end_date', '$status')";
+          $secondResult = mysqli_query($conn, $secondSql);
+          if($secondResult ===true){
+            $data = array(
+              'status' => 'insert',  
+            );
+          }
 
-  if ($result === true) {
-    $data = array(
-      'status' => 'insert',
       
-      
-    );
   } else {
     $data = array(
       'status' => 'cannot inserted',

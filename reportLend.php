@@ -108,7 +108,7 @@ include 'session/check_if_no_session.php';
                             <q-icon name="list_alt" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Lend-Book</q-item-label>
+                            <q-item-label>Borrow-Book</q-item-label>
                         </q-item-section>
                     </q-item>
                     <!-- section one  -->
@@ -308,9 +308,7 @@ include 'session/check_if_no_session.php';
                                 <template slot="body-cell-image" slot-scope="props" :props="props.row">
                                     <q-td align="center" class="vertical-align-middle">
 
-                                        <div v-show="!props.row.id">
-                                            <img style="width:50px ; height: 50px" alt="">
-                                        </div>
+
                                         <div v-show="props.row.id">
                                             <img :src="'upload/' + props.row.image" style="width:50px ; height: 50px"
                                                 alt="">
@@ -419,7 +417,7 @@ include 'session/check_if_no_session.php';
                         name: "title",
                         label: "Title",
                         align: "left",
-                        field: (row) => row.book,
+                        field: (row) => row.title,
                     },
                     {
                         name: "image",
@@ -435,13 +433,13 @@ include 'session/check_if_no_session.php';
                     },
 
                     {
-                        name: "start_date",
+                        name: "startDate",
                         label: "Date",
                         align: "left",
                         field: (row) => row.startDate,
                     },
                     {
-                        name: "expired_date",
+                        name: "end_date",
                         label: "Expired Date",
                         align: "left",
                         field: (row) => row.end_date,
@@ -461,13 +459,16 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         watch: {
-            staff: {
-                handler: function(val, oldVal) {
-                    console.log(oldVal, val);
+            'form': {
+                handler: function(newValue, oldValue) {
+                    if (newValue) {
+                        this.datatable = []
+                        this.onFind();
+                    }
                 },
                 deep: true,
                 immediate: true
-            },
+            }
         },
         methods: {
 
@@ -485,7 +486,8 @@ include 'session/check_if_no_session.php';
                 if (this.$refs.staff.hasError) {
                     // check when value null
                 } else {
-                    // 
+
+                    this.datatable = [];
                     axios
                         .post("action/reports.php", {
                             action: "findBookLendReport",
@@ -499,6 +501,7 @@ include 'session/check_if_no_session.php';
                         })
                         .then((res) => {
                             if (res) {
+
                                 this.datatable = res.data;
                                 console.log(res.data);
 

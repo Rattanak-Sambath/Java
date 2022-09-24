@@ -108,7 +108,7 @@ include 'session/check_if_no_session.php';
                             <q-icon name="list_alt" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Lend-Book</q-item-label>
+                            <q-item-label>Borrow-Book</q-item-label>
                         </q-item-section>
                     </q-item>
                     <!-- section one  -->
@@ -450,16 +450,17 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         watch: {
-            'form' : {
-               handler:  function (newValue, oldValue) {
-                    if(newValue){
+            'form': {
+                handler: function(newValue, oldValue) {
+                    if (newValue) {
                         this.datatable = []
+                        this.onFind();
                     }
                 },
-                deep : true,
+                deep: true,
                 immediate: true
             }
-         },
+        },
         methods: {
 
             toggleLeftDrawer() {
@@ -476,7 +477,7 @@ include 'session/check_if_no_session.php';
                 if (this.$refs.staff.hasError) {
                     // check when value null
                 } else {
-                    this.datatable =[];
+                    this.datatable = [];
                     axios
                         .post("action/reports.php", {
                             action: "findBookReport",
