@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -59,14 +57,15 @@
                             </div>
 
                         </div>
-                        <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange" active-color="secondary">
-                                    <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
-                                    /
-                                    <q-breadcrumbs-el label="Borrow-Book" icon="list_alt" class="q-ma-xs" />
+                        <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange"
+                            active-color="secondary">
+                            <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                            /
+                            <q-breadcrumbs-el label="Borrow-Book" icon="list_alt" class="q-ma-xs" />
 
-                                    /
-                                    <q-breadcrumbs-el label="BorrowBook Form" icon="list_alt" class="q-ma-xs" />
-                            </q-breadcrumbs>
+                            /
+                            <q-breadcrumbs-el label="BorrowBook Form" icon="list_alt" class="q-ma-xs" />
+                        </q-breadcrumbs>
                         <div>
                             <q-separator />
                         </div>
@@ -74,8 +73,9 @@
                         <div>
                             <q-card-section>
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                        <q-input readonly dense hint="ForiegnKey" ref="foriegnKey" v-model="form.foreignkey" value="form.foreignkey" label="ForiegnKey" outlined
-                                                :rules="[val => !!val || 'foriegnKey is required']"  />
+                                    <q-input readonly dense hint="ForiegnKey" ref="foriegnKey" v-model="form.foreignkey"
+                                        label="ForiegnKey" outlined
+                                        :rules="[val => !!val || 'foriegnKey is required']" />
                                 </div>
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <!-- name -->
@@ -85,7 +85,7 @@
                                             emit-value label="Student" outlined
                                             :rules="[val => !!val || 'Student is required']" />
                                     </div>
-                                        
+
                                     <!-- latin -->
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <q-input dense hint="Qty" ref="qty" v-model="form.qty" label="Qty" outlined
@@ -174,10 +174,11 @@
                     qty: "",
                     showid: "",
                     status: "lendBook",
-                 
+                    foreignkey: ''
+
                 },
-                
-               
+
+
 
             };
         },
@@ -217,7 +218,7 @@
                             startDate: this.form.startDate,
                             end_date: this.form.end_date,
                             status: this.form.status,
-                            foriegnkey: this.form.foriegnkey
+                            foreignkey: this.form.foreignkey
 
                             // description: this.form.description,
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
@@ -238,14 +239,14 @@
                                 }, 500);
 
                             } else {
-
+                                console.log(res.status)
                                 this.$q.notify({
                                     message: "Cannot Inserted!!!" + res.status,
                                     type: "negative",
                                     position: "top-right",
                                 });
                                 this.$q.notify({
-                                    message: res.data.err,
+                                    message: res.data,
                                     type: "negative",
                                     position: "top-right",
                                 });
@@ -354,9 +355,9 @@
                         action: "getAllLendBook",
                     })
                     .then((res) => {
-                        this.dataTable   = res.data;
-                     
-                        // this.form.foreignkey = this.dataTable.length + 1 ;
+                        this.dataTable = res.data;
+
+                        this.form.foreignkey = this.dataTable.length + 1;
 
                     });
             },

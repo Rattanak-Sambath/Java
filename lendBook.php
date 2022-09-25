@@ -44,8 +44,8 @@ include 'session/check_if_no_session.php';
                     </q-btn>
 
                     <!-- right side -->
-                    <q-avatar >
-                        <img  class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                    <q-avatar>
+                        <img class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
                     </q-avatar>
                     <q-btn class="q-mx-md" dense round flat icon="email">
                         <q-badge color="red" floating transparent>
@@ -233,13 +233,14 @@ include 'session/check_if_no_session.php';
                             </div>
 
                         </div>
-                        <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange" active-color="secondary">
-                                    <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
-                                    /
-                                    <q-breadcrumbs-el label="Borrow-Book" icon="list_alt" class="q-ma-xs" />
+                        <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange"
+                            active-color="secondary">
+                            <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                            /
+                            <q-breadcrumbs-el label="Borrow-Book" icon="list_alt" class="q-ma-xs" />
 
-                                    
-                            </q-breadcrumbs>
+
+                        </q-breadcrumbs>
                         <div>
                             <q-separator />
                         </div>
@@ -264,11 +265,12 @@ include 'session/check_if_no_session.php';
 
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
                                         <q-td align="center">
-                                            <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                            <q-btn dense color="primary" icon="create"
+                                                @click="onEdit(props.row.foreignkey)" />
                                         </q-td>
                                         <q-td align="center">
                                             <q-btn dense color="negative" icon="delete"
-                                                @click="onDelete(props.row.id)" />
+                                                @click="onDelete(props.row.foreignkey)" />
                                         </q-td>
 
 
@@ -309,7 +311,11 @@ include 'session/check_if_no_session.php';
                                 <!--  -->
                                 <div>
                                     <q-card-section>
-
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <q-input readonly dense hint="ForiegnKey" ref="foriegnKey"
+                                                v-model="form.foreignkey" label="ForiegnKey" outlined
+                                                :rules="[val => !!val || 'foriegnKey is required']" />
+                                        </div>
                                         <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                             <!-- name -->
                                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -408,7 +414,9 @@ include 'session/check_if_no_session.php';
                     book: "",
                     qty: "",
                     startDate: "",
-                    end_date: ""
+                    end_date: "",
+                    status: "lendBook",
+                    foreignkey: ''
                 },
                 columns: [{
                         name: "index",
@@ -499,7 +507,9 @@ include 'session/check_if_no_session.php';
                             book: this.form.book,
                             qty: this.form.qty,
                             startDate: this.form.startDate,
-                            end_date: this.form.end_date
+                            end_date: this.form.end_date,
+                            status: this.form.status,
+                            foreignkey: this.form.foreignkey,
 
 
                         })
@@ -507,7 +517,7 @@ include 'session/check_if_no_session.php';
 
                             if (res.data.status == "update") {
                                 this.$q.notify({
-                                    message: "Inserted successfully",
+                                    message: "Updated successfully",
                                     type: "positive",
                                     position: "top-right",
                                 });
@@ -520,7 +530,7 @@ include 'session/check_if_no_session.php';
                             } else {
 
                                 this.$q.notify({
-                                    message: "Cannot Inserted!!!" + res.status,
+                                    message: "Cannot Update!!!" + res.status,
                                     type: "negative",
                                     position: "top-right",
                                 });
@@ -638,7 +648,8 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         this.dataTable = res.data;
-                        console.log(res.data)
+
+                        console.log(form.foreignkey)
 
                     });
             },
@@ -686,24 +697,32 @@ include 'session/check_if_no_session.php';
     </script>
 </body>
 
-</html><style>
-       .image {
+</html>
+<style>
+.image {
     position: absolute;
-   
-    -webkit-animation:spin 4s linear infinite;
-    -moz-animation:spin 4s linear infinite;
-    animation:spin 4s linear infinite;
+
+    -webkit-animation: spin 4s linear infinite;
+    -moz-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
 }
-@-moz-keyframes spin { 
-    100% { -moz-transform: rotate(360deg); } 
+
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
 }
-@-webkit-keyframes spin { 
-    100% { -webkit-transform: rotate(360deg); } 
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
-@keyframes spin { 
-    100% { 
-        -webkit-transform: rotate(360deg); 
-        transform:rotate(360deg); 
-    } 
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 </style>

@@ -28,10 +28,11 @@ if ($received_data->action == 'addLendBook') {
   $result = mysqli_multi_query($conn, $sql);
  
   if ($result === true ) {
-          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date,foreignkey, status) values('$staff','$student','$book','$qty', '$startDate','$end_date','$foreignkey', '$status')";
+          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date, status, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$end_date', '$status', '$foreignkey')";
           $secondResult = mysqli_multi_query($conn, $secondSql);
-          if($secondResult ===true){
+          if($secondResult === true){
             $data = array(
+               
               'status' => 'insert',  
             );
           }
@@ -70,12 +71,12 @@ if ($received_data->action == 'getAllLendBook') {
 if ($received_data->action == 'deleteLendBook') {
     // var_dump($received_data->id);
     $id = $received_data->id;
-    $query = "delete from tbl_lendBook where id = $id";
+    $query = "delete from tbl_lendBook where foreignkey = $id";
    
     $result = mysqli_query($conn, $query);
   
     if($result === true){
-      $query2 = "delete from tbl_inventory where ";
+      $query2 = "delete from tbl_inventory where foreignkey = $id";
       $result2 = mysqli_query($conn, $query2);
       if($result2 === true){
       $data = array(
@@ -96,7 +97,7 @@ if ($received_data->action == 'findLendBookById') {
   $id = $received_data->id;
   // 
   // sql
-  $query = "select * from tbl_lendBook where id=$id ";
+  $query = "select * from tbl_inventory where foreignkey=$id ";
   // execure query
   $result = mysqli_query($conn, $query);
   while ($row = mysqli_fetch_array($result)) {
@@ -114,16 +115,22 @@ if ($received_data->action == 'updateLendBook') {
   $startDate = $received_data->startDate;
   $end_date = $received_data->end_date;
 
-  $sql = "update tbl_lendBook set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date ='$end_date' where id=$id";
+
+  $sql = "update tbl_lendBook set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date ='$end_date' where foreignkey=$id";
   // 
-  $result = mysqli_query($conn, $sql);
+  $result = mysqli_multi_query($conn, $sql);
   // u
 
     if($result === true){
-      $data = array(
-        'status' => 'update',
-        
-      );
+      $sql2 = "update tbl_inventory set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date='$end_date' where foreignkey=$id";     // 
+      $result2 = mysqli_multi_query($conn, $sql2);
+      if($result2 === true){
+        $data = array(
+          'status' => 'update',
+          
+        );
+      }
+     
     }else {
       $data = array(
         'status' => 'cannot Update',
