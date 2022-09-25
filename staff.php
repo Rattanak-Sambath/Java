@@ -63,6 +63,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
+
                 <q-list @click="toDashboard()" style="margin-top:160px; ">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -227,7 +228,14 @@ include 'session/check_if_no_session.php';
                                 <q-btn label="Add" color="primary" @click="goAddStaff()"></q-btn>
                             </div>
 
+
                         </div>
+                        <q-breadcrumbs class="q-ma-xs" separator="---" class="text-orange" active-color="secondary">
+                            <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                            /
+                            <q-breadcrumbs-el label="Staff" icon="widgets" class="q-ma-xs" />
+
+                        </q-breadcrumbs>
                         <div>
                             <q-separator />
                         </div>

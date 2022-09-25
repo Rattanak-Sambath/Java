@@ -57,6 +57,15 @@
                             </div>
 
                         </div>
+                        <q-breadcrumbs class="q-ma-xs" separator="---" class="text-orange" active-color="secondary">
+                            <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                            /
+                            <q-breadcrumbs-el label="Student" icon="badge" class="q-ma-xs" />
+                            /
+                            <q-breadcrumbs-el label="Student Form" icon="badge" class="q-ma-xs" />
+
+
+                        </q-breadcrumbs>
                         <div>
                             <q-separator />
                         </div>

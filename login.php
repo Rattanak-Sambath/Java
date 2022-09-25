@@ -24,12 +24,13 @@ include 'session/check_if_session.php';
 
                         <q-card-section>
                             <div class="text-center q-mb-lg">
-                                <img src="/public/rabbit.png" alt="" />
+                                <img src="https://www.svgrepo.com/show/176688/rabbit-animals.svg" alt=""
+                                    style="width: 70px; height: 70px" />
                                 <q-toolbar-title>
                                     Rabbit Technology
                                 </q-toolbar-title>
                             </div>
-                            <q-form class="q-gutter-xs" @submit.prevent.stop="onLogin()">
+                            <q-form class=" q-gutter-xs" @submit.prevent.stop="onLogin()">
                                 <!-- username -->
                                 <div class="q-pa-xs">
                                     <q-input ref="email" v-model="form.email" autofocus outlined label="Username"

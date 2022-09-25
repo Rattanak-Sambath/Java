@@ -16,8 +16,7 @@ if ($received_data->action == 'addLendBook') {
   $startDate = $received_data->startDate;
   $end_date = $received_data->end_date;
   $status = $received_data->status;
- 
-  var_dump($status);
+
 
   
 //   $created = $received_data->created;

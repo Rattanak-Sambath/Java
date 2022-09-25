@@ -34,18 +34,23 @@ include 'session/check_if_no_session.php';
                             Library-System
                         </div>
 
-
-
-
                     </q-toolbar-title>
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
+                            <?php echo  $_SESSION['email'] ?>
+                        </q-badge>
+                    </q-btn>
 
                     <!-- right side -->
+                    <q-avatar>
+                        <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                    </q-avatar>
                     <q-btn class="q-mx-md" dense round flat icon="email">
                         <q-badge color="red" floating transparent>
                             4
                         </q-badge>
                     </q-btn>
-                    <q-btn dense icon="logout" color="negative" flat @click="onLogout()" />
+                    <q-btn dense icon="logout" color="white" flat @click="onLogout()" />
 
                 </q-toolbar>
             </q-header>
@@ -210,7 +215,14 @@ include 'session/check_if_no_session.php';
             </q-drawer>
             <q-page-container>
                 <q-page class="q-pa-md">
+
                     <q-card flat bordered class="my-card" style="height: 100vh;">
+                        <q-breadcrumbs class="q-ma-md" separator="---" class="text-orange" active-color="secondary">
+                            <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                            /
+                            <q-breadcrumbs-el label="Dashboard" icon="widgets" class="q-ma-xs" />
+
+                        </q-breadcrumbs>
                         <div>
                             <q-card-section class="text-h5">
                                 Dashboard
