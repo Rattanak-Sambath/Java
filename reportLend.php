@@ -39,6 +39,16 @@ include 'session/check_if_no_session.php';
                     <!-- right side -->
                     <q-btn class="q-mx-md" dense round flat icon="email">
                         <q-badge color="red" floating transparent>
+                            <?php echo  $_SESSION['email'] ?>
+                        </q-badge>
+                    </q-btn>
+
+                    <!-- right side -->
+                    <q-avatar >
+                        <img  class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                    </q-avatar>
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
                             4
                         </q-badge>
                     </q-btn>
@@ -224,6 +234,13 @@ include 'session/check_if_no_session.php';
                             </div>
 
                         </div>
+                        <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange" active-color="secondary">
+                                    <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                                    /
+                                    <q-breadcrumbs-el label="Report Lend Book" icon="list_alt" class="q-ma-xs" />
+
+                                  
+                            </q-breadcrumbs>
                         <div>
                             <q-separator />
                         </div>
@@ -618,4 +635,24 @@ include 'session/check_if_no_session.php';
     </script>
 </body>
 
-</html>
+</html><style>
+       .image {
+    position: absolute;
+   
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+</style>

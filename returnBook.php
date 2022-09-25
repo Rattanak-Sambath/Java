@@ -39,10 +39,20 @@ include 'session/check_if_no_session.php';
                     <!-- right side -->
                     <q-btn class="q-mx-md" dense round flat icon="email">
                         <q-badge color="red" floating transparent>
+                            <?php echo  $_SESSION['email'] ?>
+                        </q-badge>
+                    </q-btn>
+
+                    <!-- right side -->
+                    <q-avatar >
+                        <img  class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                    </q-avatar>
+                    <q-btn class="q-mx-md" dense round flat icon="email">
+                        <q-badge color="red" floating transparent>
                             4
                         </q-badge>
                     </q-btn>
-                    <q-btn dense icon="logout" color="negative" flat @click="onLogout()" />
+                    <q-btn dense icon="logout" color="white" flat @click="onLogout()" />
 
                 </q-toolbar>
             </q-header>
@@ -504,4 +514,24 @@ include 'session/check_if_no_session.php';
     </script>
 </body>
 
-</html>
+</html><style>
+       .image {
+    position: absolute;
+   
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+}
+</style>

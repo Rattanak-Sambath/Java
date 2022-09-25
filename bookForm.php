@@ -26,7 +26,7 @@
        
     ?>
 
-< <!DOCTYPE html>
+ <!DOCTYPE html>
     <html>
 
     <head>
@@ -75,6 +75,14 @@
                                 </div>
 
                             </div>
+                            <q-breadcrumbs class="q-ma-xs container" separator="---" class="text-orange" active-color="secondary">
+                                    <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
+                                    /
+                                    <q-breadcrumbs-el label="Book" icon="person" class="q-ma-xs" />
+
+                                    /
+                                    <q-breadcrumbs-el label="Book Form" icon="person" class="q-ma-xs" />
+                            </q-breadcrumbs>
                             <div>
                                 <q-separator />
                             </div>
