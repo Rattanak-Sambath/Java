@@ -29,7 +29,7 @@ if ($received_data->action == 'findBookLendReport') {
     $startDate = $received_data->startDate;
     $endDate = $received_data->endDate;
     // sql
-    $query = "SELECT  A.image, A.title, B.staff ,  B.student, B.book, B.qty, B.startDate, B.end_date FROM  tbl_book A INNER JOIN tbl_lendBook B ON A.title = B.book  where B.startDate  between '$startDate' and '$endDate'";
+    $query = "select tbl_lendBook.* , tbl_book.image, tbl_book.title from tbl_lendBook inner join tbl_book on tbl_lendBook.book = tbl_book.title where tbl_book.staff = '$staff'";
     // execure query
     $result = mysqli_query($conn, $query);
   

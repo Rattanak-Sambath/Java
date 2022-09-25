@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -71,7 +73,10 @@
                         <!--  -->
                         <div>
                             <q-card-section>
-
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                        <q-input readonly dense hint="ForiegnKey" ref="foriegnKey" v-model="form.foreignkey" value="form.foreignkey" label="ForiegnKey" outlined
+                                                :rules="[val => !!val || 'foriegnKey is required']"  />
+                                </div>
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <!-- name -->
                                     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -80,7 +85,7 @@
                                             emit-value label="Student" outlined
                                             :rules="[val => !!val || 'Student is required']" />
                                     </div>
-
+                                        
                                     <!-- latin -->
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <q-input dense hint="Qty" ref="qty" v-model="form.qty" label="Qty" outlined
@@ -158,7 +163,7 @@
                 studentOpt: [],
                 bookOpt: [],
                 staffOpt: [],
-                data: [],
+                dataTable: [],
                 leftDrawerOpen: true,
                 form: {
                     staff: '',
@@ -169,7 +174,11 @@
                     qty: "",
                     showid: "",
                     status: "lendBook",
+                 
                 },
+                
+               
+
             };
         },
         created() {},
@@ -207,7 +216,8 @@
                             qty: this.form.qty,
                             startDate: this.form.startDate,
                             end_date: this.form.end_date,
-                            status: this.form.status
+                            status: this.form.status,
+                            foriegnkey: this.form.foriegnkey
 
                             // description: this.form.description,
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
@@ -338,11 +348,24 @@
 
                     });
             },
+            getAllData() {
+                axios
+                    .post("action/lendBook_action.php", {
+                        action: "getAllLendBook",
+                    })
+                    .then((res) => {
+                        this.dataTable   = res.data;
+                     
+                        // this.form.foreignkey = this.dataTable.length + 1 ;
+
+                    });
+            },
         },
         mounted() {
             this.getStudent();
             this.getBook();
             this.getStaff()
+            this.getAllData()
         },
     });
     </script>

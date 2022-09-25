@@ -607,7 +607,7 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         this.datatable = res.data;
-                        console.log(res.data)
+                        console.log('all data',res.data)
 
                     });
             },
