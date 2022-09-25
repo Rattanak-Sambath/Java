@@ -1,5 +1,6 @@
 <?php
         include "connection/db.php";
+        include "session/check_if_no_session.php";
         if(isset($_POST['submit'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
