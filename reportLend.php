@@ -250,26 +250,21 @@ include 'session/check_if_no_session.php';
 
                                 <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
                                     <!-- name -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <q-select clearable dense hint="Student" ref="staff" v-model="form.student"
+                                    <div class="col-xs-12 col-sm-4 col-md-4">
+                                        <q-select clearable dense hint="Student" ref="student" v-model="form.student"
                                             outlined :options="studentOpt" option-label="name" option-value="name"
                                             map-options emit-value label="Student"
                                             :rules="[val => !!val || 'Student is required']" />
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <q-select clearable dense hint="Username" ref="staff" v-model="form.staff"
-                                            outlined :options="staffOpt" option-label="name" option-value="name"
-                                            map-options emit-value label="Staff"
-                                            :rules="[val => !!val || 'Staff is required']" />
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                   
+                                    <div class="col-xs-12 col-sm-4 col-md-4">
                                         <q-input dense type="date" hint="StartDate" ref="startDate"
                                             v-model="form.startDate" outlined
                                             :rules="[val => !!val || 'Date is required']" />
                                     </div>
 
                                     <!-- latin -->
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    <div class="col-xs-12 col-sm-4 col-md-4">
                                         <q-input dense hint="End Date" type="date" ref="endDate" v-model="form.endDate"
                                             outlined :rules="[val => !!val || 'Phone is required']" />
                                     </div>
@@ -375,7 +370,7 @@ include 'session/check_if_no_session.php';
 
                         <div style="width:300px" class="shadow-7 q-ma-md  float-right">
 
-                            <div class="text-right" style="width: 300px">Total Book:{{datatable.length}} </div>
+                            <div class="text-right" style="width: 300px">Total Book:{{datatable}} </div>
 
                         </div>
 
@@ -494,21 +489,20 @@ include 'session/check_if_no_session.php';
             },
             onFind() {
 
-                this.$refs.staff.validate();
+                this.$refs.student.validate();
                 this.$refs.startDate.validate();
                 this.$refs.endDate.validate();
 
                 // || this.$refs.startDate.hasError || this.$refs.endDate.hasError
 
-                if (this.$refs.staff.hasError) {
+                if (this.$refs.student.hasError) {
                     // check when value null
                 } else {
 
                     this.datatable = [];
                     axios
                         .post("action/reports.php", {
-                            action: "findBookLendReport",
-                            staff: this.form.staff,
+                            action: "findBookLendReport",                         
                             student: this.form.student,
                             startDate: this.form.startDate,
                             endDate: this.form.endDate,
