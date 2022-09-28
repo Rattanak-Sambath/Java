@@ -35,12 +35,14 @@ include 'session/check_if_no_session.php';
                         </div>
 
                     </q-toolbar-title>
-                    <q-btn class="q-mx-md" dense round flat icon="email">
+                    <q-btn class="" dense round flat icon="contact_mail">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
                     </q-btn>
-
+                    <div class="q-ma-md">
+                        <?php echo $_SESSION['role'] ?>
+                    </div> 
                     <!-- right side -->
                     <q-avatar >
                         <img  class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">

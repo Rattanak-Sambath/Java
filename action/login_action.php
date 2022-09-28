@@ -17,14 +17,15 @@ if ($received_data->action == 'login') {
   if ($result) {
     if ($result && mysqli_num_rows($result) > 0) {
       $user_data = mysqli_fetch_assoc($result);
-      // return $user_data;
+    
       if ($user_data['password'] === $password) {
         $_SESSION['email'] = $email;
+        $_SESSION['password'] = $password;       
         $_SESSION['uid'] = $user_data['uid'];
+        $_SESSION['role'] = $user_data['role']; 
+        $_SESSION['image'] = $user_data['image'];
         $data = array(
-          'email' => $user_data['email'],
-          'password' => $user_data['password'],
-          'uid' => $user_data['uid'],
+           'image' => $user_data['image'],
           'status' => 'login_success'
         );
       } else {

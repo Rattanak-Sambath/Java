@@ -1,6 +1,6 @@
 <?php
         include "connection/db.php";
-        include "session/check_if_no_session.php";
+      
         if(isset($_POST['submit'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -148,47 +148,7 @@
         name: "new-home",
         data: function() {
             return {
-                //   columns: [{
-                //       name: "index",
-                //       label: "No",
-                //       align: "left",
-                //     },
-                //     {
-                //       name: "name",
-                //       label: "Khmer",
-                //       align: "left",
-                //       field: (row) => row.name,
-                //     },
-                //     {
-                //       name: "latin",
-                //       label: "English",
-                //       align: "left",
-                //       field: (row) => row.latin,
-                //     },
-                //     {
-                //       name: "gender",
-                //       label: "Gender",
-                //       align: "left",
-                //       field: (row) => row.gender,
-                //     },
-                //     {
-                //       name: "phone",
-                //       label: "Phone",
-                //       align: "left",
-                //       field: (row) => row.phone,
-                //     },
-                //     {
-                //       name: "homeName",
-                //       label: "Home Name",
-                //       align: "left",
-                //       field: (row) => row.homeName,
-                //     },
-                //     {
-                //       name: "action",
-                //       label: "Action",
-                //       align: "center",
-                //     },type
-                //   ],
+                
                 genderOpt: ["Male", "Female"],
                 data: [],
                 leftDrawerOpen: true,
@@ -204,40 +164,11 @@
         },
         created() {},
         methods: {
-            // getAllData() {
-            //     axios
-            //       .post("action/person_action.php", {
-            //         action: "getTblPerson",
-            //       })
-            //       .then((res) => {
-            //         this.data = res.data;
-            //       });
-            //   },
+         
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            // uploadFile() {
-            //     this.file = this.$refs.file.files[0];
-            //     let formData = new FormData();
-            //     formData.append('file', this.file);
-            //     formData.append('title', this.title);
-            //     this.$refs.file.value = '';
-            //     axios.post('action/upload.php', formData, {
-            //             headers: {
-            //                 'Content-Type': 'multipart/form-data'
-            //             }
-            //         })
-            //         .then(function(response) {
-            //             if (!response.data) {
-            //                 alert('File not uploaded.');
-            //             } else {
-            //                 alert('File uploaded successfully.');
-            //             }
-            //         })
-            //         .catch(function(error) {
-            //             console.log(error);
-            //         });
-            // },
+           
             onSubmit() {
                 this.$refs.email.validate();
                 this.$refs.password.validate();
@@ -291,7 +222,7 @@
                 }
             },
             goBack() {
-                window.location.href = "login.php"
+             history.go(-1)
             },
             toDashboard() {
                 window.location.href = "dashboard.php"
@@ -326,17 +257,7 @@
             toMaintenance() {
                 window.location.href = "maintenance.php";
             },
-            // onLogout() {
-            //     axios
-            //         .post("action/logout_action.php", {
-            //             action: "logout",
-            //         })
-            //         .then((res) => {
-            //             if (res.data.status == "logout") {
-            //                 window.location.href = "login.php";
-            //             }
-            //         });
-            // },
+           
             convertDate(d) {
                 return dayjs(d).format("YYYY-MM-DD");
             },
