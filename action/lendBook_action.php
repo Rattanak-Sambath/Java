@@ -71,12 +71,13 @@ if ($received_data->action == 'getAllLendBook') {
 if ($received_data->action == 'deleteLendBook') {
     // var_dump($received_data->id);
     $id = $received_data->id;
-    $query = "delete from tbl_lendBook where foreignkey = $id";
+    $status = $received_data->status;
+    $query = "delete from tbl_lendBook  where  foreignkey = $id";
    
     $result = mysqli_query($conn, $query);
   
     if($result === true){
-      $query2 = "delete from tbl_inventory where foreignkey = $id";
+      $query2 = "delete from tbl_inventory where status='$status' and  foreignkey = $id  ";
       $result2 = mysqli_query($conn, $query2);
       if($result2 === true){
       $data = array(
@@ -95,9 +96,10 @@ if ($received_data->action == 'deleteLendBook') {
   // get by id
 if ($received_data->action == 'findLendBookById') {
   $id = $received_data->id;
+  $status =$received_data->status;
   // 
   // sql
-  $query = "select * from tbl_inventory where foreignkey=$id ";
+  $query = "select * from tbl_inventory where status='$status'  and foreignkey=$id ";
   // execure query
   $result = mysqli_query($conn, $query);
   while ($row = mysqli_fetch_array($result)) {

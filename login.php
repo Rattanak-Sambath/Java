@@ -17,13 +17,14 @@ include 'session/check_if_session.php';
 <body>
     <!-- Add the following at the end of your body tag -->
     <div id="q-app">
-        <div class="window-height window-width row justify-center items-center bg-primary">
-            <div class="column">
+        <div class="window-height window-width row justify-center items-center ">
+            <img src="public/john-towner-JgOeRuGD_Y4-unsplash.jpg" alt="" style="width: 100%; height: 100%; position: absolute;"  >
+            <div class="column float">
                 <div class="row">
-                    <q-card flat bordered class="q-pa-lg shadow-1 bg-grey-3">
+                    <q-card flat bordered  >
 
                         <q-card-section>
-                            <div class="text-center q-mb-lg">
+                            <div class="text-center q-mb-lg ">
                                 <img src="https://www.svgrepo.com/show/176688/rabbit-animals.svg" alt=""
                                     style="width: 70px; height: 70px" />
                                 <q-toolbar-title>
@@ -33,7 +34,7 @@ include 'session/check_if_session.php';
                             <q-form class=" q-gutter-xs" @submit.prevent.stop="onLogin()">
                                 <!-- username -->
                                 <div class="q-pa-xs">
-                                    <q-input ref="email" v-model="form.email" autofocus outlined label="Username"
+                                    <q-input ref="email"  v-model="form.email" autofocus outlined label="Username"
                                         :rules="[val => !!val || 'email is required']" />
                                 </div>
 
@@ -134,5 +135,7 @@ include 'session/check_if_session.php';
 <style>
 .q-card {
     width: 500px;
+    
+  
 }
 </style>

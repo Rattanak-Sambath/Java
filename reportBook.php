@@ -257,6 +257,7 @@ include 'session/check_if_no_session.php';
                                         <q-select clearable dense hint="Username" ref="staff" v-model="form.staff"
                                             outlined :options="staffOpt" option-label="name" option-value="name"
                                             map-options emit-value label="Staff"
+                                          
                                             :rules="[val => !!val || 'Staff is required']" />
                                     </div>
                                     <div class="col-xs-12 col-sm-4 col-md-4">
@@ -278,12 +279,12 @@ include 'session/check_if_no_session.php';
                             </q-card-section>
                         </div>
 
-                        <q-card-section align="right">
+                        <!-- <q-card-section align="right">
 
                             <div class="q-pa-sm">
                                 <q-btn icon="add" label="Add" color="indigo-10" push @click="onFind()" />
                             </div>
-                        </q-card-section>
+                        </q-card-section> -->
 
 
 

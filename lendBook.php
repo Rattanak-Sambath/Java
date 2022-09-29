@@ -304,7 +304,7 @@ include 'session/check_if_no_session.php';
                                     </q-card-section>
 
                                     <div class="q-pa-sm">
-                                        <q-btn icon="cancel" @click="close()" />
+                                        <q-btn icon="refresh" @click="close()" />
                                     </div>
 
                                 </div>
@@ -550,7 +550,8 @@ include 'session/check_if_no_session.php';
                 console.log(id);
                 axios.post("action/lendBook_action.php", {
                     action: "deleteLendBook",
-                    id: id
+                    id: id,
+                    status: this.form.status
 
                 }).then((res) => {
                     if (res.data.status == "delete") {
@@ -576,15 +577,29 @@ include 'session/check_if_no_session.php';
                 })
             },
             close() {
-                this.dialog = false;
-                this.form = ""
+              
+                
+                axios.post("action/lendBook_action.php", {
+                    action: "findLendBookById",
+                    id: this.showid,
+                    status: this.form.status
+                   
+
+                }).then((res) => {
+                    this.form = res.data
+                    console.log(res.data)
+
+                })
+                
             },
             onEdit(id) {
                 this.dialog = true
                 this.showid = id;
                 axios.post("action/lendBook_action.php", {
                     action: "findLendBookById",
-                    id: id
+                    id: id,
+                    status: this.form.status
+                   
 
                 }).then((res) => {
                     this.form = res.data

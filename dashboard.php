@@ -329,7 +329,7 @@ include 'session/check_if_no_session.php';
                                                     class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
                                                     <div class="q-item__label text-white text-h6 text-weight-bolder">
                                                         Return Book</div>
-                                                    <div class="q-item__label">2</div>
+                                                    <div class="q-item__label">{{returnBook.length}}</div>
                                                 </div>
                                                 <!---->
                                             </div>
@@ -414,6 +414,7 @@ include 'session/check_if_no_session.php';
                 student: [],
                 book: [],
                 lendBook: [],
+                returnBook: []
 
             };
         },
@@ -510,6 +511,17 @@ include 'session/check_if_no_session.php';
                         console.log(res.data)
 
                     });
+            },
+            findreturnBook() {
+                axios
+                    .post("action/returbBook_action.php", {
+                        action: "getAllreturnBook",
+                    })
+                    .then((res) => {
+                        this.returnBook = res.data;
+                        console.log(res.data)
+
+                    });
             }
         },
         mounted() {
@@ -517,6 +529,7 @@ include 'session/check_if_no_session.php';
             this.findStudent();
             this.findBook();
             this.findLendBook();
+            this.findreturnBook()
         },
     });
     </script>
