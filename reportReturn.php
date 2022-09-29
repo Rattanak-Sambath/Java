@@ -47,8 +47,7 @@ include 'session/check_if_no_session.php';
                     </div> 
                     <!-- right side -->
                     <q-avatar >
-                        <img  class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-                    </q-avatar>
+                    <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">                    </q-avatar>
                     <q-btn class="q-mx-md" dense round flat icon="email">
                         <q-badge color="red" floating transparent>
                             4
