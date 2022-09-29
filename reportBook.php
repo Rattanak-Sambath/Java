@@ -63,8 +63,8 @@ include 'session/check_if_no_session.php';
                 <div>
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                         <div class="absolute-bottom bg-transparent">
-                            <q-avatar size="56px" class="q-mb-sm">
-                                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        <q-avatar size="56px" class="q-mb-sm" >
+                              <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">        
                             </q-avatar>
                             <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
 
@@ -139,6 +139,18 @@ include 'session/check_if_no_session.php';
                     </q-item>
                     <!-- section one  -->
                 </q-list>
+                <q-list @click="toAccessary()">
+                    <q-item to="/toAccessary" active-class="q-item-no-link-highlighting">
+                        <q-item-section avatar>
+                            <q-icon name="apps" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Accessary</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <!-- section one  -->
+                </q-list>
+               
                 <!-- <q-list>
                 <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                     <q-item-section avatar>
@@ -256,8 +268,7 @@ include 'session/check_if_no_session.php';
                                     <div class="col-xs-12 col-sm-4 col-md-4">
                                         <q-select clearable dense hint="Username" ref="staff" v-model="form.staff"
                                             outlined :options="staffOpt" option-label="name" option-value="name"
-                                            map-options emit-value label="Staff"
-                                          
+                                            map-options emit-value label="Staff"                                         
                                             :rules="[val => !!val || 'Staff is required']" />
                                     </div>
                                     <div class="col-xs-12 col-sm-4 col-md-4">
@@ -564,6 +575,9 @@ include 'session/check_if_no_session.php';
             },
             toMaintenance() {
                 window.location.href = "maintenance.php";
+            },
+            toAccessary(){
+                window.location.href = "Accessary.php";
             },
 
 

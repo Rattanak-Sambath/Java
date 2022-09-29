@@ -63,8 +63,8 @@ include 'session/check_if_no_session.php';
                 <div>
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                         <div class="absolute-bottom bg-transparent">
-                            <q-avatar size="56px" class="q-mb-sm">
-                                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        <q-avatar size="56px" class="q-mb-sm" >
+                              <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">        
                             </q-avatar>
                             <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
 
@@ -139,6 +139,18 @@ include 'session/check_if_no_session.php';
                     </q-item>
                     <!-- section one  -->
                 </q-list>
+                <q-list @click="toAccessary()">
+                    <q-item to="/toAccessary" active-class="q-item-no-link-highlighting">
+                        <q-item-section avatar>
+                            <q-icon name="apps" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Accessary</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <!-- section one  -->
+                </q-list>
+                
                 <!-- <q-list>
                 <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                     <q-item-section avatar>
@@ -271,7 +283,7 @@ include 'session/check_if_no_session.php';
                                             <q-btn dense color="primary" icon="create"
                                                 @click="onEdit(props.row.foreignkey)" />
                                         </q-td>
-                                        <q-td align="center">
+                                        <q-td align="center"  v-show="<?php echo $_SESSION['role'] === 'admin' ?>">
                                             <q-btn dense color="negative" icon="delete"
                                                 @click="onDelete(props.row.foreignkey)" />
                                         </q-td>
@@ -424,7 +436,8 @@ include 'session/check_if_no_session.php';
                     startDate: "",
                     end_date: "",
                     status: "lendBook",
-                    foreignkey: ''
+                    foreignkey: '',
+                    user: '<?php echo $_SESSION['email'] ?>'
                 },
                 columns: [{
                         name: "index",
@@ -512,6 +525,7 @@ include 'session/check_if_no_session.php';
                             startDate: this.form.startDate,                          
                             status: this.form.status,
                             foreignkey: this.form.foreignkey,
+                            user: this.form.user
 
 
                         })
@@ -631,6 +645,9 @@ include 'session/check_if_no_session.php';
             },
             toReportReturn() {
                 window.location.href = "reportReturn.php";
+            },
+            toAccessary(){
+                window.location.href = "Accessary.php";
             },
             toProfile() {
                 window.location.href = "profile.php";

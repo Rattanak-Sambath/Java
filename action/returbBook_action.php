@@ -16,6 +16,7 @@ if ($received_data->action == 'addreturnBook') {
  
   $status = $received_data->status;
   $foreignkey = $received_data->foreignkey * -1;
+  $user = $received_data->user;
 
 
   
@@ -24,11 +25,11 @@ if ($received_data->action == 'addreturnBook') {
 
   // 
   // sql
-  $sql = " insert into tbl_returnbook (staff,student ,book,qty, startDate, foreignkey) values('$staff','$student','$book','$qty', '$startDate', '$foreignkey')";
+  $sql = " insert into tbl_returnbook (staff,student ,book,qty, startDate,user, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$user', '$foreignkey')";
   $result = mysqli_multi_query($conn, $sql);
  
   if ($result === true ) {
-          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date, status, foreignkey) values('$staff','$student','$book','$qty', '$startDate','', '$status', '$foreignkey')";
+          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, status,user, foreignkey) values('$staff','$student','$book','$qty', '$startDate', '$status','$user', '$foreignkey')";
           $secondResult = mysqli_multi_query($conn, $secondSql);
           if($secondResult === true){
             $data = array(
@@ -121,7 +122,7 @@ if ($received_data->action == 'updatereturnBook') {
   // u
 
     if($result === true){
-      $sql2 = "update tbl_inventory set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date='' where foreignkey=$id";     // 
+      $sql2 = "update tbl_inventory set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate' where foreignkey=$id";     // 
       $result2 = mysqli_multi_query($conn, $sql2);
       if($result2 === true){
         $data = array(

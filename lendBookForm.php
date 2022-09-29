@@ -1,3 +1,7 @@
+<?php 
+    include 'session/check_if_no_session.php';
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -174,14 +178,16 @@
                     qty: "",
                     showid: "",
                     status: "lendBook",
-                    foreignkey: ''
-
+                    foreignkey: '',
+                    user: '<?php echo $_SESSION['email'] ?>'
+                    
                 },
 
 
 
             };
         },
+        
         created() {},
         methods: {
 
@@ -198,7 +204,7 @@
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
             onSubmit() {
-
+                console.log(this.form.user)
                 this.$refs.student.validate();
                 // this.$refs.book.validate();
                 // this.$refs.start_date.validate();
@@ -218,7 +224,8 @@
                             startDate: this.form.startDate,
                             end_date: this.form.end_date,
                             status: this.form.status,
-                            foreignkey: this.form.foreignkey
+                            foreignkey: this.form.foreignkey,
+                            user : this.form.user
 
                             // description: this.form.description,
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),

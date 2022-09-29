@@ -1,3 +1,7 @@
+
+<?php
+include 'session/check_if_no_session.php';
+?>
 <!DOCTYPE html>
 <html>
 
@@ -170,7 +174,8 @@
                     qty: "",
                     showid: "",
                     status: "ReturnBook",
-                    foreignkey: ''
+                    foreignkey: '',
+                    user: '<?php echo $_SESSION['email'] ?>'
 
                 },
 
@@ -214,7 +219,8 @@
                             startDate: this.form.startDate,
                           
                             status: this.form.status,
-                            foreignkey: this.form.foreignkey
+                            foreignkey: this.form.foreignkey,
+                            user: this.form.user  
 
                             // description: this.form.description,
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),

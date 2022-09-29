@@ -16,6 +16,7 @@ if ($received_data->action == 'addLendBook') {
   $end_date = $received_data->end_date;
   $status = $received_data->status;
   $foreignkey = $received_data->foreignkey;
+  $user = $received_data->user;
 
 
   
@@ -24,11 +25,11 @@ if ($received_data->action == 'addLendBook') {
 
   // 
   // sql
-  $sql = " insert into tbl_lendBook (staff,student ,book,qty, startDate, end_date, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$end_date', '$foreignkey')";
+  $sql = " insert into tbl_lendBook (staff,student ,book,qty, startDate, end_date,user, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$end_date','$user', '$foreignkey')";
   $result = mysqli_multi_query($conn, $sql);
  
   if ($result === true ) {
-          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date, status, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$end_date', '$status', '$foreignkey')";
+          $secondSql = "insert into  tbl_inventory (staff,student ,book,qty, startDate, end_date, status,user, foreignkey) values('$staff','$student','$book','$qty', '$startDate','$end_date', '$status','$user', '$foreignkey')";
           $secondResult = mysqli_multi_query($conn, $secondSql);
           if($secondResult === true){
             $data = array(
@@ -116,15 +117,17 @@ if ($received_data->action == 'updateLendBook') {
   $qty = $received_data->qty;
   $startDate = $received_data->startDate;
   $end_date = $received_data->end_date;
+  $user = $received_data -> user;
 
 
-  $sql = "update tbl_lendBook set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date ='$end_date' where foreignkey=$id";
+
+  $sql = "update tbl_lendBook set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',user='$user',end_date ='$end_date' where foreignkey=$id";
   // 
   $result = mysqli_multi_query($conn, $sql);
   // u
 
     if($result === true){
-      $sql2 = "update tbl_inventory set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',end_date='$end_date' where foreignkey=$id";     // 
+      $sql2 = "update tbl_inventory set staff='$staff', student='$student',book='$book',qty='$qty',startDate='$startDate',user='$user',end_date='$end_date' where foreignkey=$id";     // 
       $result2 = mysqli_multi_query($conn, $sql2);
       if($result2 === true){
         $data = array(

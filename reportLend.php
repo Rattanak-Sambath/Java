@@ -138,6 +138,18 @@ include 'session/check_if_no_session.php';
                     </q-item>
                     <!-- section one  -->
                 </q-list>
+                <q-list @click="toAccessary()">
+                    <q-item to="/toAccessary" active-class="q-item-no-link-highlighting">
+                        <q-item-section avatar>
+                            <q-icon name="apps" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Accessary</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <!-- section one  -->
+                </q-list>
+              
                 <!-- <q-list>
                 <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                     <q-item-section avatar>
@@ -532,6 +544,9 @@ include 'session/check_if_no_session.php';
                             }
                         });
                 }
+            },
+            toAccessary(){
+                window.location.href = "Accessary.php";
             },
             goAddBook() {
                 window.location.href = "bookForm.php";
