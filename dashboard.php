@@ -359,7 +359,7 @@ include 'session/check_if_no_session.php';
                                                     class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
                                                     <div class="q-item__label text-white text-h6 text-weight-bolder">
                                                         Accessary</div>
-                                                    <div class="q-item__label">2</div>
+                                                    <div class="q-item__label">{{accessaryOpt.length}}</div>
                                                 </div>
                                                 <!---->
                                             </div>
@@ -427,7 +427,8 @@ include 'session/check_if_no_session.php';
                 student: [],
                 book: [],
                 lendBook: [],
-                returnBook: []
+                returnBook: [],
+                accessaryOpt: []
 
             };
         },
@@ -537,6 +538,17 @@ include 'session/check_if_no_session.php';
                         console.log(res.data)
 
                     });
+            },
+            findAccessary() {
+                axios
+                    .post("action/Accessary_action.php", {
+                        action: "getAllAccessary",
+                    })
+                    .then((res) => {
+                        this.accessaryOpt = res.data;
+                        console.log(res.data)
+
+                    });
             }
         },
         mounted() {
@@ -544,7 +556,8 @@ include 'session/check_if_no_session.php';
             this.findStudent();
             this.findBook();
             this.findLendBook();
-            this.findreturnBook()
+            this.findreturnBook();
+            this.findAccessary();
         },
     });
     </script>

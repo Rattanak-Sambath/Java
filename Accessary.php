@@ -301,11 +301,11 @@ include 'session/check_if_no_session.php';
                                 <q-card>
                                        <q-card-section>
                                        <q-badge outline color="primary"  >
-                                       Product Amount: {{data.length}}   
+                                       Product Count: {{data.length}}   
                                        </q-badge>
                                         </q-card-section>
                                         <q-card-section>
-                                                Total Amount: {{totalAmount}}
+                                                Total Amount: {{}}  <q-icon  color="primary" style="font-size: 30px" name="request_quote" />
                                         </q-card-section>
                                 </q-card>
                             </q-card-section>
@@ -412,7 +412,7 @@ include 'session/check_if_no_session.php';
             return {
                 dialog: false,
                 maximizedToggle: false,
-                totalAmount: 0,
+                
                 columns: [{
                         name: "index",
                         label: "No",
@@ -651,7 +651,7 @@ include 'session/check_if_no_session.php';
                     .then((res) => {
                         this.data = res.data;
                         console.log(res.data)
-
+                       
                     });
             },
             convertDate(d) {
