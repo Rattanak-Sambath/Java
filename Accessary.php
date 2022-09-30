@@ -268,8 +268,17 @@ include 'session/check_if_no_session.php';
                                         </q-td>
                                     </template>
                                     <!-- action -->
+                                    <template slot="body-cell-donate" slot-scope="props" :props="props.row">
+                                        <q-td align="center" v-if="props.row.donate">
+                                            {{props.row.donate}}
+                                        </q-td>
+                                        <q-td align="center" v-else>
+                                             <q-badge outline color="primary" label="  No Donation" />
+                                          
+                                        </q-td>
+                                    </template>
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                                        <q-td align="center">
+                                        <q-td align="center" >
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
                                         </q-td>
                                         <q-td align="center">
@@ -279,6 +288,7 @@ include 'session/check_if_no_session.php';
 
 
                                     </template>
+                                    
                                     <template v-slot:top-right>
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
@@ -288,6 +298,16 @@ include 'session/check_if_no_session.php';
                                     </template>
 
                                 </q-table>
+                                <q-card>
+                                       <q-card-section>
+                                       <q-badge outline color="primary"  >
+                                       Product Amount: {{data.length}}   
+                                       </q-badge>
+                                        </q-card-section>
+                                        <q-card-section>
+                                                Total Amount: {{totalAmount}}
+                                        </q-card-section>
+                                </q-card>
                             </q-card-section>
                         </div>
 
@@ -392,6 +412,7 @@ include 'session/check_if_no_session.php';
             return {
                 dialog: false,
                 maximizedToggle: false,
+                totalAmount: 0,
                 columns: [{
                         name: "index",
                         label: "No",
