@@ -62,8 +62,8 @@ include 'session/check_if_no_session.php';
                 <div>
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                         <div class="absolute-bottom bg-transparent">
-                            <q-avatar size="56px" class="q-mb-sm">
-                                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        <q-avatar size="56px" class="q-mb-sm" >
+                              <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">        
                             </q-avatar>
                             <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
 
