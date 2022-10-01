@@ -60,11 +60,25 @@ if ($received_data->action == 'getAllAccessary') {
   // echo
   echo json_encode($data);
 }
-if ($received_data->action == 'deleteStaff') {
-  // var_dump($received_data->id);
+// getAccessaryBySearch
+if ($received_data->action == 'getAccessaryBySearch') {
   $id = $received_data->id;
-  $query = "DELETE FROM tbl_staff WHERE id = $id ";
-  // execure query
+  $query = "select *  from tbl_accessary where type = '$id' ";
+  
+  $result = mysqli_query($conn, $query);
+
+  while ($row = $result->fetch_array()) {
+    $data[] = $row;
+  }
+ 
+  echo json_encode($data);
+}
+
+if ($received_data->action == 'deleteAccessary') {
+ 
+  $id = $received_data->id;
+  $query = "DELETE FROM tbl_accessary WHERE id = $id ";
+
   $result = mysqli_query($conn, $query);
 
   if($result === true){
@@ -83,11 +97,11 @@ if ($received_data->action == 'deleteStaff') {
 
 
 // get by id
-if ($received_data->action == 'getStaffbyId') {
+if ($received_data->action == 'getAccessarybyId') {
   $id = $received_data->id;
   // 
   // sql
-  $query = "select * from tbl_staff where id=$id limit 1";
+  $query = "select * from tbl_accessary where id=$id limit 1";
   // execure query
   $result = mysqli_query($conn, $query);
   if ($result && mysqli_num_rows($result) > 0) {
@@ -99,15 +113,18 @@ if ($received_data->action == 'getStaffbyId') {
 }
 
 // update staff 
-if ($received_data->action == 'updateStaff') {
+if ($received_data->action == 'updateAccessary') {
   $id = $received_data->id;
   $name = $received_data->name;
-  $phone = $received_data->phone;
-  $gender = $received_data->gender;
-  $address = $received_data->address;
- 
+  $type = $received_data->type;
+  // $description = $received_data->description;
+  $price = $received_data->price;
+  $qty = $received_data->qty;
+  $date = $received_data->date;
+  $category = $received_data->category;
+  $donate = $received_data->donate;
   // 
-  $sql = "update tbl_staff set name='$name',phone='$phone',gender='$gender',address='$address' where id=$id";
+  $sql = "update tbl_accessary set name='$name',type='$type',price='$price',qty='$qty', date='$date', category='$category',donate='$donate' where id=$id";
   // 
   $result = mysqli_query($conn, $sql);
   // 

@@ -36,7 +36,7 @@ include 'session/check_if_no_session.php';
 
 
                     </q-toolbar-title>
-                    <q-btn class="" dense round flat icon="contact_mail">
+                    <q-btn class="" dense round flat icon="contact_mail"  @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
@@ -69,7 +69,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
-
+<q-card>
                 <q-list @click="toDashboard()" style="margin-top:160px; ">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -226,7 +226,7 @@ include 'session/check_if_no_session.php';
 
                     </q-list>
                 </q-expansion-item>
-
+                </q-card>
                 </q-list>
             </q-drawer>
 
@@ -293,7 +293,7 @@ include 'session/check_if_no_session.php';
 
                         <!-- dialog section -->
                         <q-dialog v-model="dialog" persistent :maximized="maximizedToggle" transition-show="slide-up"
-                            transition-hide="slide-down">>
+                            transition-hide="slide-down">
                             <q-card flat bordered class="my-card" style="width: 800px">
 
                                 <div class="row justify-between">
@@ -376,6 +376,28 @@ include 'session/check_if_no_session.php';
                     </q-card>
 
 
+                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                        <q-card class="my-card">                      
+                            <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                                <q-card-section>                             
+                                    <div class="row no-wrap items-center text-bold">
+                                    Email : 
+                                        <div class="text-subtitle1 q-ma-md">
+                                        <?php echo $_SESSION['email'] ?>
+                                        </div>                                                           
+                                    </div>
+                                    <div class="row no-wrap items-center text-bold">
+                                    Role : 
+                                        <div class="text-subtitle1 q-ma-md">
+                                            <?php echo $_SESSION['role'] ?>
+                                        </div>
+                                    </div>                          
+                                </q-card-section>         
+                        </q-card>
+                    </q-dialog>
+                   
+            
+
                 </q-page>
             </q-page-container>
         </q-layout>
@@ -392,6 +414,7 @@ include 'session/check_if_no_session.php';
             return {
                 dialog: false,
                 maximizedToggle: false,
+                Userdialog: false,                
                 columns: [{
                         name: "index",
                         label: "No",
@@ -443,6 +466,9 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         methods: {
+            userClick(){
+                this.Userdialog = true
+            },
             close() {
                 this.dialog = false
                 this.form = "";

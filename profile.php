@@ -37,7 +37,7 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
-                    <q-btn class="" dense round flat icon="contact_mail">
+                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
@@ -70,6 +70,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
+                <q-card>
                 <q-list @click="toDashboard()" style="margin-top:160px; ">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -228,6 +229,7 @@ include 'session/check_if_no_session.php';
                 </q-expansion-item>
 
                 </q-list>
+                </q-card>
             </q-drawer>
 
             <q-page-container>
@@ -259,6 +261,22 @@ include 'session/check_if_no_session.php';
                                         </q-td>
                                     </template>
                                     <!-- action -->
+                                    <template slot="body-cell-password" slot-scope="props" :props="props.row" >
+                                        <!-- <q-td align="center">
+                                            <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                        </q-td> -->
+                                        <q-td align="center" v-show="<?php echo $_SESSION['role'] === 'admin' ?>" >
+
+                                            {{props.row.password}}
+
+                                        </q-td>
+
+                                        <q-td align="left" v-show="<?php echo $_SESSION['role'] !== 'admin' ?>" >
+
+                                          <q-badge color="red" outlinded> Your Dont Have Permisson</q-badge>
+                                         </q-td>
+
+                                    </template>
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row" >
                                         <!-- <q-td align="center">
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
@@ -269,6 +287,10 @@ include 'session/check_if_no_session.php';
                                                 @click="onDelete(props.row.id)" />
 
                                         </q-td>
+                                        <q-td align="left" v-show="<?php echo $_SESSION['role'] !== 'admin' ?>" >
+
+                                          <q-badge color="red" outlinded> Your Dont Have Permisson</q-badge>
+                                         </q-td>
 
 
                                     </template>
@@ -354,19 +376,29 @@ include 'session/check_if_no_session.php';
                                 <!-- end table -->
                             </q-card>
                         </q-dialog>
-                        <!-- end dialog section -->
-
-                        <!-- <q-card-section align="right">
-                <!-- btn -->
-                        <!-- <div class="q-pa-sm">
-                  <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
-                </div> 
-              </q-card-section> -->
-
-
-
-                        <!-- end table -->
+                    
                     </q-card>
+                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                                <q-card class="my-card">                      
+                                    <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                                        <q-card-section>                             
+                                            <div class="row no-wrap items-center text-bold">
+                                            Email : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                <?php echo $_SESSION['email'] ?>
+                                                </div>                                                           
+                                            </div>
+                                            <div class="row no-wrap items-center text-bold">
+                                            Role : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                    <?php echo $_SESSION['role'] ?>
+                                                </div>
+                                            </div>                          
+                                        </q-card-section>         
+                                </q-card>
+                            </q-dialog>
+               
+
 
 
                 </q-page>
@@ -386,6 +418,7 @@ include 'session/check_if_no_session.php';
                 role: '',
                 dialog: false,
                 maximizedToggle: false,
+                Userdialog: false,
                 columns: [{
                         name: "index",
                         label: "No",
@@ -433,6 +466,9 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         methods: {
+            userClick(){
+                this.Userdialog = true
+            },
             close() {
                 this.dialog = false
                 this.form = "";
@@ -531,8 +567,8 @@ include 'session/check_if_no_session.php';
                 window.location.href = "maintenance.php";
             },
             onDelete(id) {
-                axios.post("action/staff_action.php", {
-                    action: "deleteStaff",
+                axios.post("action/user_actoin.php", {
+                    action: "deleteUser",
                     id: id
 
                 }).then((res) => {
@@ -545,7 +581,7 @@ include 'session/check_if_no_session.php';
                         });
                         //
                         setTimeout(() => {
-                            window.location.href = "staff.php";
+                            window.location.href = "profile.php";
                         }, 500);
                     } else {
                         this.$q.notify({

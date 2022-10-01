@@ -22,4 +22,24 @@ if ($received_data->action == 'getUser') {
   echo json_encode($data);
 }
 
+if ($received_data->action == 'deleteUser') {
+  // var_dump($received_data->id);
+  $id = $received_data->id;
+  $query = "DELETE FROM tbl_user WHERE uid = '$id' ";
+  // execure query
+  $result = mysqli_query($conn, $query);
+
+  if($result === true){
+    $data = array(
+      'status' => 'delete',  
+    );
+  }else {
+    $data = array(
+      'status' => 'cannot Delete',
+  
+    );
+  }
+  echo json_encode($data);
+}
+
 ?>

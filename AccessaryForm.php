@@ -176,18 +176,7 @@
             };
         },
         created() {},
-         watch: {
-            'form.qty' : {
-                handler: function(newValue, oldValue) {
-                    if (newValue) {
-                        this.form.price = this.form.qty * this.form.price
-                    }
-                   
-                },
-                deep: true,
-                immediate: true
-            }
-        },
+        
         methods: {
 
 

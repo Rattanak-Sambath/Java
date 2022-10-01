@@ -36,7 +36,7 @@ include 'session/check_if_no_session.php';
 
 
                     </q-toolbar-title>
-                    <q-btn class="" dense round flat icon="contact_mail">
+                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
@@ -69,7 +69,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
-
+                 <q-card>
                 <q-list @click="toDashboard()" style="margin-top:160px; ">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -228,6 +228,7 @@ include 'session/check_if_no_session.php';
                 </q-expansion-item>
 
                 </q-list>
+                </q-card>           
             </q-drawer>
 
             <q-page-container>
@@ -278,18 +279,27 @@ include 'session/check_if_no_session.php';
                                         </q-td>
                                     </template>
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                                        <q-td align="center" >
+                                        <q-td align="center"  v-show="<?php echo $_SESSION['role'] === 'admin' ?>"  >
                                             <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
                                         </q-td>
-                                        <q-td align="center">
+                                        <q-td align="center"  v-show="<?php echo $_SESSION['role'] === 'admin' ?>" >
                                             <q-btn dense color="negative" icon="delete"
                                                 @click="onDelete(props.row.id)" />
                                         </q-td>
+                                        <q-td align="left" v-show="<?php echo $_SESSION['role'] !== 'admin' ?>" >
 
+                                        <q-badge color="red" outlinded> Your Dont Have Permisson</q-badge>
+                                        </q-td>
 
                                     </template>
-                                    
+                                    <template v-slot:top-left>
+                                    <q-select dense hint="Type" ref="type" v-model="search"
+                                            :options="searchType" outlined  />
+                                  
+                                             
+                                    </template>
                                     <template v-slot:top-right>
+                                       
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
                                                 <q-icon name="search" />
@@ -320,7 +330,7 @@ include 'session/check_if_no_session.php';
 
                                     <!-- btn search -->
                                     <q-card-section class="text-h5">
-                                        Update Staff
+                                        Update Accessary
                                     </q-card-section>
 
                                     <div class="q-pa-sm">
@@ -333,41 +343,65 @@ include 'session/check_if_no_session.php';
                                 </div>
                                 <!--  -->
                                 <div>
-                                    <q-card-section>
+                            <q-card-section>
+                            <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md" v-if="form.type === 'Donate'">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-card-section class="text-right text-bold">
+                                            <p >Name of the Donater :</p>
+                                        </q-card-section>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div >
+                                          <q-input dense hint="Donater" clearable  ref="donate" v-model="form.donate" label="Donater"
+                                                        outlined :rules="[val => !!val || 'Name is required']" />
+                                        </div> 
+                                    </div>
+                                   
+                             </div>
+                          
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                    <!-- name -->
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input dense hint="Username" ref="name" v-model="form.name" label="Name"
+                                            outlined :rules="[val => !!val || 'Name is required']" />
+                                    </div>
 
-                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                            <!-- name -->
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Username" ref="name" v-model="form.name"
-                                                    label="Name" outlined
-                                                    :rules="[val => !!val || 'Name is required']" />
-                                            </div>
+                                    <!-- latin -->
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-select dense hint="Type" ref="type" v-model="form.type"
+                                            label="Type" :options="typeOpt" outlined :rules="[val => !!val || 'Type is required']" />
+                                          
+                                    </div>
 
-                                            <!-- latin -->
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Phone Number" ref="phone" v-model="form.phone"
-                                                    label="Phone" outlined
-                                                    :rules="[val => !!val || 'Phone is required']" />
-                                            </div>
-
-                                        </div>
-
-                                        <!-- description -->
-                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-input dense hint="Address" ref="address" v-model="form.address"
-                                                    label="Address" outlined
-                                                    :rules="[val => !!val || 'Address is required']" />
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <q-select dense hint="Gender" ref="gender" :options="genderOpt"
-                                                    v-model="form.gender" label="Gender" outlined
-                                                    :rules="[val => !!val || 'GEnder is required']" />
-                                            </div>
-
-                                        </div>
-                                    </q-card-section>
                                 </div>
+
+                                <!-- description -->
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input dense hint="Price" ref="price" v-model="form.price"
+                                            label="Price" outlined :rules="[val => !!val || 'Price is required']" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-select dense hint="Category" clearable ref="category" :options="categoryOpt"
+                                            v-model="form.category" label="Category" outlined
+                                            :rules="[val => !!val || 'Category is required']" />
+                                    </div>
+
+                                </div>
+                                <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input type="number" dense hint="Qty" ref="qty" v-model="form.qty"
+                                            label="Qty" outlined :rules="[val => !!val || 'Qty is required']" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <q-input type="date" dense hint="Date" ref="darte" 
+                                            v-model="form.date" outlined
+                                            :rules="[val => !!val || 'Date is required']" />
+                                    </div> 
+                                </div>
+                            </q-card-section>
+                        </div>
+
 
                                 <q-card-section align="right">
 
@@ -381,18 +415,29 @@ include 'session/check_if_no_session.php';
                                 <!-- end table -->
                             </q-card>
                         </q-dialog>
-                        <!-- end dialog section -->
+                      
 
-                        <!-- <q-card-section align="right">
-                <!-- btn -->
-                        <!-- <div class="q-pa-sm">
-                  <q-btn icon="add" label="Add" color="indigo-10" push @click="onSubmit()" />
-                </div> 
-              </q-card-section> -->
-
-
-
-                        <!-- end table -->
+                        <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                                <q-card class="my-card">                      
+                                    <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                                        <q-card-section>                             
+                                            <div class="row no-wrap items-center text-bold">
+                                            Email : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                <?php echo $_SESSION['email'] ?>
+                                                </div>                                                           
+                                            </div>
+                                            <div class="row no-wrap items-center text-bold">
+                                            Role : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                    <?php echo $_SESSION['role'] ?>
+                                                </div>
+                                            </div>                          
+                                        </q-card-section>         
+                                </q-card>
+                            </q-dialog>
+                   
+                       
                     </q-card>
 
 
@@ -412,7 +457,7 @@ include 'session/check_if_no_session.php';
             return {
                 dialog: false,
                 maximizedToggle: false,
-                
+                Userdialog: false,
                 columns: [{
                         name: "index",
                         label: "No",
@@ -467,21 +512,60 @@ include 'session/check_if_no_session.php';
                         align: "center",
                     },
                 ],
-                genderOpt: ["Male", "Female"],
+                
                 data: [],
                 leftDrawerOpen: true,
                 showId: '',
+                categoryOpt: ["Camera", "Scanner", "Monitor", "Fans"],
+                typeOpt: ['Cash', 'Donate'],
                 form: {
                     name: "",
-                    phone: "",
-                    address: "",
-                    gender: ""
+                    price: '',
+                    qty: "1",
+                    category: "",
+                    date:'',
+                    type:'',
+                    donate: '',
+                   
+                    
                 },
+                search: 'All',
                 filter: '',
+                searchType:['All', 'Cash', 'Donate']
             };
         },
         created() {},
+        watch: {
+            'search': {
+                handler: function(newValue, oldValue) {
+                   
+                    if(newValue) {
+                        if(newValue === 'All'){
+                            this.getAllData()
+                        }
+                        else {
+                            axios
+                            .post("action/Accessary_action.php", {
+                                action: "getAccessaryBySearch",
+                                id:  newValue
+                            })
+                            .then((res) => {
+                                this.data = res.data;
+                                console.log(res.data)
+                            
+                            });
+                        }
+                      
+                     }
+                },
+                deep: true,
+                immediate: true
+            }
+        },
         methods: {
+            userClick(){
+                this.Userdialog = true
+            },
             close() {
                 this.dialog = false
                 this.form = "";
@@ -493,24 +577,24 @@ include 'session/check_if_no_session.php';
             OnUpdate() {
 
                 this.$refs.name.validate();
-                this.$refs.phone.validate();
-                this.$refs.address.validate();
-                this.$refs.gender.validate();
+               
 
 
-                if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-                    .$refs.gender.hasError) {
+                if (this.$refs.name.hasError ) {
                     // check when value null
                 } else {
                     // 
                     axios
-                        .post("action/staff_action.php", {
-                            action: "updateStaff",
+                        .post("action/Accessary_action.php", {
+                            action: "updateAccessary",
                             id: this.showId,
                             name: this.form.name,
-                            phone: this.form.phone,
-                            gender: this.form.gender,
-                            address: this.form.address,
+                            type: this.form.type,
+                            price: this.form.price,
+                            qty: this.form.qty,
+                            date: this.form.date,
+                            category: this.form.category,
+                            donate: this.form.donate
                             // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                             // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
                         })
@@ -523,7 +607,7 @@ include 'session/check_if_no_session.php';
                                 });
                                 //
                                 setTimeout(() => {
-                                    window.location.href = "staff.php";
+                                    window.location.href = "Accessary.php";
                                 }, 500);
                             } else {
                                 this.$q.notify({
@@ -580,8 +664,8 @@ include 'session/check_if_no_session.php';
                 window.location.href = "maintenance.php";
             },
             onDelete(id) {
-                axios.post("action/staff_action.php", {
-                    action: "deleteStaff",
+                axios.post("action/Accessary_action.php", {
+                    action: "deleteAccessary",
                     id: id
 
                 }).then((res) => {
@@ -594,7 +678,7 @@ include 'session/check_if_no_session.php';
                         });
                         //
                         setTimeout(() => {
-                            window.location.href = "staff.php";
+                            window.location.href = "Accessary.php";
                         }, 500);
                     } else {
                         this.$q.notify({
@@ -612,8 +696,8 @@ include 'session/check_if_no_session.php';
 
                 this.dialog = true;
                 axios
-                    .post("action/staff_action.php", {
-                        action: "getStaffbyId",
+                    .post("action/Accessary_action.php", {
+                        action: "getAccessarybyId",
                         id: id,
                     })
                     .then((res) => {
@@ -624,7 +708,7 @@ include 'session/check_if_no_session.php';
                                 position: "top-right",
                             });
                             setTimeout(() => {
-                                window.location.href = "staff.php";
+                                window.location.href = "Accessary.php";
                             }, 2000);
                         } else {
                             this.form = res.data

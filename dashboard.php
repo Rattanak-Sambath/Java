@@ -35,7 +35,7 @@ include 'session/check_if_no_session.php';
                         </div>
 
                     </q-toolbar-title>
-                    <q-btn class="" dense round flat icon="contact_mail">
+                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
@@ -55,8 +55,8 @@ include 'session/check_if_no_session.php';
 
                 </q-toolbar>
             </q-header>
-            <q-drawer :width="230" :breakpoint="400" v-model="leftDrawerOpen" bordered class=" text-black  ">
-                <div>
+            <q-drawer :width="230" style="height:100% ;" v-model="leftDrawerOpen" bordered class=" text-black  ">
+                <div style="height: 150px">
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                         <div class="absolute-bottom bg-transparent">
                             <q-avatar size="56px" class="q-mb-sm" >
@@ -68,7 +68,10 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
-                <q-list @click="toDashboard()" style="margin-top:160px; ">
+
+                <div>
+                <q-card>
+                <q-list @click="toDashboard()" >
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
                             <q-icon name="dashboard" />
@@ -227,6 +230,8 @@ include 'session/check_if_no_session.php';
                 </q-expansion-item>
 
                 </q-list>
+                </div>
+                </q-card>
             </q-drawer>
             <q-page-container>
                 <q-page class="q-pa-md">
@@ -405,6 +410,30 @@ include 'session/check_if_no_session.php';
                     </div>
 
 
+
+                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                        <q-card class="my-card">                      
+                            <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                                <q-card-section>                             
+                                    <div class="row no-wrap items-center text-bold">
+                                    Email : 
+                                        <div class="text-subtitle1 q-ma-md">
+                                        <?php echo $_SESSION['email'] ?>
+                                        </div>                                                           
+                                    </div>
+                                    <div class="row no-wrap items-center text-bold">
+                                    Role : 
+                                        <div class="text-subtitle1 q-ma-md">
+                                            <?php echo $_SESSION['role'] ?>
+                                        </div>
+                                    </div>                          
+                                </q-card-section>         
+                        </q-card>
+                    </q-dialog>
+                    
+
+
+
                 </q-page>
             </q-page-container>
 
@@ -428,12 +457,17 @@ include 'session/check_if_no_session.php';
                 book: [],
                 lendBook: [],
                 returnBook: [],
-                accessaryOpt: []
+                accessaryOpt: [],
+                Userdialog: false,
+                maximizedToggle: false
 
             };
         },
         created() {},
         methods: {
+            userClick(){
+                this.Userdialog = true
+            },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },

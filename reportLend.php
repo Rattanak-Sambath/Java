@@ -37,7 +37,7 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
-                    <q-btn class="" dense round flat icon="contact_mail">
+                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
@@ -70,6 +70,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-img>
                 </div>
+                <q-card>
                 <q-list @click="toDashboard()" style="margin-top:160px; ">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -228,6 +229,7 @@ include 'session/check_if_no_session.php';
                 </q-expansion-item>
 
                 </q-list>
+                </q-card>
             </q-drawer>
 
             <q-page-container>
@@ -392,7 +394,26 @@ include 'session/check_if_no_session.php';
                     </q-card>
 
                 </div>
-
+                <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                                <q-card class="my-card">                      
+                                    <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                                        <q-card-section>                             
+                                            <div class="row no-wrap items-center text-bold">
+                                            Email : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                <?php echo $_SESSION['email'] ?>
+                                                </div>                                                           
+                                            </div>
+                                            <div class="row no-wrap items-center text-bold">
+                                            Role : 
+                                                <div class="text-subtitle1 q-ma-md">
+                                                    <?php echo $_SESSION['role'] ?>
+                                                </div>
+                                            </div>                          
+                                        </q-card-section>         
+                                </q-card>
+                            </q-dialog>
+                  
 
 
 
@@ -416,6 +437,7 @@ include 'session/check_if_no_session.php';
                 maximizedToggle: false,
                 staffOpt: [],
                 studentOpt: [],
+                Userdialog: false,
                 form: {
                     startDate: '',
                     endDate: dayjs(new Date()).format('YYYY-MM-DD'),
@@ -497,6 +519,9 @@ include 'session/check_if_no_session.php';
             }
         },
         methods: {
+            userClick(){
+                this.Userdialog = true
+            },
 
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
