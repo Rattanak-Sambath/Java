@@ -625,8 +625,6 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         this.staffOpt = res.data;
-
-
                     });
             },
             goBack() {
@@ -640,18 +638,13 @@ include 'session/check_if_no_session.php';
                     .then((res) => {
                         this.datatable = res.data;
                         console.log(res.data)
-
-
                     });
             },
-
-
         },
+        // reactive 
         mounted() {
             this.getStaff();
             this.getAllData();
-
-
         },
     });
     </script>
