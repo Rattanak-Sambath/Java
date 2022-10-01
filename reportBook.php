@@ -641,7 +641,7 @@ include 'session/check_if_no_session.php';
                     });
             },
         },
-        // reactive 
+        // try to reactive data
         mounted() {
             this.getStaff();
             this.getAllData();
