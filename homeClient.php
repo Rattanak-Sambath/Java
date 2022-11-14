@@ -1,6 +1,3 @@
-<?php
-include 'session/check_if_no_session.php';
-?>
 <!DOCTYPE html>
 <html>
 
@@ -26,213 +23,74 @@ include 'session/check_if_no_session.php';
             <q-header class="bg-indigo-10" elevated>
                 <q-toolbar>
 
-                    <q-toolbar-title class="row">
+                    <q-toolbar-title class="row q-mx-lg" >
                         <div>
-                            <q-btn flat dense round @click="toggleLeftDrawer" icon="menu" aria-label="Menu" />
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="orange" icon="menu_book" aria-label="Menu" />
                         </div>
-                        <div class="text-h5">
-                            Library-System
+                        <div class="text-h5 q-my-auto">
+                           Rabbit Library
                         </div>
 
                     </q-toolbar-title>
-                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
-                        <q-badge color="red" floating transparent>
-                            <?php echo  $_SESSION['email'] ?>
-                        </q-badge>
+                    <q-btn dense color="purple" round icon="email" class="q-ml-md q-mx-md">
+                            <q-badge color="red" floating>4</q-badge>
                     </q-btn>
-                    <div class="q-ma-md">
-                        <?php echo $_SESSION['role'] ?>
-                    </div> 
-                    <!-- right side -->
-                    <q-avatar >
-                        <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">                            </q-avatar>
-                    <q-btn class="q-mx-md" dense round flat icon="email">
-                        <q-badge color="red" floating transparent>
-                            4
-                        </q-badge>
-                    </q-btn>
-                    <q-btn dense icon="logout" color="white" flat @click="onLogout()" />
+
+                    <q-btn dense icon="login" size="20px" color="white" flat @click="onLogin()" />
 
                 </q-toolbar>
             </q-header>
-            <q-drawer :width="230" style="height:100% ;" v-model="leftDrawerOpen" bordered class=" text-black  ">
+          <q-drawer :width="230" style="height:100% ;" v-model="leftDrawerOpen" bordered class=" text-black  ">
                 <div style="height: 150px">
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
-                        <div class="absolute-bottom bg-transparent">
+                   <!-- <div class="absolute-bottom bg-transparent">
                             <q-avatar size="56px" class="q-mb-sm" >
                               <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">        
                             </q-avatar>
                             
                             <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
 
-                        </div>
-                    </q-img>
-                </div>
-
-                <div>
+                        </div>  -->
+                  </q-img>
+                </div><div>
                 <q-card>
-                <q-list @click="toDashboard()" >
-                    <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
+                <q-list >
+                    <q-item to="/homeClient" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
-                            <q-icon name="dashboard" />
+                            <q-icon name="home" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Dashboard</q-item-label>
+                            <q-item-label>Home</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <!-- section one  -->
-                </q-list>
-                <q-list @click="toStaff">
-                    <q-item to="/staff" active-class="q-item-no-link-highlighting">
+                    
+                </q-list>   
+                <q-list @click="toHistory()">
+                    <q-item to="/history" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
-                            <q-icon name="person" />
+                            <q-icon name="history" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Staff</q-item-label>
+                            <q-item-label>History</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <!-- section one  -->
-                </q-list>
-                <q-list @click="toStudent()">
-                    <q-item to="/student" active-class="q-item-no-link-highlighting">
+                    
+                </q-list>   
+                <q-list @click="toAbout()">
+                    <q-item to="/about" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
-                            <q-icon name="badge" />
+                            <q-icon name="contact_page" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Student</q-item-label>
+                            <q-item-label>About Us</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <!-- section one  -->
-                </q-list>
-                <q-list @click="toBook()">
-                    <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                        <q-item-section avatar>
-                            <q-icon name="import_contacts" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>Book</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <!-- section one  -->
-                </q-list>
-                <q-list @click="toLendBook()">
-                    <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                        <q-item-section avatar>
-                            <q-icon name="list_alt" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>Borrow-Book</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <!-- section one  -->
-                </q-list>
-
-
-                <q-list @click="toReturnBook()">
-                    <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                        <q-item-section avatar>
-                            <q-icon name="assignment_returned" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>Return-Book</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <!-- section one  -->
-                </q-list>
-                
-                <q-list @click="toAccessary()">
-                    <q-item to="/toAccessary" active-class="q-item-no-link-highlighting">
-                        <q-item-section avatar>
-                            <q-icon name="apps" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>Accessary</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                    <!-- section one  -->
-                </q-list>
-                
-                <!-- <q-list>
-                <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
-                    <q-item-section avatar>
-                      <q-icon name="group_2"/>
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Staff</q-item-label>
-                    </q-item-section>
-                  </q-item>
-              </q-list> -->
-                <q-expansion-item icon="assignment_add" label="Reports">
-
-                    <q-list class="q-pl-lg">
-                        <q-list @click="toReportBook()">
-                            <q-item to="/Login-1" active-class="q-item-no-link-highlighting">
-                                <q-item-section avatar>
-                                    <q-icon name="assignment_turned_in" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>Report-Book</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </q-list>
-                        <q-list @click="toReportLend()">
-                            <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                                <q-item-section avatar>
-                                    <q-icon name="list_alt" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>Report-Lend</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </q-list>
-
-                        <q-list @click="toReportReturn()">
-                            <q-item to="/Lock" active-class="q-item-no-link-highlighting">
-                                <q-item-section avatar>
-                                    <q-icon name="assignment_returned" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>Report-Return</q-item-label>
-                                </q-item-section>
-                            </q-item>
-
-                        </q-list>
-
-                    </q-list>
-                </q-expansion-item>
-
-                <q-expansion-item icon="settings" label="Settings">
-                    <q-list class="q-pl-lg">
-
-                        <q-list @click="toProfile()">
-                            <q-item to="/Profile" active-class="q-item-no-link-highlighting">
-                                <q-item-section avatar>
-                                    <q-icon name="person" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>User Profile</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </q-list>
-
-                        <q-list @click="toMaintenance()">
-                            <q-item to="/Maintenance" active-class="q-item-no-link-highlighting">
-                                <q-item-section avatar>
-                                    <q-icon name="construction" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>Maintenance</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </q-list>
-
-                    </q-list>
-                </q-expansion-item>
-
+                    
+                </q-list>   
                 </q-list>
                 </div>
                 </q-card>
-            </q-drawer>
+            </q-drawer>  
             <q-page-container>
                 <q-page class="q-pa-md">
 
@@ -254,7 +112,7 @@ include 'session/check_if_no_session.php';
 
                         <!--  -->
                         <div class="row">
-                            <div class="col-md-9 col-lg-9 q-mx-auto">
+                            <div class="col-md-9 col-lg-9">
                                 <div class="q-mx-tu" style=" width:100% ">
                                     <div class=" row text-center">
                                         <div class=" col-md-4 col-sm-12 col-xs-12  ">
@@ -263,9 +121,7 @@ include 'session/check_if_no_session.php';
                                                 <div class="q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white"
                                                     style="background-color: rgb(243, 70, 54);">
                                                     <q-icon name="person"></q-icon>
-
-                                                    <!---->
-                                                </div>
+                                                    </div>
                                                 <div
                                                     class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
                                                     <div class="q-item__label text-white text-h6 text-weight-bolder">
@@ -312,8 +168,7 @@ include 'session/check_if_no_session.php';
                                                     <div class="q-item__label">{{staff.length}}</div>
                                                 </div>
                                             </div>
-
-                                        </div>
+                                            </div>
                                     </div>
                                     <div class=" row text-center q-my-xs">
                                         <div class="col-md-4 col-sm-4 col-xs-12 ">
@@ -360,7 +215,7 @@ include 'session/check_if_no_session.php';
                                                         class="notranslate material-icons q-icon text-white"
                                                         aria-hidden="true" role="presentation"
                                                         style="font-size: 24px;">bar_chart</i></div>
-                                                <div
+                                                        <div
                                                     class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
                                                     <div class="q-item__label text-white text-h6 text-weight-bolder">
                                                         Accessary</div>
@@ -375,8 +230,8 @@ include 'session/check_if_no_session.php';
                                 </div>
                             </div>
                             <!-- left section -->
-                            <div class="col-md-3 col-lg-3 q-mx-auto q-my-auto">
-                                <div class=" row" style="width: 100%; height: 100%;">
+                            <div class="col-md-3 col-lg-3">
+                                <div class="row" style="width: 100%; height: 100%;">
 
                                     <div class="text-center " style="margin: 0px auto">
                                         <img style="width: 150px;"
@@ -394,10 +249,18 @@ include 'session/check_if_no_session.php';
 
                             </div>
                         </div>
-                        
+                        <div class="row">
+                            <div class="col-lg-8">
+
+
+                            </div>
+                            <div class="col-lg-4">
+
+                            </div>
+                        </div>
 
                     </q-card>
-                    <div class="text-center ">
+                    <div class="text-center">
                         <p>Copyright and reserved by 2022-2025</p>
                     </div>
 
@@ -436,7 +299,6 @@ include 'session/check_if_no_session.php';
     <script src=" https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
-
     <script>
     var app = new Vue({
         el: "#q-app",
@@ -464,17 +326,15 @@ include 'session/check_if_no_session.php';
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
 
-            toDashboard() {
-                window.location.href = "dashboard.php"
+            homeClient() {
+                window.location.href = "homeClient.php"
             },
-            toStaff() {
-                window.location.href = "staff.php";
+            toHistory() {
+                window.location.href = "history.php";
             },
-            toStudent() {
-                window.location.href = "student.php";
-            },
-            toBook() {
-                window.location.href = "book.php";
+            
+            toAbout() {
+                window.location.href = "about.php";
             },
             toLendBook() {
                 window.location.href = "lendBook.php";
@@ -500,16 +360,8 @@ include 'session/check_if_no_session.php';
             toAccessary(){
                 window.location.href = "Accessary.php";
             },
-            onLogout() {
-                axios
-                    .post("action/logout_action.php", {
-                        action: "logout",
-                    })
-                    .then((res) => {
-                        if (res.data.status == "logout") {
-                            window.location.href = "homeClient.php";
-                        }
-                    });
+            onLogin() {             
+                  window.location.href ="login.php";                 
             },
             convertDate(d) {
                 return dayjs(d).format("YYYY-MM-DD");
@@ -573,7 +425,6 @@ include 'session/check_if_no_session.php';
                     .then((res) => {
                         this.accessaryOpt = res.data;
                         console.log(res.data)
-
                     });
             }
         },
