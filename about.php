@@ -22,10 +22,12 @@
         <q-layout view="lHh Lpr lFf" class="bg-white">
             <q-header class="bg-indigo-10" elevated>
                 <q-toolbar>
-
+                        <div>
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  icon="menu" aria-label="Menu" />
+                        </div>
                     <q-toolbar-title class="row q-mx-lg" >
                         <div>
-                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="orange" icon="menu_book" aria-label="Menu" />
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="white" icon="menu_book" aria-label="Menu" />
                         </div>
                         <div class="text-h5 q-my-auto">
                            Rabbit Library
@@ -81,7 +83,7 @@
                         <q-item-section avatar>
                             <q-icon name="contact_page" />
                         </q-item-section>
-                        <q-item-section>
+                        <q-item-section >
                             <q-item-label>About Us</q-item-label>
                         </q-item-section>
                     </q-item>
@@ -102,171 +104,58 @@
 
                         </q-breadcrumbs>
                         <div>
-                            <q-card-section class="text-h5">
-                                Dashboard
+                            <q-card-section class="text-h5 text-bold text-center">
+                                ABOUT US
                             </q-card-section>
+                            
+                            <p class="text-center text-bold"> Please take a moments to get in touch, we'll get back to you shortly</p>
                         </div>
 
 
                         <q-separator></q-separator>
 
                         <!--  -->
+                       
+                            
+
                         <div class="row">
-                            <div class="col-md-9 col-lg-9">
-                                <div class="q-mx-tu" style=" width:100% ">
-                                    <div class=" row text-center">
-                                        <div class=" col-md-4 col-sm-12 col-xs-12  ">
-                                            <div class=" q-item q-item-type row no-wrap q-pa-xs"
-                                                style="background-color: rgb(243, 113, 105); height: 150px">
-                                                <div class="q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white"
-                                                    style="background-color: rgb(243, 70, 54);">
-                                                    <q-icon name="person"></q-icon>
-                                                    </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Book
-                                                    </div>
-                                                    <div class="q-item__label"> {{book.length}}</div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-green-10"
-                                                style="height:150px">
-                                                <div
-                                                    class=" bg-green-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <q-icon name="person"></q-icon>
-
-                                                    <!---->
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Student
-                                                    </div>
-                                                    <div class="q-item__label">{{student.length}}</div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-indigo-10"
-                                                style="height:150px">
-                                                <div class="bg-indigo-5 q-item__section column q-item__section--side
-                                            justify-center q-pa-lg q-mr-none text-white">
-                                                    <q-icon name="person"></q-icon>
-
-                                                    <!---->
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Staff
-                                                    </div>
-                                                    <div class="q-item__label">{{staff.length}}</div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                    </div>
-                                    <div class=" row text-center q-my-xs">
-                                        <div class="col-md-4 col-sm-4 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-deep-orange-10"
-                                                style="height:150px">
-                                                <div
-                                                    class="bg-deep-orange-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <i class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i>
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Lend Book</div>
-                                                    <div class="q-item__label">{{lendBook.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12  ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-teal-10"
-                                                style="height:150px">
-                                                <div
-                                                    class="bg-teal-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <i class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i>
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Return Book</div>
-                                                    <div class="q-item__label">{{returnBook.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs"
-                                                style="background-color: rgb(162, 112, 177); height: 150px">
-                                                <div class="q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white"
-                                                    style="background-color: rgb(159, 82, 177);"><i
-                                                        class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i></div>
-                                                        <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Accessary</div>
-                                                    <div class="q-item__label">{{accessaryOpt.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- left section -->
-                            <div class="col-md-3 col-lg-3">
-                                <div class="row" style="width: 100%; height: 100%;">
-
-                                    <div class="text-center " style="margin: 0px auto">
-                                        <img style="width: 150px;"
-                                            src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" />
-                                    </div>
-
-
-
-                                    <div class="text-center q-my-lg" style="height: 130px; margin: 0px auto">
-                                        <img style="width: 190px; "
-                                            src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" />
-                                    </div>
-
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                                <div class="q-ma-md shadow-11 ">
+                                     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6535.551404555549!2d103.20307424132699!3d13.09524988546788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2skh!4v1668435475514!5m2!1sen!2skh" class="full-width" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
 
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8">
-
-
-                            </div>
-                            <div class="col-lg-4">
-
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <q-card-section class="text-h5 text-bold">
+                                        Contact Us
+                                    </q-card-section>
+                                     <div class=" shadow-11 q-pa-md">
+                                           <div class="q-mb-md">
+                                                <q-input dense hint="Email Address" ref="email" v-model="form.email"
+                                                    label="Email" outlined :rules="[val => !!val || 'Email is required']" />
+                                           </div>
+                                           <div class="q-mb-md">
+                                                <q-input dense hint="Phone Number" ref="phone" v-model="form.phone"
+                                                    label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
+                                           </div>
+                                           <div class="q-mb-md">
+                                                <q-input type="textarea" dense hint="Describtion"  v-model="form.phone"
+                                                    label="Description" outlined  />
+                                           </div>
+                                           <div class="q-mb-md text-right">
+                                                <q-btn icon="arrow_right_alt" @click="submit()"  color="primary">Submit</q-btn>
+                                           </div>
+                                        
+                                            
+                                    </div>
                             </div>
                         </div>
 
                     </q-card>
-                    <div class="text-center">
-                        <p>Copyright and reserved by 2022-2025</p>
-                    </div>
+                    
 
 
-
-                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                    <!-- <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
                         <q-card class="my-card">                      
                             <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
                                 <q-card-section>                             
@@ -284,15 +173,19 @@
                                     </div>                          
                                 </q-card-section>         
                         </q-card>
-                    </q-dialog>
+                    </q-dialog> -->
                     
 
 
 
                 </q-page>
+                
+
             </q-page-container>
 
-
+            <q-foo class="text-center">
+                        <p>Copyright and reserved by 2022-2025</p>
+                    </q-foo>
         </q-layout>
     </div>
 
@@ -305,20 +198,75 @@
         name: "new-home",
         data: function() {
             return {
+                genderOpt: ["Male", "Female"],
+                data: [],
                 leftDrawerOpen: true,
-                staff: [],
-                student: [],
-                book: [],
-                lendBook: [],
-                returnBook: [],
-                accessaryOpt: [],
-                Userdialog: false,
-                maximizedToggle: false
+                maximizedToggle:false,
+                form: {
+                    email: "",
+                    phone: "",
+                    describtion: "",
+                   
+                },
 
             };
         },
         created() {},
         methods: {
+            submit(){
+                this.$refs.email.validate();
+                this.$refs.phone.validate();
+                
+                
+                if (this.$refs.email.hasError || this.$refs.phone.hasError  ) {
+                    
+                } else {
+                  
+                                this.$q.notify({
+                                    message: res.data.err,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                    // axios
+                        // .post("action/student_action.php", {
+                        //     action: "addNewStudent",
+                        //     name: this.form.name,
+                        //     phone: this.form.phone,
+                        //     address: this.form.address,
+                        //     gender: this.form.gender,
+
+                            // description: this.form.description,
+                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        // })
+                        // .then((res) => {
+                        //     if (res.data.status == "insert") {
+                        //         this.$q.notify({
+                        //             message: "Inserted successfully",
+                        //             type: "positive",
+                        //             position: "top-right",
+                        //         });
+                        //         //
+                        //         setTimeout(() => {
+                        //             history.go(-1);
+
+                        //         }, 500);
+
+                        //     } else {
+                        //         this.$q.notify({
+                        //             message: "Cannot Inserted!!!",
+                        //             type: "negative",
+                        //             position: "top-right",
+                        //         });
+                        //         this.$q.notify({
+                        //             message: res.data.err,
+                        //             type: "negative",
+                        //             position: "top-right",
+                        //         });
+                        //     }
+                        // });
+                }
+            },
             userClick(){
                 this.Userdialog = true
             },

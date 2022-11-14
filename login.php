@@ -106,7 +106,7 @@ include 'session/check_if_session.php';
                                 });
                                 setTimeout(() => {
                                     this.loading = false;
-                                    window.location.href = "staff.php";
+                                    window.location.href = "dashboard.php";
                                 }, 500);
                             } else {
                                 setTimeout(() => {

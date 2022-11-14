@@ -22,10 +22,12 @@
         <q-layout view="lHh Lpr lFf" class="bg-white">
             <q-header class="bg-indigo-10" elevated>
                 <q-toolbar>
-
+                        <div>
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  icon="menu" aria-label="Menu" />
+                        </div>
                     <q-toolbar-title class="row q-mx-lg" >
                         <div>
-                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="orange" icon="menu_book" aria-label="Menu" />
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="white" icon="menu_book" aria-label="Menu" />
                         </div>
                         <div class="text-h5 q-my-auto">
                            Rabbit Library
@@ -102,162 +104,14 @@
 
                         </q-breadcrumbs>
                         <div>
-                            <q-card-section class="text-h5">
-                                Dashboard
+                            <q-card-section class="text-h5 text-bold">
+                                History
                             </q-card-section>
                         </div>
 
 
-                        <q-separator></q-separator>
-
-                        <!--  -->
-                        <div class="row">
-                            <div class="col-md-9 col-lg-9">
-                                <div class="q-mx-tu" style=" width:100% ">
-                                    <div class=" row text-center">
-                                        <div class=" col-md-4 col-sm-12 col-xs-12  ">
-                                            <div class=" q-item q-item-type row no-wrap q-pa-xs"
-                                                style="background-color: rgb(243, 113, 105); height: 150px">
-                                                <div class="q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white"
-                                                    style="background-color: rgb(243, 70, 54);">
-                                                    <q-icon name="person"></q-icon>
-                                                    </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Book
-                                                    </div>
-                                                    <div class="q-item__label"> {{book.length}}</div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-green-10"
-                                                style="height:150px">
-                                                <div
-                                                    class=" bg-green-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <q-icon name="person"></q-icon>
-
-                                                    <!---->
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Student
-                                                    </div>
-                                                    <div class="q-item__label">{{student.length}}</div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-4 col-sm-12 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-indigo-10"
-                                                style="height:150px">
-                                                <div class="bg-indigo-5 q-item__section column q-item__section--side
-                                            justify-center q-pa-lg q-mr-none text-white">
-                                                    <q-icon name="person"></q-icon>
-
-                                                    <!---->
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Staff
-                                                    </div>
-                                                    <div class="q-item__label">{{staff.length}}</div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                    </div>
-                                    <div class=" row text-center q-my-xs">
-                                        <div class="col-md-4 col-sm-4 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-deep-orange-10"
-                                                style="height:150px">
-                                                <div
-                                                    class="bg-deep-orange-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <i class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i>
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Lend Book</div>
-                                                    <div class="q-item__label">{{lendBook.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12  ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs bg-teal-10"
-                                                style="height:150px">
-                                                <div
-                                                    class="bg-teal-5 q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white">
-                                                    <i class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i>
-                                                </div>
-                                                <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Return Book</div>
-                                                    <div class="q-item__label">{{returnBook.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12 ">
-                                            <div class="q-item q-item-type row no-wrap q-pa-xs"
-                                                style="background-color: rgb(162, 112, 177); height: 150px">
-                                                <div class="q-item__section column q-item__section--side justify-center q-pa-lg q-mr-none text-white"
-                                                    style="background-color: rgb(159, 82, 177);"><i
-                                                        class="notranslate material-icons q-icon text-white"
-                                                        aria-hidden="true" role="presentation"
-                                                        style="font-size: 24px;">bar_chart</i></div>
-                                                        <div
-                                                    class="q-item__section column q-item__section--main justify-center q-pa-md q-ml-none  text-white">
-                                                    <div class="q-item__label text-white text-h6 text-weight-bolder">
-                                                        Accessary</div>
-                                                    <div class="q-item__label">{{accessaryOpt.length}}</div>
-                                                </div>
-                                                <!---->
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- left section -->
-                            <div class="col-md-3 col-lg-3">
-                                <div class="row" style="width: 100%; height: 100%;">
-
-                                    <div class="text-center " style="margin: 0px auto">
-                                        <img style="width: 150px;"
-                                            src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" />
-                                    </div>
-
-
-
-                                    <div class="text-center q-my-lg" style="height: 130px; margin: 0px auto">
-                                        <img style="width: 190px; "
-                                            src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" />
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8">
-
-
-                            </div>
-                            <div class="col-lg-4">
-
-                            </div>
-                        </div>
+                        <q-separator></q-separator>                                    
+                        
 
                     </q-card>
                     <div class="text-center">

@@ -22,10 +22,12 @@
         <q-layout view="lHh Lpr lFf" class="bg-white">
             <q-header class="bg-indigo-10" elevated>
                 <q-toolbar>
-
+                    <div>
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  icon="menu" aria-label="Menu" />
+                        </div>
                     <q-toolbar-title class="row q-mx-lg" >
                         <div>
-                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="orange" icon="menu_book" aria-label="Menu" />
+                            <q-btn flat dense round @click="toggleLeftDrawer" class="q-text-lg"  size="25px" color="white" icon="menu_book" aria-label="Menu" />
                         </div>
                         <div class="text-h5 q-my-auto">
                            Rabbit Library
