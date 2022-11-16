@@ -464,6 +464,12 @@ include 'session/check_if_no_session.php';
                         field: (row) => row.qty,
                     },
                     {
+                        name: "price",
+                        label: "Price",
+                        align: "center",
+                        field: (row) => row.price + ' $',
+                    },
+                    {
                         name: "image",
                         label: "Image",
                         align: "center",
@@ -649,7 +655,7 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         if (res.data.status == "logout") {
-                            window.location.href = "login.php";
+                            window.location.href = "homeClient.php";
                         }
                     });
             },

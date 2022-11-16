@@ -114,14 +114,14 @@
 
                         <!--  -->
                         <div class="row" >
-                            <div v-for="(book, index) in books" :key="index" class="justify-around q-mx-auto">
+                            <div v-for="(book, index) in books" :key="index" class="justify-around q-mx-auto col-lg-3 col-md-4 col-sm-6 col-xs-12">
 
                            
-                            <q-card class="my-card q-my-md   "  style="max-width:350px;"   >
+                            <q-card class="my-card q-ma-md  "    >
                                     <q-card-section class="col-5 flex flex-center ">
                                         <q-img
-                                                style="height:200px; width:300px"
-                                                class="rounded-borders"
+                                                style="height:200px"
+                                                class="rounded-borders "
                                                 :src="'upload/' + book.image"
                                          />
                                     </q-card-section>
@@ -131,6 +131,7 @@
                                     <div class="text-h5  q-mb-xs">{{book.title}}</div>
                                     <div class="text-overline "> Type :{{ book.type }}</div>
                                     <div class="text-overline">In stock :{{ book.qty }}</div>
+                                    <div class="text-overline">Price :{{ book.price }}$</div>
 
                                     <div class="text-caption text-grey">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -237,7 +238,7 @@
                                 });
                                 setTimeout(() => {
                                     window.location.href = "homeClient.php";
-                                }, 2000);
+                                }, 100);
                                 
                             }
                         });

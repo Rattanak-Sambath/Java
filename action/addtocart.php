@@ -54,8 +54,47 @@ if ($received_data->action == 'addtocart') {
         // echo
         echo json_encode($data);
       
-  }
+  };
+  if ($received_data->action == 'getAllBook') {
 
+   
+    // sql
+    $query = "  select tbl_addtocart.* , tbl_book.image,  tbl_book.price, tbl_book.title from tbl_addtocart inner join tbl_book on tbl_addtocart.title = tbl_book.title";
+    // execure query
+    $result = mysqli_query($conn, $query);
+  
+    while ($row = $result->fetch_array()) {
+      $data[] = $row;
+    }
+    // $data = array(
+    //   'status' => 'Hi',
+    //   'name' => $row[0]['name'],
+    // );
+    // echo
+    echo json_encode($data);
+  
+};
+if ($received_data->action == 'deleteBook') {
+  // var_dump($received_data->id);
+  $id = $received_data->id;
+  $query = "DELETE FROM tbl_addtocart WHERE id = $id ";
+  // execure query
+  $result = mysqli_query($conn, $query);
+
+  if($result === true){
+    $data = array(
+      'status' => 'delete',
+      
+    );
+  }else {
+    $data = array(
+      'status' => 'cannot Delete',
+  
+    );
+  }
+  echo json_encode($data);
+}
+  
 
 
 

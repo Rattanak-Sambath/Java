@@ -6,11 +6,13 @@
             $staff = $_POST['staff'];
             $date = $_POST['date'];           
             $type = $_POST['type'];
+            $price = $_POST['price'];
+
             $image = $_FILES['image']['name'];
             $tmp_name = $_FILES['image']['tmp_name'];
             
-            $insert = "INSERT INTO tbl_book(title,staff, qty, date, type, image)
-                       VALUES ('$title','$staff', '$qty', '$date', '$type', '$image')";
+            $insert = "INSERT INTO tbl_book(title,staff, qty, date, type, image, price)
+                       VALUES ('$title','$staff', '$qty', '$date', '$type', '$image', '$price')";
             $run_insert = mysqli_query($conn, $insert);
             if($run_insert === true) {
                 echo "Data has been installed"; 
@@ -106,6 +108,7 @@
                                                     <input type="text " placeholder="Qty" class="form-control"
                                                         name="qty" required>
                                                 </div>
+                                               
 
 
                                             </div>
@@ -132,12 +135,20 @@
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6">
 
+                                                    <input type="text" placeholder="Price" class="form-control"
+                                                        name="price" required>
+                                                    </div>
+                                                
+                                                <div class="col-xs-12 col-sm-6 col-md-6"></div>
+                                            </div>
+                                            <div class="q-pa-sm row q-col-gutter-x-md ">
+
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+
                                                     <input type="file" class="form-control" id="exampleInputPassword1"
                                                         name="image">
                                                 </div>
-                                                <div class="col-xs-12 col-sm-6 col-md-6"></div>
                                             </div>
-
 
                                             <br>
                                             <button type="submit" name="submit" class="btn btn-primary">Create</button>
@@ -219,6 +230,7 @@
                         date: dayjs(new Date()).format("YYYY-MM-DD"),
                         type: "",
                         image: '',
+                        price:""
                     },
                     typeOpt: ["Science", "Biology", "Scienfiction"],
 

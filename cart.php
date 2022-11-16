@@ -114,6 +114,79 @@
 
                         <!--  -->
                         <div class="row" >
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    
+                                <q-table flat :columns="columns" :filter="filter" :data="data">
+                                    <!-- index -->
+                                    <template slot="body-cell-index" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                            {{ props.pageIndex + 1 }}
+                                        </q-td>
+                                    </template>
+                                    <!-- action -->
+
+                                    <template slot="body-cell-image" slot-scope="props" :props="props.row">
+                                        <q-td align="center" class="vertical-align-middle">
+
+                                            <div v-show="!props.row.id">
+                                                <img style="width:50px ; height: 50px" alt="">
+                                            </div>
+                                            <div v-show="props.row.id">
+                                                <img :src="'upload/' + props.row.image"
+                                                    style="width:50px ; height: 50px" alt="">
+                                            </div>
+
+                                        </q-td>
+
+
+                                    </template>
+                                    <template v-slot:top-right slot="body-cell-title">
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                    </template>
+                                    <template slot="body-cell-action" slot-scope="props" :props="props.row">                                    
+                                        <q-td align="center">
+                                            <q-btn dense color="negative" icon="delete"
+                                                @click="onDelete(props.row.id)" />
+                                        </q-td>
+
+
+                                    </template>
+                                    <template v-slot:top-right>
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                    </template>
+
+                                </q-table>  
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                                    <q-card class="q-pa-md">
+                                                <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
+                                                    <q-input dense hint="Price" ref="price" v-model="delivery"
+                                                    label="Price" outlined :rules="[val => !!val || 'Price is required']" />
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
+                                                    <q-input dense hint="PromotCode" v-model="delivery"
+                                                    label="Promote" outlined :rules="[val => !!val || 'Price is required']" />
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
+                                                <q-select dense hint="Payment" ref="payment" :options="paymentOpt"
+                                                    v-model="payment" label="Payment" outlined
+                                                    :rules="[val => !!val || 'Payment is required']" />
+                                                    
+                                                </div>
+                                                <div class="text-right ">
+                                                      <q-btn icon="add"  full-width color="primary" label="Submit"  />
+                                                </div>
+                                    </q-card>
+                                        
+                                </div>
 
                         </div>  
                     </q-card>
@@ -166,10 +239,59 @@
                 leftDrawerOpen: true,
                 Userdialog: false,
                 maximizedToggle: false,
-                stars: '',
+                filter: "",
+                data:[],
                 expanded: false,
                 books: [],
-                addtocarts:[]
+                addtocarts:[],
+                delivery:'',
+                promotecode:'',
+                payment:'',
+                paymentOpt:[
+                    'ABA',
+                    'ACLEDA',
+                    'Other'
+                ],
+                columns: [{
+                        name: "index",
+                        label: "No",
+                        align: "left",
+                    },
+
+                    {
+                        name: "title",
+                        label: "Title",
+                        align: "left",
+                        field: (row) => row.title,
+                    },
+                    {
+                        name: "qty",
+                        label: "Qty",
+                        align: "center",
+                        field: (row) => row.qty,
+                    },
+                    {
+                        name: "price",
+                        label: "Price",
+                        align: "center",
+                        field: (row) => row.price,
+                    },
+                    {
+                        name: "image",
+                        label: "Image",
+                        align: "center",
+                        field: (row) => row.image,
+                    },
+                    
+                   
+                    {
+                        name: "action",
+                        label: "Action",
+                        align: "center",
+
+                    },
+
+                ],
 
 
             };
@@ -179,30 +301,18 @@
             toCart(){
                 window.location.href = "cart.php";
             },
-            // addtocart(item){
-            //     console.log('item',item)
-              
-            //         axios
-            //             .post("action/addtocart.php", {
-            //                 action: "addtocart",
-            //                 book_id: item.id,
-            //                 title: item.title,                     
-            //                 qty: 1,                                                
-            //             })
-            //             .then((res) => {
-            //                 if (res.data.status != "insert")  {
-            //                     this.$q.notify({
-            //                         message: "Insert Successfully !!!",
-            //                         type: "positive",
-            //                         position: "top-right",
-            //                     });
-            //                     setTimeout(() => {
-            //                         window.location.href = "homeClient.php";
-            //                     }, 2000);
-                                
-            //                 }
-            //             });
-            // },  
+            getCart() {
+                axios
+                    .post("action/addtocart.php", {
+                        action: "getAllBook",
+                    })
+                    .then((res) => {
+                        this.data = res.data;
+                        console.log(res.data)
+
+
+                    });
+            },          
             userClick(){
                 this.Userdialog = true
             },
@@ -239,21 +349,50 @@
             },
             findBook() {
                 axios
-                    .post("action/book_action.php", {
+                    .post("action/addtocart.php", {
                         action: "getAllBook",
                     })
                     .then((res) => {
                         this.books = res.data;
-                        console.log(res);   
+                        console.log('book',res);       
                     });
+            },
+            onDelete(id) {
+                axios.post("action/addtocart.php", {
+                    action: "deleteBook",
+                    id: id
+
+                }).then((res) => {
+                    if (res.data.status == "delete") {
+                        this.$q.notify({
+                            message: "Delete Book successfully",
+                            type: "positive",
+                            position: "top-right",
+
+                        });
+                        //
+                        setTimeout(() => {
+                            window.location.href = "cart.php";
+                        }, 100);
+                    } else {
+                        this.$q.notify({
+                            message: "Delete unsuccessful",
+                            type: "negative",
+                            position: "top-right",
+
+                        });
+                    }
+
+                })
             },
            
            
-           
         },
+        
         mounted() {         
             this.findAddtocart();
             this.findBook();
+            this.getCart();
             
         },
     });

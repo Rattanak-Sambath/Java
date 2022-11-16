@@ -7,11 +7,13 @@
             $qty = $_POST['qty'];
             $date = $_POST['date'];           
             $type = $_POST['type'];
+            $price = $_POST['price'];
+
             $image = $_FILES['image']['name'];
             $tmp_name = $_FILES['image']['tmp_name'];
            
             
-            $insert = "update tbl_book set title='$title',staff='$staff', qty='$qty', date='$date', type='$type', image='$image' where id=$id";
+            $insert = "update tbl_book set title='$title',staff='$staff', qty='$qty', date='$date', type='$type', image='$image' , price='$price' where id=$id";
             $run_insert = mysqli_query($conn, $insert);
             if($run_insert === true) {
                 echo "Data has been installed"; 
@@ -34,6 +36,7 @@
                 $type = $row['type'];
                 $date = $row['date'];
                 $image = $row['image'];
+                $price = $row['price'];
                
             } 
             
@@ -142,10 +145,18 @@
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-6">
 
-                                                <input type="file" class="form-control" id="exampleInputPassword1"
-                                                    name="image" value="<?= $image ?>">
+                                                    <input type="text" placeholder="Price" class="form-control"
+                                                        name="price" required value="<?= $price ?>">
                                             </div>
+                                           
                                             <div class="col-xs-12 col-sm-6 col-md-6"></div>
+                                        </div>
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                                <div class="col-xs-12 col-sm-6 col-md-6">
+
+                                                    <input type="file" class="form-control" id="exampleInputPassword1"
+                                                        name="image" value="<?= $image ?>">
+                                                </div>
                                         </div>
 
 

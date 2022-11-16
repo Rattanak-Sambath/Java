@@ -696,7 +696,7 @@ include 'session/check_if_no_session.php';
                     })
                     .then((res) => {
                         if (res.data.status == "logout") {
-                            window.location.href = "login.php";
+                            window.location.href = "homeClient.php";
                         }
                     });
             },
