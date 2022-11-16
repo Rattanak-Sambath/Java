@@ -56,7 +56,7 @@
                   </q-img>
                 </div><div>
                 <q-card>
-                <q-list >
+                <q-list @click="homeClient" >
                     <q-item to="/homeClient" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
                             <q-icon name="home" />
@@ -100,12 +100,12 @@
                         <q-breadcrumbs class="q-ma-md" separator="---" class="text-orange" active-color="secondary">
                             <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
                             /
-                            <q-breadcrumbs-el label="Dashboard" icon="widgets" class="q-ma-xs" />
+                            <q-breadcrumbs-el label="to cart" icon="shopping_cart_checkout" class="q-ma-xs" />
 
                         </q-breadcrumbs>
                         <div>
-                            <q-card-section class="text-h5">
-                                Dashboard
+                            <q-card-section class="text-h5 text-bold">
+                                To cart
                             </q-card-section>
                         </div>
 
@@ -114,46 +114,7 @@
 
                         <!--  -->
                         <div class="row" >
-                            <div v-for="(book, index) in books" :key="index" class="justify-around q-mx-auto">
 
-                           
-                            <q-card class="my-card q-my-md   "  style="max-width:350px;"   >
-                                    <q-card-section class="col-5 flex flex-center ">
-                                        <q-img
-                                                style="height:200px; width:300px"
-                                                class="rounded-borders"
-                                                :src="'upload/' + book.image"
-                                         />
-                                    </q-card-section>
-                                <div>                                 
-                                    <q-card-section class="">
-                                  
-                                    <div class="text-h5  q-mb-xs">{{book.title}}</div>
-                                    <div class="text-overline "> Type :{{ book.type }}</div>
-                                    <div class="text-overline">In stock :{{ book.qty }}</div>
-
-                                    <div class="text-caption text-grey">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    </div>
-                                    </q-card-section>                                 
-                                </div>
-                                <q-card-actions class="justify-between items-center">
-                                   
-                                    
-                                    <q-btn flat color="primary" @click="addtocart(book) ">
-                                            Add to Cart         
-                                    </q-btn>
-                                    <q-btn flat >
-                                            View More 
-                                    </q-btn>
-                                </q-card-actions>
-
-
-                               
-                            </q-card>
-                            </div>
-                                        
-                                
                         </div>  
                     </q-card>
                     
@@ -218,30 +179,30 @@
             toCart(){
                 window.location.href = "cart.php";
             },
-            addtocart(item){
-                console.log('item',item)
+            // addtocart(item){
+            //     console.log('item',item)
               
-                    axios
-                        .post("action/addtocart.php", {
-                            action: "addtocart",
-                            book_id: item.id,
-                            title: item.title,                     
-                            qty: 1,                                                
-                        })
-                        .then((res) => {
-                            if (res.data.status != "insert")  {
-                                this.$q.notify({
-                                    message: "Insert Successfully !!!",
-                                    type: "positive",
-                                    position: "top-right",
-                                });
-                                setTimeout(() => {
-                                    window.location.href = "homeClient.php";
-                                }, 2000);
+            //         axios
+            //             .post("action/addtocart.php", {
+            //                 action: "addtocart",
+            //                 book_id: item.id,
+            //                 title: item.title,                     
+            //                 qty: 1,                                                
+            //             })
+            //             .then((res) => {
+            //                 if (res.data.status != "insert")  {
+            //                     this.$q.notify({
+            //                         message: "Insert Successfully !!!",
+            //                         type: "positive",
+            //                         position: "top-right",
+            //                     });
+            //                     setTimeout(() => {
+            //                         window.location.href = "homeClient.php";
+            //                     }, 2000);
                                 
-                            }
-                        });
-            },  
+            //                 }
+            //             });
+            // },  
             userClick(){
                 this.Userdialog = true
             },
@@ -252,6 +213,8 @@
             homeClient() {
                 window.location.href = "homeClient.php"
             },
+           
+            
             toHistory() {
                 window.location.href = "history.php";
             },
@@ -263,18 +226,7 @@
             toProfile() {
                 window.location.href = "profile.php";
             },
-            toMaintenance() {
-                window.location.href = "maintenance.php";
-            },
-            toAccessary(){
-                window.location.href = "Accessary.php";
-            },
-            onLogin() {             
-                  window.location.href ="login.php";                 
-            },
-            convertDate(d) {
-                return dayjs(d).format("YYYY-MM-DD");
-            },
+            
             findAddtocart() {
                 axios
                     .post("action/addtocart.php", {
