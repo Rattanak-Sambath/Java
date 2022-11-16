@@ -103,10 +103,8 @@
                             <q-breadcrumbs-el label="to cart" icon="shopping_cart_checkout" class="q-ma-xs" />
 
                         </q-breadcrumbs>
-                        <div>
-                            <q-card-section class="text-h5 text-bold">
-                                To cart
-                            </q-card-section>
+                        <div class="row justify-between col-lg-6">
+                          
                         </div>
 
 
@@ -115,7 +113,16 @@
                         <!--  -->
                         <div class="row" >
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    
+                                            <q-card-section class="text-h5 text-bold row justify-between items-center">
+                                                Shopping Cart
+                                                <div>
+                                                                
+                                                    <q-card-section class="text-h5 text-bold">
+                                                        {{ addtocarts.length }} Items
+                                                    </q-card-section>
+                                                </div>
+                                            </q-card-section>
+                                            <hr>
                                 <q-table flat :columns="columns" :filter="filter" :data="data">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
@@ -165,8 +172,13 @@
 
                                 </q-table>  
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
-                                    <q-card class="q-pa-md">
+                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 q-mx-auto" >
+                                         
+                                                   <q-card-section class="text-h5 text-bold">
+                                                        Order Summary
+                                                    </q-card-section>
+                                                    <hr>
+                                         <q-card class="q-pa-md q-my-lg">
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                     <q-input dense hint="Price" ref="price" v-model="delivery"
                                                     label="Price" outlined :rules="[val => !!val || 'Price is required']" />
@@ -181,10 +193,19 @@
                                                     :rules="[val => !!val || 'Payment is required']" />
                                                     
                                                 </div>
+                                                <div class="row justify-between items-center q-pa-sm">
+                                                    <div>
+                                                           Total Cose
+                                                    </div>
+                                                    <div>
+                                                          {{  }} Items
+                                                    </div>
+                                                </div>
+
                                                 <div class="text-right ">
                                                       <q-btn icon="add"  full-width color="primary" label="Submit"  />
                                                 </div>
-                                    </q-card>
+                                         </q-card>
                                         
                                 </div>
 
