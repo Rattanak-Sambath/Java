@@ -131,7 +131,7 @@
                                         </q-td>
                                     </template>
                                     <template slot="body-cell-total" slot-scope="props" :props="props.row">
-                                        <q-td>
+                                        <q-td class="font-bold"> 
                                             {{props.row.qty * props.row.price}}
                                         </q-td>
                                     </template>
@@ -266,6 +266,7 @@
                 Userdialog: false,
                 maximizedToggle: false,
                 filter: "",
+                totalCose = qty * price,
                 data:[],
                 expanded: false,
                 books: [],
@@ -362,6 +363,9 @@
             },          
             userClick(){
                 this.Userdialog = true
+            },
+            onLogin() {             
+                  window.location.href ="login.php";                 
             },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen

@@ -283,10 +283,10 @@ include 'session/check_if_no_session.php';
                                     <!-- action -->
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
                                         <q-td align="center">
-                                            <q-btn dense color="primary" icon="create" @click="onEdit(props.row.id)" />
+                                            <q-btn dense color="primary" icon="done"  @click="onEdit(props.row.id)" />
                                         </q-td>
                                         <q-td align="center">
-                                            <q-btn dense color="negative" icon="delete"
+                                             <q-btn dense color="negative"  icon="close"
                                                 @click="onDelete(props.row.id)" />
                                         </q-td>
 

@@ -270,6 +270,9 @@
             userClick(){
                 this.Userdialog = true
             },
+            onLogin() {             
+                  window.location.href ="login.php";                 
+            },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
