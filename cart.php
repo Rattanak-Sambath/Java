@@ -130,6 +130,11 @@
                                             {{ props.pageIndex + 1 }}
                                         </q-td>
                                     </template>
+                                    <template slot="body-cell-total" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                            {{props.row.qty * props.row.price}}
+                                        </q-td>
+                                    </template>
                                     <!-- action -->
 
                                     <template slot="body-cell-image" slot-scope="props" :props="props.row">
@@ -180,12 +185,12 @@
                                                     <hr>
                                          <q-card class="q-pa-md q-my-lg">
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
-                                                    <q-input dense hint="Price" ref="price" v-model="delivery"
-                                                    label="Price" outlined :rules="[val => !!val || 'Price is required']" />
+                                                    <q-input dense hint="Price" ref="delivery" v-model="delivery"
+                                                    label="Delivery" outlined  />
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                     <q-input dense hint="PromotCode" v-model="delivery"
-                                                    label="Promote" outlined :rules="[val => !!val || 'Price is required']" />
+                                                    label="Promote" outlined />
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                 <q-select dense hint="Payment" ref="payment" :options="paymentOpt"
@@ -195,15 +200,15 @@
                                                 </div>
                                                 <div class="row justify-between items-center q-pa-sm">
                                                     <div>
-                                                           Total Cose
+                                                           Total Cost
                                                     </div>
                                                     <div>
-                                                          {{  }} Items
+                                                          {{totalAmount  }} $
                                                     </div>
                                                 </div>
 
                                                 <div class="text-right ">
-                                                      <q-btn icon="add"  full-width color="primary" label="Submit"  />
+                                                      <q-btn icon="add"  full-width color="primary" label="Submit"  @click="submitCart" />
                                                 </div>
                                          </q-card>
                                         
@@ -298,6 +303,12 @@
                         field: (row) => row.price,
                     },
                     {
+                        name: "total",
+                        label: "Total",
+                        align: "center",
+                        
+                    },
+                    {
                         name: "image",
                         label: "Image",
                         align: "center",
@@ -318,7 +329,22 @@
             };
         },
         created() {},
+        computed :{
+
+            totalAmount(){
+                let total = 0;
+                this.data.forEach((item)=>{
+                    total += item.price * item.qty;
+                    
+                })
+                return total;
+               
+            },
+         },
         methods: {
+            submitCart(){
+                console.log('hello  ')
+            },
             toCart(){
                 window.location.href = "cart.php";
             },
