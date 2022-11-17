@@ -115,6 +115,18 @@ include 'session/check_if_no_session.php';
                     </q-item>
                     <!-- section one  -->
                 </q-list>
+                <q-list @click="toClient()">
+                    <q-item to="/client" active-class="q-item-no-link-highlighting">
+                        <q-item-section avatar>
+                            <q-icon name="check_box" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Client</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                
+                </q-list>
+               
                 <q-list @click="toLendBook()">
                     <q-item to="/dasboard" active-class="q-item-no-link-highlighting">
                         <q-item-section avatar>
@@ -575,6 +587,9 @@ include 'session/check_if_no_session.php';
                             }
                         });
                 }
+            },
+            toClient() {
+                window.location.href = "ApClient.php"
             },
             toAccessary(){
                 window.location.href = "Accessary.php";
