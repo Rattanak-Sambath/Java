@@ -123,7 +123,7 @@
                                                 </div>
                                             </q-card-section>
                                             <hr>
-                                <q-table flat :columns="columns" :filter="filter" :data="data">
+                                <q-table flat :columns="columns" :filter="filter" :data="addtocarts">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
@@ -131,7 +131,7 @@
                                         </q-td>
                                     </template>
                                     <template slot="body-cell-total" slot-scope="props" :props="props.row">
-                                        <q-td class="font-bold"> 
+                                        <q-td>
                                             {{props.row.qty * props.row.price}}
                                         </q-td>
                                     </template>
@@ -266,7 +266,6 @@
                 Userdialog: false,
                 maximizedToggle: false,
                 filter: "",
-                totalCose = qty * price,
                 data:[],
                 expanded: false,
                 books: [],
@@ -344,28 +343,35 @@
          },
         methods: {
             submitCart(){
-                console.log('hello  ')
+                axios.post("action/ClientAction.php", {
+                            action: "addtoclient",
+                            addtocarts: this.addtocarts,
+                            payment : this.payment,
+                            user_name : "Dara",
+                            status: "pending", 
+
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            if (res.data.status == "insert")  {
+                                this.$q.notify({
+                                    message: "Insert Successfully !!!",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                                setTimeout(() => {
+                                    window.location.href = "homeClient.php";
+                                }, 100);
+                                
+                            }
+                        });
             },
             toCart(){
                 window.location.href = "cart.php";
             },
-            getCart() {
-                axios
-                    .post("action/addtocart.php", {
-                        action: "getAllBook",
-                    })
-                    .then((res) => {
-                        this.data = res.data;
-                        console.log(res.data)
-
-
-                    });
-            },          
+                 
             userClick(){
                 this.Userdialog = true
-            },
-            onLogin() {             
-                  window.location.href ="login.php";                 
             },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
@@ -387,27 +393,38 @@
             toProfile() {
                 window.location.href = "profile.php";
             },
-            
-            findAddtocart() {
+            getCart() {
                 axios
                     .post("action/addtocart.php", {
                         action: "getAllcart",
+                    })
+                    .then((res) => {
+                        this.data = res.data;
+                        console.log(res.data)
+
+
+                    });
+            },     
+            findAddtocart() {
+                axios
+                    .post("action/addtocart.php", {
+                        action: "getAllBook",
                     })
                     .then((res) => {
                         this.addtocarts = res.data;
                         console.log(res);
                     });
             },
-            findBook() {
-                axios
-                    .post("action/addtocart.php", {
-                        action: "getAllBook",
-                    })
-                    .then((res) => {
-                        this.books = res.data;
-                        console.log('book',res);       
-                    });
-            },
+            // findBook() {
+            //     axios
+            //         .post("action/addtocart.php", {
+            //             action: "getAllBook",
+            //         })
+            //         .then((res) => {
+            //             this.books = res.data;
+            //             console.log('book',res);       
+            //         });
+            // },
             onDelete(id) {
                 axios.post("action/addtocart.php", {
                     action: "deleteBook",

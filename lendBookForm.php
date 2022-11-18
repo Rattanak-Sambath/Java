@@ -204,14 +204,14 @@
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
             onSubmit() {
-                console.log(this.form.user)
+                // console.log(this.form.user)
                 this.$refs.student.validate();
                 // this.$refs.book.validate();
                 // this.$refs.start_date.validate();
                 // this.$refs.expired_date.validate();
                 // this.$refs.qty.validate();
                 if (this.$refs.student.hasError) {
-                    // check when value null
+                  
                 } else {
                     //
                     axios
