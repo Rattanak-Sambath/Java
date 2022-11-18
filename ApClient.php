@@ -1,4 +1,6 @@
-
+<?php
+include 'session/check_if_no_session.php';
+?>
 <!DOCTYPE html>
 <html>
 
