@@ -185,12 +185,12 @@
                                                     <hr>
                                          <q-card class="q-pa-md q-my-lg">
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
-                                                    <q-input dense hint="Price" ref="delivery" v-model="delivery"
-                                                    label="Delivery" outlined  />
+                                                    <q-input dense hint="Name" ref="name" v-model="name"
+                                                    label="Name" outlined  />
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
-                                                    <q-input dense hint="PromotCode" v-model="delivery"
-                                                    label="Promote" outlined />
+                                                    <q-input dense hint="Phone" v-model="phone"
+                                                    label="Phone" outlined />
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                 <q-select dense hint="Payment" ref="payment" :options="paymentOpt"
@@ -270,8 +270,9 @@
                 expanded: false,
                 books: [],
                 addtocarts:[],
-                delivery:'',
-                promotecode:'',
+                name : '',
+                phone:'',
+               
                 payment:'',
                 paymentOpt:[
                     'ABA',
@@ -347,8 +348,10 @@
                             action: "addtoclient",
                             addtocarts: this.addtocarts,
                             payment : this.payment,
-                            user_name : "Dara",
+                            user_name : this.name,
+                            phone: this.phone,
                             status: "pending", 
+
 
                         })
                         .then((res) => {
@@ -459,7 +462,7 @@
         
         mounted() {         
             this.findAddtocart();
-            this.findBook();
+            // this.findBook();
             this.getCart();
             
         },

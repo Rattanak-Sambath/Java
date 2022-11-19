@@ -280,16 +280,17 @@ include 'session/check_if_no_session.php';
                                             {{ props.pageIndex + 1 }}
                                         </q-td>
                                     </template>
+                                    <template slot="body-cell-status" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                        <q-badge outline color="orange" >{{props.row.status}}</q-badge>
+                                        </q-td>
+                                    </template>
                                     <!-- action -->
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
                                         <q-td align="center">
                                             <q-btn dense color="primary" icon="done"  @click="onEdit(props.row.id)" />
                                         </q-td>
-                                        <q-td align="center">
-                                             <q-btn dense color="negative"  icon="close"
-                                                @click="onDelete(props.row.id)" />
-                                        </q-td>
-
+                                    
 
                                     </template>
                                     <template v-slot:top-right>
@@ -355,23 +356,25 @@ include 'session/check_if_no_session.php';
                         field: (row) => row.name,
                     },
                     {
+                        name: "total",
+                        label: "Total",
+                        align: "left",
+                        field: (row) => row.total,
+                    },
+                    
+                    {
                         name: "phone",
                         label: "Phone",
                         align: "left",
                         field: (row) => row.phone,
                     },
-                    {
-                        name: "gender",
-                        label: "Gender",
-                        align: "left",
-                        field: (row) => row.gender,
-                    },
 
+                   
+                    
                     {
-                        name: "address",
-                        label: "Address",
+                        name: "status",
+                        label: "Status",
                         align: "left",
-                        field: (row) => row.address,
                     },
                     {
                         name: "action",
@@ -408,56 +411,7 @@ include 'session/check_if_no_session.php';
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen
             },
-            OnUpdate() {
-
-                this.$refs.name.validate();
-                this.$refs.phone.validate();
-                this.$refs.address.validate();
-                this.$refs.gender.validate();
-
-
-                if (this.$refs.name.hasError || this.$refs.phone.hasError || this.$refs.address.hasError || this
-                    .$refs.gender.hasError) {
-                    // check when value null
-                } else {
-                    // 
-                    axios
-                        .post("action/student_action.php", {
-                            action: "updateStudent",
-                            id: this.showId,
-                            name: this.form.name,
-                            phone: this.form.phone,
-                            gender: this.form.gender,
-                            address: this.form.address,
-                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        })
-                        .then((res) => {
-                            if (res.data.status == "update") {
-                                this.$q.notify({
-                                    message: "Update successfully",
-                                    type: "positive",
-                                    position: "top-right",
-                                });
-                                //
-                                setTimeout(() => {
-                                    window.location.href = "student.php";
-                                }, 1000);
-                            } else {
-                                this.$q.notify({
-                                    message: "Cannot Update !!!",
-                                    type: "negative",
-                                    position: "top-right",
-                                });
-                                this.$q.notify({
-                                    message: res.data.err,
-                                    type: "negative",
-                                    position: "top-right",
-                                });
-                            }
-                        });
-                }
-            },
+           
             toAccessary(){
                 window.location.href = "Accessary.php";
             },
@@ -563,8 +517,8 @@ include 'session/check_if_no_session.php';
             },
             getAllData() {
                 axios
-                    .post("action/student_action.php", {
-                        action: "getAllStudent",
+                    .post("action/ClientAction.php", {
+                        action: "getAllClient",
                     })
                     .then((res) => {
                         this.data = res.data;

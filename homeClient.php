@@ -236,9 +236,9 @@
                                     type: "positive",
                                     position: "top-right",
                                 });
-                                setTimeout(() => {
-                                    window.location.href = "homeClient.php";
-                                }, 100);
+                                    // setTimeout(() => {
+                                    //     window.location.href = "homeClient.php";
+                                    // }, 100);
                                 
                             }
                         });
