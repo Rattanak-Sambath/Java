@@ -272,7 +272,7 @@ include 'session/check_if_no_session.php';
                         </div>
                         <!--  -->
                         <div>
-                            <q-card-section>
+                            <q-card rounded>
                                 <q-table flat :columns="columns" :filter="filter" :data="data">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
@@ -282,16 +282,21 @@ include 'session/check_if_no_session.php';
                                     </template>
                                     <template slot="body-cell-status" slot-scope="props" :props="props.row">
                                         <q-td>
-                                        <q-badge outline color="orange" >{{props.row.status}}</q-badge>
+                                        <q-badge outline class="bg-orange" >{{props.row.status}}</q-badge>
                                         </q-td>
                                     </template>
+                                    
                                     <!-- action -->
                                     <template slot="body-cell-action" slot-scope="props" :props="props.row">
-                                        <q-td align="center">
-                                            <q-btn dense color="primary" icon="done"  @click="onEdit(props.row.id)" />
+                                         <q-td align="center" >                                
+                                            <q-btn dense color="primary" icon="done"  @click="approve(props.row)" />                                         
                                         </q-td>
-                                    
-
+                                        <q-td align="center" >                                
+                                            <q-btn dense color="red" icon="cancel"  @click="decline(props.row.id)" />                                         
+                                        </q-td>
+                                        <q-td align="center" >                                
+                                            <q-btn dense color="primary" icon="visibility"  @click="detail(props.row.id)" />                                         
+                                        </q-td>
                                     </template>
                                     <template v-slot:top-right>
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
@@ -302,7 +307,8 @@ include 'session/check_if_no_session.php';
                                     </template>
 
                                 </q-table>
-                            </q-card-section>
+
+                            </q-card>
                         </div>
                     </q-card>
 
@@ -340,11 +346,12 @@ include 'session/check_if_no_session.php';
         name: "new-home",
         data: function() {
             return {
-                dialog: false,
                 maximizedToggle: false,
+              
                 Userdialog: false,
                 
-                columns: [{
+                columns: [
+                    {
                         name: "index",
                         label: "No",
                         align: "left",
@@ -368,19 +375,19 @@ include 'session/check_if_no_session.php';
                         align: "left",
                         field: (row) => row.phone,
                     },
-
-                   
-                    
+                  
                     {
                         name: "status",
                         label: "Status",
                         align: "left",
                     },
+                    
                     {
                         name: "action",
                         label: "Action",
                         align: "center",
                     },
+                    
                 ],
                 genderOpt: ["Male", "Female"],
                 data: [],
@@ -397,6 +404,9 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         methods: {
+            popupDialog(){
+                this.popup = true;
+            },  
             toClient() {
                 window.location.href = "ApClient.php"
             },
@@ -479,28 +489,29 @@ include 'session/check_if_no_session.php';
 
                 })
             },
-            onEdit(id) {
-                this.showId = id;
-
-                this.dialog = true;
+            approve(item) {
+                this.showId = item.id;   
+                console.log(item.title)
                 axios
-                    .post("action/student_action.php", {
-                        action: "getStudentbyId",
-                        id: id,
+                    .post("action/ClientAction.php", {
+                        action: "approvetoclient",                       
+                        id: item.id,
+                        status: "Approve",
                     })
                     .then((res) => {
                         if (res.data == "no data") {
                             this.$q.notify({
-                                message: "This Staff not found !",
+                                message: "This Record not found !",
                                 type: "warning",
                                 position: "top-right",
                             });
                             setTimeout(() => {
-                                window.location.href = "student.php";
+                                window.location.href = "ApClient.php";
                             }, 2000);
                         } else {
-                            this.form = res.data
-                            console.log(res.data);
+                            if (res.data.status == "update") {
+                            window.location.href = "ApClient.php";
+                        }
                         }
                     });
             },

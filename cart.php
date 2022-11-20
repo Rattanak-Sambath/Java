@@ -184,10 +184,15 @@
                                                     </q-card-section>
                                                     <hr>
                                          <q-card class="q-pa-md q-my-lg">
+                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
+                                                    <q-input dense type="date" hint="Date" ref="date" v-model="date"
+                                                     outlined  />
+                                                </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                     <q-input dense hint="Name" ref="name" v-model="name"
                                                     label="Name" outlined  />
                                                 </div>
+                                             
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                     <q-input dense hint="Phone" v-model="phone"
                                                     label="Phone" outlined />
@@ -272,6 +277,7 @@
                 addtocarts:[],
                 name : '',
                 phone:'',
+                date: dayjs(new Date()).format('YYYY-MM-DD'),
                
                 payment:'',
                 paymentOpt:[
@@ -344,6 +350,11 @@
          },
         methods: {
             submitCart(){
+                this.$refs.payment.validate();
+                this.$refs.date.validate();
+                if (this.$refs.payment.hasError || this.$refs.date.hasError) {
+                  
+                } else {
                 axios.post("action/ClientAction.php", {
                             action: "addtoclient",
                             addtocarts: this.addtocarts,
@@ -351,6 +362,7 @@
                             user_name : this.name,
                             phone: this.phone,
                             status: "pending", 
+                            date: this.date
 
 
                         })
@@ -368,6 +380,7 @@
                                 
                             }
                         });
+                    }
             },
             toCart(){
                 window.location.href = "cart.php";

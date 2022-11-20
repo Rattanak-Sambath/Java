@@ -11,7 +11,7 @@
         $user_name = $received_data->user_name;
         $phone = $received_data->phone;
         $status = $received_data->status; 
-       
+        $date = $received_data->date;
         $delivery="";
         $promote = "";
         // print_r($addtocarts);  
@@ -40,7 +40,7 @@
             }  
             else{  
                 $total = $addtocart->qty * $addtocart->price;
-                $sql = "insert into tbl_client(title,name, qty, price, payment, total, phone, status) values ('$addtocart->title', '$user_name', '$addtocart->qty', '$addtocart->price', '$payment', '$total', '$phone', '$status' )";
+                $sql = "insert into tbl_client(title,name, qty, price, payment, total, phone, status, date) values ('$addtocart->title', '$user_name', '$addtocart->qty', '$addtocart->price', '$payment', '$total', '$phone', '$status', '$date' )";
                 $result = mysqli_query($conn, $sql);
                 if($result){
                     $remotesql ="delete from tbl_addtocart where title='$addtocart->title' ";
@@ -66,18 +66,46 @@
                 
             }
                   
-        }
-        
-
-        
+        }      
         echo json_encode($data);
     };
 
 
     if ($received_data->action == 'getAllClient') {
-        $query = "select SUM(tbl_client.total) as total, tbl_client.name, tbl_client.phone, tbl_client.status from tbl_client where status ='pending'";
-        // $query = "select tbl_lendBook.student, tbl_lendBook.book, tbl_lendBook.qty, tbl_lendBook.start_date, tbl_lendBook.end_date, tbl_book.image from tbl_lendBook  inner join tbl_book on tbl_lendBook.title = tbl_book.title";
-        // execure query
+        $status = 'pending';
+        $query = "select SUM(tbl_client.total) as total , tbl_client.name, tbl_client.phone, tbl_client.status, tbl_client.title from tbl_client WHERE status='$status'  GROUP BY name";
+        $result = mysqli_query($conn, $query);
+      
+        while ($row = $result->fetch_array()) {
+          $data[] = $row;
+        }
+        // $data = array(
+        //   'status' => 'Hi',
+        //   'name' => $row[0]['name'],
+        // );
+        // echo
+        echo json_encode($data);
+      };
+      if ($received_data->action == 'getAllApprove') {
+        $status = 'Approve';
+        $query = "select SUM(tbl_client.total) as total , tbl_client.name, tbl_client.phone, tbl_client.status, tbl_client.title from tbl_client WHERE status='$status'  GROUP BY name";
+        $result = mysqli_query($conn, $query);
+      
+        while ($row = $result->fetch_array()) {
+          $data[] = $row;
+        }
+        // $data = array(
+        //   'status' => 'Hi',
+        //   'name' => $row[0]['name'],
+        // );
+        // echo
+        echo json_encode($data);
+      };
+      
+      if ($received_data->action == 'approvetoclient') {
+        $status = $received_data->status;
+        $id = $received_data->id;
+        $query = "update tbl_client set status='$status' where  ";
         $result = mysqli_query($conn, $query);
       
         while ($row = $result->fetch_array()) {
@@ -90,6 +118,7 @@
         // echo
         echo json_encode($data);
       }
+      
       
 
     ?>

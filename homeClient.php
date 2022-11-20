@@ -236,9 +236,9 @@
                                     type: "positive",
                                     position: "top-right",
                                 });
-                                    // setTimeout(() => {
-                                    //     window.location.href = "homeClient.php";
-                                    // }, 100);
+                                    setTimeout(() => {
+                                        window.location.href = "homeClient.php";
+                                    }, 100);
                                 
                             }
                         });
@@ -279,13 +279,15 @@
             findAddtocart() {
                 axios
                     .post("action/addtocart.php", {
-                        action: "getAllcart",
+                        action: "getAllBook",
                     })
                     .then((res) => {
                         this.addtocarts = res.data;
+                       
                         console.log(res);
                     });
             },
+            
             findBook() {
                 axios
                     .post("action/book_action.php", {

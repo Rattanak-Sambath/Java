@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^2.0.8",
-    "dayjs": "^1.11.5"
+    "dayjs": "^1.11.6"
   }
 }

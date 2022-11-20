@@ -101,11 +101,41 @@
                             <q-breadcrumbs-el label="Home" icon="home" class="q-ma-md" />
                             /
                             <q-breadcrumbs-el label="Dashboard" icon="widgets" class="q-ma-xs" />
-
+                           
                         </q-breadcrumbs>
                         <div>
+                        <div>
                             <q-card-section class="text-h5 text-bold">
-                                History
+                                Buying History
+                            </q-card-section>
+                        </div>
+                        <q-separator></q-separator>
+                        <q-card-section>
+                                <q-table flat :columns="columns" :filter="filter" :data="data">
+                                    <!-- index -->
+                                    <template slot="body-cell-index" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                            {{ props.pageIndex + 1 }}
+                                        </q-td>
+                                    </template>
+                                    <template slot="body-cell-status" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                        <q-badge outline  class="bg-primary text-white" >{{props.row.status}}</q-badge>
+                                        </q-td>
+                                    </template>
+                                    
+                                    <!-- action -->
+                                    
+                                    <template v-slot:top-right>
+                                        <q-input round dense debounce="300" v-model="filter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                    </template>
+
+                                </q-table>
+
                             </q-card-section>
                         </div>
 
@@ -160,14 +190,57 @@
         data: function() {
             return {
                 leftDrawerOpen: true,
-                staff: [],
-                student: [],
-                book: [],
-                lendBook: [],
-                returnBook: [],
-                accessaryOpt: [],
+                
                 Userdialog: false,
-                maximizedToggle: false
+                maximizedToggle: false,
+                Userdialog: false,
+                
+                columns: [
+                    {
+                        name: "index",
+                        label: "No",
+                        align: "left",
+                    },
+                    {
+                        name: "name",
+                        label: "Name",
+                        align: "left",
+                        field: (row) => row.name,
+                    },
+                    {
+                        name: "total",
+                        label: "Total",
+                        align: "left",
+                        field: (row) => row.total,
+                    },
+                    
+                    {
+                        name: "phone",
+                        label: "Phone",
+                        align: "left",
+                        field: (row) => row.phone,
+                    },
+                  
+                    {
+                        name: "status",
+                        label: "Status",
+                        align: "left",
+                    },
+                    
+                
+                    
+                ],
+                genderOpt: ["Male", "Female"],
+                data: [],
+                leftDrawerOpen: true,
+                showId: '',
+                form: {
+                    name: "",
+                    phone: "",
+                    address: "",
+                    gender: ""
+                },
+                filter: ''
 
             };
         },
@@ -192,27 +265,7 @@
             toAbout() {
                 window.location.href = "about.php";
             },
-            toLendBook() {
-                window.location.href = "lendBook.php";
-            },
-            toReturnBook() {
-                window.location.href = "returnBook.php";
-            },
-            toReportBook() {
-                window.location.href = "reportBook.php";
-            },
-            toReportLend() {
-                window.location.href = "reportLend.php";
-            },
-            toReportReturn() {
-                window.location.href = "reportReturn.php";
-            },
-            toProfile() {
-                window.location.href = "profile.php";
-            },
-            toMaintenance() {
-                window.location.href = "maintenance.php";
-            },
+           
             toAccessary(){
                 window.location.href = "Accessary.php";
             },
@@ -222,75 +275,23 @@
             convertDate(d) {
                 return dayjs(d).format("YYYY-MM-DD");
             },
-            findStaff() {
+            
+            getAllData() {
                 axios
-                    .post("action/staff_action.php", {
-                        action: "getAllStaff",
+                    .post("action/ClientAction.php", {
+                        action: "getAllApprove",
                     })
                     .then((res) => {
-                        this.staff = res.data;
-                    });
-            },
-            findBook() {
-                axios
-                    .post("action/book_action.php", {
-                        action: "getAllBook",
-                    })
-                    .then((res) => {
-                        this.book = res.data;
-                    });
-            },
-            findStudent() {
-                axios
-                    .post("action/student_action.php", {
-                        action: "getAllStudent",
-                    })
-                    .then((res) => {
-                        this.student = res.data;
+                        this.data = res.data;
                         console.log(res.data)
 
                     });
             },
-            findLendBook() {
-                axios
-                    .post("action/lendBook_action.php", {
-                        action: "getAllLendBook",
-                    })
-                    .then((res) => {
-                        this.lendBook = res.data;
-                        console.log(res.data)
-
-                    });
-            },
-            findreturnBook() {
-                axios
-                    .post("action/returbBook_action.php", {
-                        action: "getAllreturnBook",
-                    })
-                    .then((res) => {
-                        this.returnBook = res.data;
-                        console.log(res.data)
-
-                    });
-            },
-            findAccessary() {
-                axios
-                    .post("action/Accessary_action.php", {
-                        action: "getAllAccessary",
-                    })
-                    .then((res) => {
-                        this.accessaryOpt = res.data;
-                        console.log(res.data)
-                    });
-            }
+            
+           
         },
         mounted() {
-            this.findStaff();
-            this.findStudent();
-            this.findBook();
-            this.findLendBook();
-            this.findreturnBook();
-            this.findAccessary();
+           this.getAllData();
         },
     });
     </script>
