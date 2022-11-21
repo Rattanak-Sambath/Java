@@ -353,16 +353,19 @@
                 this.$refs.payment.validate();
                 this.$refs.date.validate();
                 this.$refs.name.validate();
-
-                if (this.$refs.payment.hasError || this.$refs.date.hasError || this.$refs.name.hasError) {                  
-                          this.$q.notify({
+                if(name == ''){
+                            this.$q.notify({
                                     message: "Login to buy items !!!",
                                     type: "negative",
                                     position: "top-right",
                                 });
                                 setTimeout(() => {
                                     window.location.href = "homeClient.php";
-                                }, 400);                       
+                                }, 1500);  
+                                  
+                }
+                else {
+                if (this.$refs.payment.hasError || this.$refs.date.hasError ) {                                           
                 } else {
                 axios.post("action/ClientAction.php", {
                             action: "addtoclient",
@@ -390,6 +393,7 @@
                             }
                         });
                     }
+                }
             },
             toCart(){
                 window.location.href = "cart.php";
