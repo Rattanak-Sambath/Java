@@ -189,8 +189,8 @@
                                                      outlined  />
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
-                                                    <q-input dense hint="Name" ref="name" v-model="name"
-                                                    label="Name" outlined  />
+                                                    <q-input dense hint="Email"  disable  ref="name" v-model="name"
+                                                    label="User" outlined  />
                                                 </div>
                                              
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
@@ -352,8 +352,17 @@
             submitCart(){
                 this.$refs.payment.validate();
                 this.$refs.date.validate();
-                if (this.$refs.payment.hasError || this.$refs.date.hasError) {
-                  
+                this.$refs.name.validate();
+
+                if (this.$refs.payment.hasError || this.$refs.date.hasError || this.$refs.name.hasError) {                  
+                          this.$q.notify({
+                                    message: "Login to buy items !!!",
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                setTimeout(() => {
+                                    window.location.href = "homeClient.php";
+                                }, 400);                       
                 } else {
                 axios.post("action/ClientAction.php", {
                             action: "addtoclient",

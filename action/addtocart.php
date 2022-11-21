@@ -13,16 +13,20 @@ if ($received_data->action == 'addtocart') {
     // sql
     $secondsql = "select * from tbl_addtocart where book_id = $book_id ";
     $secondResult = mysqli_query($conn, $secondsql);
-    var_dump($secondsql); 
-    var_dump($secondResult); 
+    
     
     if($secondResult->num_rows > 0){
       // $secondResult->
-      $qty = $secondResult->fetch_object()->qty + 1;
+        $qty = $secondResult->fetch_object()->qty + 1;
       
         $thirdsql = "update tbl_addtocart set qty ='$qty' where book_id = '$book_id'" ;
         $thirdResult = mysqli_query($conn, $thirdsql);
-
+        if ($thirdResult === true) {
+          $data = array(
+            'status' => 'increase',
+            
+          );
+        }
      }
     else {
       $sql = "insert into tbl_addtocart(book_id, title, qty) values ('$book_id', '$title', '$qty')";

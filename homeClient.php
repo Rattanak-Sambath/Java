@@ -34,6 +34,7 @@
                         </div>
 
                     </q-toolbar-title>
+                    <q-btn class="q-ma-md" @click="registerClick()" >Register</q-btn>
                     <q-btn dense @click="toCart" icon="shopping_cart_checkout" style="font-size: 20px;">
                     {{addtocarts.length}}
                     </q-btn>
@@ -158,7 +159,85 @@
                         </div>  
                     </q-card>
                     
+                    <q-dialog v-model="dialog" persistent :maximized="maximizedToggle" transition-show="slide-up"
+                            transition-hide="slide-down">
+                            <q-card flat bordered class="my-card" style="width: 800px">
 
+                                <div class="row justify-between">
+
+                                    <!-- btn search -->
+                                    <q-card-section class="text-h5">
+                                        Register
+                                    </q-card-section>
+
+                                    <div class="q-pa-sm">
+                                        <q-btn icon="cancel" @click="close()" />
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <q-separator />
+                                </div>
+                                <!--  -->
+                                <div>
+                                    <q-card-section>
+
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <!-- name -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <q-input dense hint="Email" ref="email" v-model="email"
+                                                    label="Email" outlined
+                                                    :rules="[val => !!val || 'Email is required']" />
+                                            </div>
+
+                                            <!-- latin -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <q-input dense hint="Phone Number" ref="phone" v-model="phone"
+                                                    label="Phone" outlined
+                                                    :rules="[val => !!val || 'Phone is required']" />
+                                            </div>
+
+                                        </div>
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <!-- name -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <q-input dense hint="Password" ref="password" v-model="password"
+                                                    label="Password" outlined
+                                                    :rules="[val => !!val || 'Password is required']" />
+                                            </div>
+
+                                            <!-- latin -->                                        
+
+                                        </div>
+                                        <!-- description -->
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                <q-input dense hint="Address" ref="address" v-model="address"
+                                                    label="Address" outlined
+                                                    :rules="[val => !!val || 'Address is required']" />
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                <q-select dense hint="Gender" ref="gender" :options="genderOpt"
+                                                    v-model="gender" label="Gender" outlined
+                                                    :rules="[val => !!val || 'GEnder is required']" />
+                                            </div>
+
+                                        </div>
+                                    </q-card-section>
+                                </div>
+
+                                <q-card-section align="right">
+
+                                    <div class="q-pa-sm">
+                                        <q-btn icon="add" label="Submit" color="indigo-10" push @click="submitRigister()" />
+                                    </div>
+                                </q-card-section>
+
+
+
+                                <!-- end table -->
+                            </q-card>
+                        </q-dialog>
 
 
                     <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
@@ -209,7 +288,18 @@
                 stars: '',
                 expanded: false,
                 books: [],
-                addtocarts:[]
+                addtocarts:[],
+                dialog: false,
+                email: '',
+                phone: '',
+                date : dayjs(new Date()).format('YYYY-MM-DD'),
+                password: '',
+                gender: '',
+                address: '',
+                genderOpt : [
+                    'Female',
+                    'Male'
+                ]
 
 
             };
@@ -219,9 +309,48 @@
             toCart(){
                 window.location.href = "cart.php";
             },
+            submitRigister(){
+                     axios
+                        .post("action/clientRegister.php", {
+                            action: "add",
+                            email: this.email,
+                            phone: this.phone,   
+                            password: this.password,
+                            gender : this.gender,
+                            address: this.address,    
+                            date: this.date                                                                  
+                        })
+                        .then((res) => {
+                            if (res.data.status == "dublicate")  {
+                                this.$q.notify({
+                                    message: "This user is token  !!!",
+                                    type: "negative",
+                                    position: "top-right",
+                                   
+                                });
+                                    // setTimeout(() => {
+                                    //     window.location.href = "homeClient.php";
+                                    // }, 300);
+                                
+                                
+                            }
+                            else {
+                                this.$q.notify({
+                                    message: "Insert Successfully !!!",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                                setTimeout(() => {
+                                        window.location.href = "homeClient.php";
+                             }, 400);
+
+                                    
+                                
+                            }
+                        });
+            },
             addtocart(item){
-                console.log('item',item)
-              
+                        
                     axios
                         .post("action/addtocart.php", {
                             action: "addtocart",
@@ -230,9 +359,19 @@
                             qty: 1,                                                
                         })
                         .then((res) => {
-                            if (res.data.status != "insert")  {
+                            if (res.data.status == "increase")  {
                                 this.$q.notify({
                                     message: "Insert Successfully !!!",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                                setTimeout(() => {
+                                        window.location.href = "homeClient.php";
+                                    }, 600);                        
+                            }
+                            else {
+                                this.$q.notify({
+                                    message: "Insert new Items  !!!",
                                     type: "positive",
                                     position: "top-right",
                                 });
@@ -245,6 +384,12 @@
             },  
             userClick(){
                 this.Userdialog = true
+            },
+            close(){
+                this.dialog = false
+            },
+            registerClick(){
+                this.dialog = true
             },
             toggleLeftDrawer() {
                 this.leftDrawerOpen = !this.leftDrawerOpen

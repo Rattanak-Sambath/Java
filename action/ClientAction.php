@@ -87,8 +87,8 @@
         echo json_encode($data);
       };
       if ($received_data->action == 'getAllApprove') {
-        $status = 'Approve';
-        $query = "select SUM(tbl_client.total) as total , tbl_client.name, tbl_client.phone, tbl_client.status, tbl_client.title from tbl_client WHERE status='$status'  GROUP BY name";
+       
+        $query = "select SUM(tbl_client.total) as total , tbl_client.name, tbl_client.phone, tbl_client.status, tbl_client.title from tbl_client   GROUP BY name";
         $result = mysqli_query($conn, $query);
       
         while ($row = $result->fetch_array()) {

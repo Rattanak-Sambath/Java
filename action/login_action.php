@@ -4,7 +4,7 @@ $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 // connection
 include "../connection/db.php";// 
-if ($received_data->action == 'login') {
+if ($received_data->action == 'login') {  
   // data member
   $email = $received_data->email;
   $password = $received_data->password;

@@ -118,9 +118,9 @@
                                             {{ props.pageIndex + 1 }}
                                         </q-td>
                                     </template>
-                                    <template slot="body-cell-status" slot-scope="props" :props="props.row">
+                                    <template slot="body-cell-status" slot-scope="props" :props="props.row" >
                                         <q-td>
-                                        <q-badge outline  class="bg-primary text-white" >{{props.row.status}}</q-badge>
+                                        <q-badge outline   :class="props.row.status == 'approve' ? 'bg-primary' : 'bg-orange' " >{{props.row.status}}</q-badge>
                                         </q-td>
                                     </template>
                                     

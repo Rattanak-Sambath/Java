@@ -139,7 +139,7 @@
                                                     label="Phone" outlined :rules="[val => !!val || 'Phone is required']" />
                                            </div>
                                            <div class="q-mb-md">
-                                                <q-input type="textarea" dense hint="Describtion"  v-model="form.phone"
+                                                <q-input type="textarea" dense hint="Describtion"  v-model="form.describtion"
                                                     label="Description" outlined  />
                                            </div>
                                            <div class="q-mb-md text-right">
@@ -221,50 +221,39 @@
                 if (this.$refs.email.hasError || this.$refs.phone.hasError  ) {
                     
                 } else {
-                  
+                           
+                    axios
+                        .post("action/sentmail.php", {
+                            action: "sentmail",
+                            email: this.form.email,
+                            phone: this.form.phone,
+                            describtion: this.form.describtion,                          
+                            created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                            updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                        })
+                        .then((res) => {
+                            if (res.data.status == "insert") {
                                 this.$q.notify({
-                                    message: res.data.err,
+                                    message: "Inserted successfully",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                               
+                                //
+                                setTimeout(() => {
+                                    history.go(-1);
+
+                                }, 500);
+
+                            } else {
+                                this.$q.notify({
+                                    message: "Cannot Inserted!!!",
                                     type: "negative",
                                     position: "top-right",
                                 });
-                    // axios
-                        // .post("action/student_action.php", {
-                        //     action: "addNewStudent",
-                        //     name: this.form.name,
-                        //     phone: this.form.phone,
-                        //     address: this.form.address,
-                        //     gender: this.form.gender,
-
-                            // description: this.form.description,
-                            // created: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                            // updated: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-                        // })
-                        // .then((res) => {
-                        //     if (res.data.status == "insert") {
-                        //         this.$q.notify({
-                        //             message: "Inserted successfully",
-                        //             type: "positive",
-                        //             position: "top-right",
-                        //         });
-                        //         //
-                        //         setTimeout(() => {
-                        //             history.go(-1);
-
-                        //         }, 500);
-
-                        //     } else {
-                        //         this.$q.notify({
-                        //             message: "Cannot Inserted!!!",
-                        //             type: "negative",
-                        //             position: "top-right",
-                        //         });
-                        //         this.$q.notify({
-                        //             message: res.data.err,
-                        //             type: "negative",
-                        //             position: "top-right",
-                        //         });
-                        //     }
-                        // });
+                               
+                            }
+                        });
                 }
             },
             userClick(){

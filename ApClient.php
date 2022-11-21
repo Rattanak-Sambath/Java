@@ -496,7 +496,7 @@ include 'session/check_if_no_session.php';
                     .post("action/ClientAction.php", {
                         action: "approvetoclient",                       
                         id: item.id,
-                        status: "Approve",
+                        status: "approve",
                     })
                     .then((res) => {
                         if (res.data == "no data") {
