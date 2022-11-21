@@ -1,4 +1,11 @@
+<?php
+    session_start();
+   
+    
+?> 
+
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -47,10 +54,10 @@
                     <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
                    <!-- <div class="absolute-bottom bg-transparent">
                             <q-avatar size="56px" class="q-mb-sm" >
-                              <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>">        
+                              <img  src="        
                             </q-avatar>
                             
-                            <div class="text-weight-bold"><?php echo $_SESSION['email']; ?></div>
+                            <div class="text-weight-bold"></div>
 
                         </div>  -->
                   </q-img>
@@ -152,6 +159,11 @@
 
 
                                     </template>
+                                    <template slot="body-cell-qty" slot-scope="props" :props="props.row" >   
+                                        <q-td align="center" >                                  
+                                             <q-input v-model="props.row.qty" @input="handleQty(props.row,$event)"  outlined  dense style="width: 70px; " class="text-center" /> 
+                                        </q-td>
+                                    </template>
                                     <template v-slot:top-right slot="body-cell-title">
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
@@ -192,7 +204,7 @@
                                                     <q-input dense hint="Email"  disable  ref="name" v-model="name"
                                                     label="User" outlined  />
                                                 </div>
-                                             
+                                      
                                                 <div class="col-xs-12 col-sm-6 col-md-6 q-my-md">
                                                     <q-input dense hint="Phone" v-model="phone"
                                                     label="Phone" outlined />
@@ -208,12 +220,12 @@
                                                            Total Cost
                                                     </div>
                                                     <div>
-                                                          {{totalAmount  }} $
+                                                          {{totalAmount}} $
                                                     </div>
                                                 </div>
 
                                                 <div class="text-right ">
-                                                      <q-btn icon="add"  full-width color="primary" label="Submit"  @click="submitCart" />
+                                                      <q-btn icon="add" :disable="visible"  full-width color="primary" label="Submit"  @click="submitCart" />
                                                 </div>
                                          </q-card>
                                         
@@ -225,27 +237,89 @@
 
 
 
-                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
+                    <!-- <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
                         <q-card class="my-card">                      
-                            <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
+                            <img  src=">"> 
                                 <q-card-section>                             
                                     <div class="row no-wrap items-center text-bold">
                                     Email : 
                                         <div class="text-subtitle1 q-ma-md">
-                                        <?php echo $_SESSION['email'] ?>
+                                     
                                         </div>                                                           
                                     </div>
                                     <div class="row no-wrap items-center text-bold">
                                     Role : 
                                         <div class="text-subtitle1 q-ma-md">
-                                            <?php echo $_SESSION['role'] ?>
+                                            
                                         </div>
                                     </div>                          
                                 </q-card-section>         
                         </q-card>
-                    </q-dialog>
+                    </q-dialog> -->
                     
+                    <q-dialog v-model="dialog" persistent :maximized="maximizedToggle" transition-show="slide-up"
+                            transition-hide="slide-down">
+                            <q-card flat bordered class="my-card" style="width: 800px">
 
+                                <div class="row justify-between ">
+
+                                    <!-- btn search -->
+                                    <q-card-section class="text-h5">
+                                        Login
+                                    </q-card-section>
+
+                                    <div class="q-pa-sm">
+                                        <q-btn icon="cancel" @click="close()" />
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <q-separator />
+                                </div>
+                                <!--  -->
+                                <div>
+                                    <q-card-section>
+
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <!-- name -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <q-input dense hint="Email" ref="email" v-model="email"
+                                                    label="Email" outlined
+                                                    :rules="[val => !!val || 'Email is required']" />
+                                            </div>
+
+                                            <!-- latin -->
+                                           
+
+                                        </div>
+                                        <div class="q-pa-sm row q-col-gutter-x-md q-col-gutter-y-md">
+                                            <!-- name -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <q-input dense hint="Password" ref="password" v-model="password"
+                                                    label="Password" outlined
+                                                    :rules="[val => !!val || 'Password is required']" />
+                                            </div>
+
+                                            <!-- latin -->                                        
+
+                                        </div>
+                                        <!-- description -->
+                                       
+                                    </q-card-section>
+                                </div>
+
+                                <q-card-section align="right">
+
+                                    <div class="q-pa-sm">
+                                        <q-btn icon="add" label="Submit" color="indigo-10" push @click="submitRigister()" />
+                                    </div>
+                                </q-card-section>
+
+
+
+                                <!-- end table -->
+                            </q-card>
+                        </q-dialog>
 
 
                 </q-page>
@@ -274,12 +348,17 @@
                 data:[],
                 expanded: false,
                 books: [],
+                client: [],
                 addtocarts:[],
-                name : '',
+                name :'',
                 phone:'',
-                date: dayjs(new Date()).format('YYYY-MM-DD'),
-               
+                dialog: false,
+                date: dayjs(new Date()).format('YYYY-MM-DD'),              
                 payment:'',
+                email: '',
+                password: '',
+                visible: false,
+                foreignkey: '' ,
                 paymentOpt:[
                     'ABA',
                     'ACLEDA',
@@ -298,10 +377,16 @@
                         field: (row) => row.title,
                     },
                     {
+                        name: "image",
+                        label: "Image",
+                        align: "center",
+                        field: (row) => row.image,
+                    },
+                    {
                         name: "qty",
                         label: "Qty",
                         align: "center",
-                        field: (row) => row.qty,
+                        // field: (row) => row.qty,
                     },
                     {
                         name: "price",
@@ -315,14 +400,7 @@
                         align: "center",
                         
                     },
-                    {
-                        name: "image",
-                        label: "Image",
-                        align: "center",
-                        field: (row) => row.image,
-                    },
-                    
-                   
+                                   
                     {
                         name: "action",
                         label: "Action",
@@ -335,6 +413,34 @@
 
             };
         },
+        // watch: {
+        //     'props.row.qty': {
+        //         handler: function(newValue, oldValue) {
+                   
+        //             if(newValue) {
+        //                 console.log(newValue);
+        //                 // if(newValue === 'All'){
+        //                 //     this.getAllData()
+        //                 // }
+        //                 // else {
+        //                 //     axios
+        //                 //     .post("action/Accessary_action.php", {
+        //                 //         action: "getAccessaryBySearch",
+        //                 //         id:  newValue
+        //                 //     })
+        //                 //     .then((res) => {
+        //                 //         this.data = res.data;
+        //                 //         console.log(res.data)
+                            
+        //                 //     });
+        //                 // }
+                      
+        //              }
+        //         },
+        //         deep: true,
+        //         immediate: true
+        //     }
+        // },
         created() {},
         computed :{
 
@@ -349,24 +455,106 @@
             },
          },
         methods: {
+            onLogin() {    
+                window.location.href ="login.php"; 
+                //   axios.post("action/logout_action.php", {
+                //             action: "logout",                          
+                //         })
+                //         .then((res) => {
+                //             console.log(res);
+                //             if (res.data.status == "logout")  {
+                //                 this.$q.notify({
+                //                     message: "logout Successfully !!!",
+                //                     type: "negative",
+                //                     position: "top-right",
+                //                 });
+                //                 setTimeout(() => {                               
+                                    
+                //                 }, 1000);
+                                
+                //             }
+                //         });
+                                  
+            },
+            submitRigister(){
+
+                this.$refs.email.validate();
+                this.$refs.password.validate();
+                if (this.$refs.email.hasError || this.$refs.password.hasError ) {                                           
+                } else {
+                axios.post("action/clientLogin.php", {
+                            action: "login",
+                            email: this.email,
+                            password : this.password,                       
+                            
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            this.name = res.data.email;
+                            if (res.data.status == "login")  {   
+                                                       
+                                this.$q.notify({
+                                    message: "Login Successfully !!!",
+                                    type: "positive",
+                                    position: "top-right",
+                                });
+                                setTimeout(() => {
+                                    // window.location.href= 'cart.php';
+                                    this.dialog = false
+                                }, 1000);
+                                
+                            }
+                        });
+                    }
+            },
+            handleQty(it,newValue){               
+                if(newValue){                  
+                    axios.post("action/book_action.php", {
+                            action: "findbookbyid",                          
+                            id: it.book_id
+                        })
+                        .then((res) => {
+                         
+                            if( newValue > res.data[0].qty ){
+                                this.visible = true;
+                                this.$q.notify({
+                                    message: "The qty is only " + res.data[0].qty,
+                                    type: "negative",
+                                    position: "top-right",
+                                });
+                                // setTimeout(() => {  
+
+                                //  }, 200);
+                            }
+                            else {
+                                this.visible =  false;
+                            }
+                        });
+                }
+            },
+            close(){
+                this.dialog = false
+            },
             submitCart(){
                 this.$refs.payment.validate();
                 this.$refs.date.validate();
                 this.$refs.name.validate();
-                if(name == ''){
-                            this.$q.notify({
+                if(this.name == ''){
+                         this.$q.notify({
                                     message: "Login to buy items !!!",
                                     type: "negative",
                                     position: "top-right",
-                                });
-                                setTimeout(() => {
-                                    window.location.href = "homeClient.php";
-                                }, 1500);  
+                             });
+                            //   setTimeout(() => {
+                            //        window.location.href = "homeClient.php";
+                            //  }, 2500); 
+                             this.dialog = true; 
                                   
                 }
                 else {
                 if (this.$refs.payment.hasError || this.$refs.date.hasError ) {                                           
                 } else {
+                    
                 axios.post("action/ClientAction.php", {
                             action: "addtoclient",
                             addtocarts: this.addtocarts,
@@ -374,7 +562,8 @@
                             user_name : this.name,
                             phone: this.phone,
                             status: "pending", 
-                            date: this.date
+                            date: this.date,
+                            foreignkey: this.foreignkey
 
 
                         })
@@ -388,7 +577,7 @@
                                 });
                                 setTimeout(() => {
                                     window.location.href = "homeClient.php";
-                                }, 100);
+                                }, 1000);
                                 
                             }
                         });
@@ -398,7 +587,9 @@
             toCart(){
                 window.location.href = "cart.php";
             },
-                 
+            loginClick(){
+
+            },    
             userClick(){
                 this.Userdialog = true
             },
@@ -444,16 +635,16 @@
                         console.log(res);
                     });
             },
-            // findBook() {
-            //     axios
-            //         .post("action/addtocart.php", {
-            //             action: "getAllBook",
-            //         })
-            //         .then((res) => {
-            //             this.books = res.data;
-            //             console.log('book',res);       
-            //         });
-            // },
+            findBook() {
+                axios
+                    .post("action/addtocart.php", {
+                        action: "getAllBook",
+                    })
+                    .then((res) => {
+                        this.books = res.data;
+                        console.log('book',res);       
+                    });
+            },
             onDelete(id) {
                 axios.post("action/addtocart.php", {
                     action: "deleteBook",
@@ -482,11 +673,26 @@
 
                 })
             },
+            countTblclient(){
+                
+                axios
+                    .post("action/ClientAction.php", {
+                        action: "getAllClient",
+                    })
+                    .then((res) => {
+                        this.client = res.data;
+                        this.foreignkey = this.client.length  + 1;   
+                       
+
+                    });
+            
+            }
            
            
         },
         
-        mounted() {         
+        mounted() {     
+            this.countTblclient();  
             this.findAddtocart();
             // this.findBook();
             this.getCart();

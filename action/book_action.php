@@ -108,6 +108,22 @@ if ($received_data->action == 'getDataById') {
   echo json_encode($data);
   //
 }
+if ($received_data->action == 'findbookbyid') {
+    $id = $received_data->id;
+  // 
+  // sql
+  $query = "select * from tbl_book where id=$id ";
+  // execure query
+ 
+  $result = mysqli_query($conn, $query);
+
+  while ($row = $result->fetch_array()) {
+    $data[] = $row;
+  }
+  echo json_encode($data);
+  //
+}
+
 
 // update staff 
 if ($received_data->action == 'updateStudent') {

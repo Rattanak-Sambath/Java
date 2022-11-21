@@ -37,11 +37,11 @@ include 'session/check_if_no_session.php';
 
                     </q-toolbar-title>
                     <!-- right side -->
-                    <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
+                    <!-- <q-btn class="" dense round flat icon="contact_mail" @click="userClick">
                         <q-badge color="red" floating transparent>
                             <?php echo  $_SESSION['email'] ?>
                         </q-badge>
-                    </q-btn>
+                    </q-btn> -->
                     <div class="q-ma-md">
                         <?php echo $_SESSION['role'] ?>
                     </div> 
@@ -287,15 +287,15 @@ include 'session/check_if_no_session.php';
                                     </template>
                                     
                                     <!-- action -->
-                                    <template slot="body-cell-action" slot-scope="props" :props="props.row">
+                                    <template slot="body-cell-action" slot-scope="props" :props="props.row.foreignkey">
                                          <q-td align="center" >                                
                                             <q-btn dense color="primary" icon="done"  @click="approve(props.row)" />                                         
                                         </q-td>
                                         <q-td align="center" >                                
-                                            <q-btn dense color="red" icon="cancel"  @click="decline(props.row.id)" />                                         
+                                            <q-btn dense color="red" icon="cancel"  @click="decline(props.row)" />                                         
                                         </q-td>
                                         <q-td align="center" >                                
-                                            <q-btn dense color="primary" icon="visibility"  @click="detail(props.row.id)" />                                         
+                                            <q-btn dense color="primary" icon="visibility"  @click="detail(props.row)" />                                         
                                         </q-td>
                                     </template>
                                     <template v-slot:top-right>
@@ -312,25 +312,7 @@ include 'session/check_if_no_session.php';
                         </div>
                     </q-card>
 
-                    <q-dialog v-model="Userdialog"  :maximized="maximizedToggle" transition-show="slide-down" transition-hide="slide-up">                   
-                        <q-card class="my-card">                      
-                            <img  src="<?php echo 'upload/'.$_SESSION['image'] ?>"> 
-                                <q-card-section>                             
-                                    <div class="row no-wrap items-center text-bold">
-                                    Email : 
-                                        <div class="text-subtitle1 q-ma-md">
-                                        <?php echo $_SESSION['email'] ?>
-                                        </div>                                                           
-                                    </div>
-                                    <div class="row no-wrap items-center text-bold">
-                                    Role : 
-                                        <div class="text-subtitle1 q-ma-md">
-                                            <?php echo $_SESSION['role'] ?>
-                                        </div>
-                                    </div>                          
-                                </q-card-section>         
-                        </q-card>
-                    </q-dialog>
+
                  
                 </q-page>
             </q-page-container>
@@ -348,7 +330,7 @@ include 'session/check_if_no_session.php';
             return {
                 maximizedToggle: false,
               
-                Userdialog: false,
+              
                 
                 columns: [
                     {
@@ -366,7 +348,7 @@ include 'session/check_if_no_session.php';
                         name: "total",
                         label: "Total",
                         align: "left",
-                        field: (row) => row.total,
+                        field: (row) => row.total + ' $',
                     },
                     
                     {
@@ -404,15 +386,14 @@ include 'session/check_if_no_session.php';
         },
         created() {},
         methods: {
+           
             popupDialog(){
                 this.popup = true;
             },  
             toClient() {
                 window.location.href = "ApClient.php"
             },
-            userClick(){
-                this.Userdialog = true
-            },
+           
             close() {
                 this.dialog = false
                 this.form = "";
@@ -489,17 +470,24 @@ include 'session/check_if_no_session.php';
 
                 })
             },
-            approve(item) {
-                this.showId = item.id;   
-                console.log(item.title)
+            decline(item){
                 axios
                     .post("action/ClientAction.php", {
-                        action: "approvetoclient",                       
-                        id: item.id,
-                        status: "approve",
+                        action: "declinetoclient",                       
+                        id: item.foreignkey,
+                        status: "decline",
                     })
                     .then((res) => {
-                        if (res.data == "no data") {
+                        if (res.data.status == "decline") {
+                            this.$q.notify({
+                                message: "This Record have been decline !!!!",
+                                type: "positive",
+                                position: "top-right",
+                            });
+                            setTimeout(() => {
+                                window.location.href = "ApClient.php";
+                            }, 1500);
+                        } else {
                             this.$q.notify({
                                 message: "This Record not found !",
                                 type: "warning",
@@ -507,14 +495,73 @@ include 'session/check_if_no_session.php';
                             });
                             setTimeout(() => {
                                 window.location.href = "ApClient.php";
-                            }, 2000);
-                        } else {
-                            if (res.data.status == "update") {
-                            window.location.href = "ApClient.php";
-                        }
+                            }, 1500);
+                           
+                        
                         }
                     });
             },
+            approve(item) {
+                // this.showId = item.foreignkey;   
+                // console.log(item.foreignkey)
+                axios
+                    .post("action/ClientAction.php", {
+                        action: "approvetoclient",                       
+                        id: item.foreignkey,
+                        status: "approve",
+                    })
+                    .then((res) => {
+                        if (res.data.status == "update") {
+                            this.$q.notify({
+                                message: "This Record have been updated !!!!",
+                                type: "positive",
+                                position: "top-right",
+                            });
+                            setTimeout(() => {
+                                window.location.href = "ApClient.php";
+                            }, 1500);
+                        } else {
+                            this.$q.notify({
+                                message: "This Record not found !",
+                                type: "warning",
+                                position: "top-right",
+                            });
+                            setTimeout(() => {
+                                window.location.href = "ApClient.php";
+                            }, 1500);
+                           
+                        
+                        }
+                    });
+            },
+            detail(item) {
+                // this.showId = item.foreignkey;   
+                // console.log(item.foreignkey)
+                axios
+                    .post("action/ClientAction.php", {
+                        action: "getdetailbyid",                       
+                        id: item.foreignkey,
+                        
+                    })
+                    .then((res) => {
+                        console.log(res.data)
+                        if (res.data.status == "find") {
+                            
+                        } else {
+                            this.$q.notify({
+                                message: "This Record not found !",
+                                type: "warning",
+                                position: "top-right",
+                            });
+                            // setTimeout(() => {
+                            //     window.location.href = "ApClient.php";
+                            // }, 1500);
+                           
+                        
+                        }
+                    });
+            },
+            
             onLogout() {
                 axios
                     .post("action/logout_action.php", {

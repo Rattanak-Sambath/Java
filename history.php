@@ -120,7 +120,8 @@
                                     </template>
                                     <template slot="body-cell-status" slot-scope="props" :props="props.row" >
                                         <q-td>
-                                        <q-badge outline   :class="props.row.status == 'approve' ? 'bg-primary' : 'bg-orange' " >{{props.row.status}}</q-badge>
+                                             <q-badge outline   v-show="props.row.status == 'decline' "  class=" bg-negative     " >{{props.row.status}}</q-badge>
+                                            <q-badge outline  v-show="props.row.status != 'decline' "  :class="props.row.status == 'approve' ? 'bg-primary'  : 'bg-orange'  " >{{props.row.status}}</q-badge>
                                         </q-td>
                                     </template>
                                     
@@ -211,7 +212,7 @@
                         name: "total",
                         label: "Total",
                         align: "left",
-                        field: (row) => row.total,
+                        field: (row) => row.total + ' $',
                     },
                     
                     {
