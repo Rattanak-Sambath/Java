@@ -227,7 +227,7 @@ include 'session/check_if_no_session.php';
                         </q-list>
 
                         <q-list @click="toMaintenance()">
-                            <q-item to="/Maintenance" active-class="q-item-no-link-highlighting">
+                            <q-item to="/Maintenance" active-class="q-item-no-link-highlighting bg-gray">
                                 <q-item-section avatar>
                                     <q-icon name="construction" />
                                 </q-item-section>
@@ -316,18 +316,41 @@ include 'session/check_if_no_session.php';
                  
                 </q-page>
             </q-page-container>
-        </q-layout>
-    </div>
+            <q-dialog
+                    v-model="dialog"
+                    >
+                    <q-card style="width: 700px; max-width: 80vw;">
+                        <q-card-section>
+                        <div class="text-h6">Medium</div>
+                        </q-card-section>
+
+                        <q-card-section class="q-pt-none">
+                        Click/Tap on the backdrop.
+                        </q-card-section>
+
+                        <q-card-actions align="right" class="bg-white text-teal">
+                        <q-btn flat label="OK" v-close-popup />
+                        </q-card-actions>
+                    </q-card>
+                    </q-dialog>
+                        </q-layout>
+                    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.7/dist/quasar.umd.min.js"></script>
 
     <script>
+        
+
     var app = new Vue({
+        
         el: "#q-app",
         name: "new-home",
+        
         data: function() {
+            
             return {
+                
                 maximizedToggle: false,
               
               
@@ -375,6 +398,7 @@ include 'session/check_if_no_session.php';
                 data: [],
                 leftDrawerOpen: true,
                 showId: '',
+                dialog: false,
                 form: {
                     name: "",
                     phone: "",
@@ -502,8 +526,7 @@ include 'session/check_if_no_session.php';
                     });
             },
             approve(item) {
-                // this.showId = item.foreignkey;   
-                // console.log(item.foreignkey)
+                
                 axios
                     .post("action/ClientAction.php", {
                         action: "approvetoclient",                       
@@ -540,13 +563,12 @@ include 'session/check_if_no_session.php';
                 axios
                     .post("action/ClientAction.php", {
                         action: "getdetailbyid",                       
-                        id: item.foreignkey,
-                        
+                        id: item.foreignkey,                      
                     })
                     .then((res) => {
                         console.log(res.data)
                         if (res.data.status == "find") {
-                            
+                            this.dialog = true;
                         } else {
                             this.$q.notify({
                                 message: "This Record not found !",

@@ -161,7 +161,7 @@
                                     </template>
                                     <template slot="body-cell-qty" slot-scope="props" :props="props.row" >   
                                         <q-td align="center" >                                  
-                                             <q-input v-model="props.row.qty" @input="handleQty(props.row,$event)"  outlined  dense style="width: 70px; " class="text-center" /> 
+                                             <q-input v-model="props.row.qty" @input="handleQty(props.row, $event)"  outlined  dense style="width: 70px; " class="text-center" /> 
                                         </q-td>
                                     </template>
                                     <template v-slot:top-right slot="body-cell-title">
@@ -350,6 +350,7 @@
                 books: [],
                 client: [],
                 addtocarts:[],
+                stores: [],
                 name :'',
                 phone:'',
                 dialog: false,
@@ -359,6 +360,7 @@
                 password: '',
                 visible: false,
                 foreignkey: '' ,
+                qty: null,
                 paymentOpt:[
                     'ABA',
                     'ACLEDA',
@@ -508,17 +510,20 @@
                     }
             },
             handleQty(it,newValue){               
-                if(newValue){                  
+                if(newValue){        
+                    // console.log(newValue);
+                    // console.log(it);          
                     axios.post("action/book_action.php", {
                             action: "findbookbyid",                          
-                            id: it.book_id
+                            id: it.book_id,
+                            newValue: newValue
                         })
-                        .then((res) => {
-                         
-                            if( newValue > res.data[0].qty ){
+                        .then((res) => {           
+                            this.stores = res.data;                                                 
+                            if(res.data.status == 'bigger'){                             
                                 this.visible = true;
                                 this.$q.notify({
-                                    message: "The qty is only " + res.data[0].qty,
+                                    message: "The qty is only "  ,
                                     type: "negative",
                                     position: "top-right",
                                 });
@@ -529,6 +534,7 @@
                             else {
                                 this.visible =  false;
                             }
+                        
                         });
                 }
             },

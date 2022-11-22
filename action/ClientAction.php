@@ -158,7 +158,7 @@
         $result = mysqli_query($conn, $query);
         while ($row = $result->fetch_array()) {
           $data[] = $row;
-        }
+      }
         if($result === true){
           $data = array(
             'status' => 'find',

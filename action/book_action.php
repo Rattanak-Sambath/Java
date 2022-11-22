@@ -110,18 +110,27 @@ if ($received_data->action == 'getDataById') {
 }
 if ($received_data->action == 'findbookbyid') {
     $id = $received_data->id;
-  // 
-  // sql
-  $query = "select * from tbl_book where id=$id ";
-  // execure query
- 
-  $result = mysqli_query($conn, $query);
-
-  while ($row = $result->fetch_array()) {
-    $data[] = $row;
+    $newValue = $received_data->newValue;
+    $query = "select * from tbl_book where id=$id";
+    $result = mysqli_query($conn, $query);
+    $qty = $result->fetch_object()->qty;
+    if($newValue > $qty){
+      while ($row = $result->fetch_array()) {
+        $data[] = $row;
+      }
+      $data = array(
+        'status' => 'bigger'      
+      );
+    
   }
+  else {
+    while ($row = $result->fetch_array()) {
+      $data[] = $row;
+    }
+  }
+ 
   echo json_encode($data);
-  //
+  
 }
 
 
