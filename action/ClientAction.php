@@ -14,11 +14,23 @@
         $date = $received_data->date;
         $foreignkey = $received_data->foreignkey;
          $delivery="";
-        $promote = "";
-        // print_r($addtocarts);  
+        $promote = ""; 
         foreach ($addtocarts as $addtocart)
         {       
+            // find in stock 
+            $findbookStock ="select * from tbl_book where id ='$addtocart->book_id'";
+            $resultStock= mysqli_query($conn, $findbookStock);
+            while ($row = $resultStock->fetch_array()) {
+               $newStockQty= $row['qty'] - $addtocart->qty;
+               $totalStock = " update tbl_book set qty='$newStockQty' where id = '$addtocart->book_id'";
+               $resultTotalStock = mysqli_query($conn, $totalStock);
+               
+            }
+          
 
+           
+
+            // find book if the same increase one value
             $secondsql= "select title from tbl_client where title = '$addtocart->title'";
             $result2 = mysqli_query($conn, $secondsql);
             
@@ -45,24 +57,34 @@
                 $sql = "insert into tbl_client(title,name, qty, price, payment, total, phone, status, date, foreignkey) values ('$addtocart->title', '$user_name', '$addtocart->qty', '$addtocart->price', '$payment', '$total', '$phone', '$status', '$date', '$foreignkey' )";
                 $result = mysqli_query($conn, $sql);
                 if($result){
-                    $remotesql ="delete from tbl_addtocart where title='$addtocart->title' ";
-                    $resultRemove = mysqli_query($conn, $remotesql);
+                    $removesql ="delete from tbl_addtocart where title='$addtocart->title' ";
+                    $resultRemove = mysqli_query($conn, $removesql);
+
                     if($resultRemove){
-                        if ($resultRemove === true) {
-                    
-                            $data = array(
-                                'status' => 'insert',
+                          if ($resultRemove === true) {
+
+                              $data = array(
+                                  'status' => 'insert',
+                                  
+                              );
+                              } else {
+                              $data = array(
+                                  'status' => 'err',
                                 
-                            );
-                            } else {
-                            $data = array(
-                                'status' => 'err',
-                               
-                                'err' => $conn->error,
+                                  'err' => $conn->error,
+                          
+                              );
+                              }
+                        }
+                    else {
+                      $data = array(
+                        'status' => 'cantremove',
                         
-                            );
-                            }
+                    );
                     }
+                }
+                else {
+                  
                 }
                 
                 
