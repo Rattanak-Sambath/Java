@@ -42,7 +42,7 @@
 
                     </q-toolbar-title>
                     <q-btn dense @click="toCart" icon="shopping_cart_checkout" style="font-size: 20px;">
-                    {{addtocarts.length}}
+                        {{addtocarts.length}}
                     </q-btn>
 
                     <q-btn dense icon="login" size="20px" color="white" flat @click="onLogin()" />
@@ -176,8 +176,6 @@
                                             <q-btn dense color="negative" icon="delete"
                                                 @click="onDelete(props.row.id)" />
                                         </q-td>
-
-
                                     </template>
                                     <template v-slot:top-right>
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
@@ -216,10 +214,10 @@
                                                     
                                                 </div>
                                                 <div class="row justify-between items-center q-pa-sm">
-                                                    <div>
+                                                    <div class="text-bold " style="font-size: 20px;">
                                                            Total Cost
                                                     </div>
-                                                    <div>
+                                                    <div class="text-bold " style="font-size: 20px;">
                                                           {{totalAmount}} $
                                                     </div>
                                                 </div>
@@ -448,7 +446,7 @@
 
             totalAmount(){
                 let total = 0;
-                this.data.forEach((item)=>{
+                this.addtocarts.forEach((item)=>{
                     total += item.price * item.qty;
                     
                 })

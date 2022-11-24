@@ -115,10 +115,11 @@
 
                         <!--  -->
                         <div class="row" >
-                            <div v-for="(book, index) in books" :key="index" class="justify-around q-mx-auto col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div v-for="(book, index) in books"  :key="index" class="justify-around q-mx-auto col-lg-3 col-md-4 col-sm-6 col-xs-12">
 
-                           
-                            <q-card class="my-card q-ma-md  "    >
+                        <div >
+
+                          <q-card class="my-card q-ma-md"    >
                                     <q-card-section class="col-5 flex flex-center ">
                                         <q-img
                                                 style="height:200px"
@@ -128,8 +129,11 @@
                                     </q-card-section>
                                 <div>                                 
                                     <q-card-section class="">
-                                  
-                                    <div class="text-h5  q-mb-xs">{{book.title}}</div>
+                                    <div class=" row justify-between  ">
+                                            <div class="text-h5  q-mb-xs">{{book.title}} </div>
+                                            <p v-show="book.qty== 0" class="text-red text-bold q-my-auto "> Not in stock</p>
+                                    </div>
+                                   
                                     <div class="text-overline "> Type :{{ book.type }}</div>
                                     <div class="text-overline">In stock :{{ book.qty }}</div>
                                     <div class="text-overline">Price :{{ book.price }}$</div>
@@ -140,19 +144,21 @@
                                     </q-card-section>                                 
                                 </div>
                                 <q-card-actions class="justify-between items-center">
-                                   
-                                    
-                                    <q-btn flat color="primary" @click="addtocart(book) ">
+                                                                   
+                                    <q-btn :disable="book.qty == 0" flat color="primary" @click="addtocart(book) ">
                                             Add to Cart         
                                     </q-btn>
+                                   
                                     <q-btn flat >
                                             View More 
                                     </q-btn>
                                 </q-card-actions>
+                              
 
 
                                
                             </q-card>
+                            </div>
                             </div>
                                         
                                 

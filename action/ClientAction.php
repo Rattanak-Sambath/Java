@@ -176,17 +176,16 @@
       }
       if ($received_data->action == 'getdetailbyid') {
         $id = $received_data->id;
-        $query = "select * from tbl_client where foreignkey=$id";
-        $result = mysqli_query($conn, $query);
+        $query = "select SUM(tbl_client.price) as total, SUM(tbl_client.qty) as qty, tbl_client.title, tbl_client.phone,  tbl_client.status ,  tbl_client.name from tbl_client where foreignkey=$id group by title";
+        $result = mysqli_query($conn, $query);      
         while ($row = $result->fetch_array()) {
           $data[] = $row;
-      }
-        if($result === true){
-          $data = array(
-            'status' => 'find',
-            
-          );
-        }    
+          // $data = array(
+          //   'status' => 'find',
+
+          // );
+        } 
+       
         echo json_encode($data);
       };
   

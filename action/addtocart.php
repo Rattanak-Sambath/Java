@@ -7,14 +7,19 @@ $datas = array();
 if ($received_data->action == 'addtocart') {
 
     $book_id = $received_data->book_id;
-    $title = $received_data->title;
-   
+    $title = $received_data->title;   
     $qty = $received_data->qty;
-    // sql
-    $secondsql = "select * from tbl_addtocart where book_id = $book_id ";
+
+    $findbookStock ="select * from tbl_book where id ='$book_id'";
+    $resultStock= mysqli_query($conn, $findbookStock);
+    // if($resultStocK->num_rows->$qty < 0){
+    //   $data = array(
+    //     'status' => 'noinstock',      
+    //   );
+    // }
+    // else {
+      $secondsql = "select * from tbl_addtocart where book_id = $book_id ";
     $secondResult = mysqli_query($conn, $secondsql);
-    
-    
     if($secondResult->num_rows > 0){
       // $secondResult->
         $qty = $secondResult->fetch_object()->qty + 1;
@@ -46,9 +51,9 @@ if ($received_data->action == 'addtocart') {
     
         );
       }
-    }
+    // }
     
-  
+}
     // while ($row = $result->fetch_array()) {
     //   $data[] = $row;
     // }

@@ -273,7 +273,7 @@ include 'session/check_if_no_session.php';
                         <!--  -->
                         <div>
                             <q-card rounded>
-                                <q-table flat :columns="columns" :filter="filter" :data="data">
+                                <q-table flat :columns="dialogcolumns"  :filter="filter" :data="data">
                                     <!-- index -->
                                     <template slot="body-cell-index" slot-scope="props" :props="props.row">
                                         <q-td>
@@ -299,6 +299,7 @@ include 'session/check_if_no_session.php';
                                         </q-td>
                                     </template>
                                     <template v-slot:top-right>
+                                      
                                         <q-input round dense debounce="300" v-model="filter" placeholder="Search">
                                             <template v-slot:append>
                                                 <q-icon name="search" />
@@ -319,18 +320,48 @@ include 'session/check_if_no_session.php';
             <q-dialog
                     v-model="dialog"
                     >
-                    <q-card style="width: 700px; max-width: 80vw;">
-                        <q-card-section>
-                        <div class="text-h6">Medium</div>
-                        </q-card-section>
+                    <q-card style="width: 800px; max-width: 80vw;">
+                     <q-table flat :columns="columns" :filter="dialogfilter" title="Client list details"    :data="dialogData">
+                                    <!-- index -->
+                                    <template slot="body-cell-index" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                            {{ props.pageIndex + 1 }}
+                                        </q-td>
+                                    </template>
+                                    <template slot="body-cell-status" slot-scope="props" :props="props.row">
+                                        <q-td>
+                                        <q-badge outline class="bg-orange" >{{props.row.status}}</q-badge>
+                                        </q-td>
+                                    </template>
+                                    
+                                    <!-- action -->
+                                    <template slot="body-cell-action" slot-scope="props" :props="props.row.foreignkey">
+                                         <q-td align="center" >                                
+                                            <q-btn dense color="primary" icon="done"  @click="approve(props.row)" />                                         
+                                        </q-td>
+                                        <q-td align="center" >                                
+                                            <q-btn dense color="red" icon="cancel"  @click="decline(props.row)" />                                         
+                                        </q-td>
+                                        <!-- <q-td align="center" >                                
+                                            <q-btn dense color="primary" icon="visibility"  @click="detail(props.row)" />                                         
+                                        </q-td> -->
+                                    </template>
+                                    <!-- <template v-slot:top-left class=""  >
+                                         <p class="text-bold" style="font-size: 25px;">Client list Details</p>
 
-                        <q-card-section class="q-pt-none">
-                        Click/Tap on the backdrop.
-                        </q-card-section>
+                                    </template> -->
+                                    <template v-slot:top-right >
+                                      
+                                        <q-input round dense debounce="300" v-model="dialogfilter" placeholder="Search">
+                                            <template v-slot:append>
+                                                <q-icon name="search" />
+                                            </template>
+                                        </q-input>
+                                       
+                                      
+                                    </template>
 
-                        <q-card-actions align="right" class="bg-white text-teal">
-                        <q-btn flat label="OK" v-close-popup />
-                        </q-card-actions>
+                                </q-table>
                     </q-card>
                     </q-dialog>
                         </q-layout>
@@ -352,10 +383,59 @@ include 'session/check_if_no_session.php';
             return {
                 
                 maximizedToggle: false,
-              
-              
-                
+                       
                 columns: [
+                    {
+                        name: "index",
+                        label: "No",
+                        align: "left",
+                    },
+                    {
+                        name: "name",
+                        label: "Name",
+                        align: "left",
+                        field: (row) => row.name,
+                    },
+                    {
+                        name: "title",
+                        label: "Title",
+                        align: "left",
+                        field: (row) => row.title,
+                    },
+                    {
+                        name: "qty",
+                        label: "Qty",
+                        align: "left",
+                        field: (row) => row.qty,
+                    },
+                    {
+                        name: "total",
+                        label: "Total",
+                        align: "left",
+                        field: (row) => row.total + ' $',
+                    },
+                    
+                    {
+                        name: "phone",
+                        label: "Phone",
+                        align: "left",
+                        field: (row) => row.phone,
+                    },
+                  
+                    {
+                        name: "status",
+                        label: "Status",
+                        align: "left",
+                    },
+                    
+                    {
+                        name: "action",
+                        label: "Action",
+                        align: "center",
+                    },
+                    
+                ],
+                dialogcolumns: [
                     {
                         name: "index",
                         label: "No",
@@ -396,6 +476,7 @@ include 'session/check_if_no_session.php';
                 ],
                 genderOpt: ["Male", "Female"],
                 data: [],
+                dialogData: [],
                 leftDrawerOpen: true,
                 showId: '',
                 dialog: false,
@@ -405,7 +486,8 @@ include 'session/check_if_no_session.php';
                     address: "",
                     gender: ""
                 },
-                filter: ''
+                filter: '',
+                dialogfilter: ''
             };
         },
         created() {},
@@ -558,17 +640,18 @@ include 'session/check_if_no_session.php';
                     });
             },
             detail(item) {
-                // this.showId = item.foreignkey;   
-                // console.log(item.foreignkey)
+             
                 axios
                     .post("action/ClientAction.php", {
                         action: "getdetailbyid",                       
                         id: item.foreignkey,                      
                     })
                     .then((res) => {
-                        console.log(res.data)
-                        if (res.data.status == "find") {
+                      
+                        if (res) {
+                            console.log('detail', res.data);
                             this.dialog = true;
+                            this.dialogData =res.data;
                         } else {
                             this.$q.notify({
                                 message: "This Record not found !",
