@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <!-- Add the following at the end of your body tag -->
+    
     <div id="q-app">
         <div class="window-height window-width row justify-center items-center ">
             <img src="public/john-towner-JgOeRuGD_Y4-unsplash.jpg" alt="" style="width: 100%; height: 100%; position: absolute;"  >
